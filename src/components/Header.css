@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Neue+Haas+Grotesk+Display:wght@500&display=swap');
+
+
+.header {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  height: 60px;
+  border-bottom: solid;
+  border-bottom-color: white;
+  border-bottom-width: 2px;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  z-index: 100;
+}
+
+.header-left {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  font-size: 26px;
+  font-family: Inter, Arial;
+  letter-spacing: 1px;
+  font-weight: 500;
+  padding-right: 15px;
+  padding-left: 15px;
+  gap: 10px;
+}
+
+.header-center {
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  display: flex;
+  padding-right: 15px;
+  padding-left: 15px;
+  justify-content: center;
+}
+
+.brand-name-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.brand-name-link:active {
+  opacity: 0.7;
+}
+
+.current-page-button, .homepage-home-button {
+  text-decoration: underline;
+}
+
+.current-page-button, .category-header-button, .home-button, .homepage-home-button {
+  flex: 1;
+  color: black;
+  background: none;
+  border: none;
+  font-size: 28px;
+  font-family: "NHaas Grotesk", "Neue Haas Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: 1px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 0;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.6px;
+  
+}
+
+.logo-container {
+  position: relative;
+  height: 50px;
+  width: 50px;
+  margin-right: 160px;
+}
+
+.logo {
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+.logo-placeholder {
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+  background-color: #000ce9;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 5px;
+}
+
+.logo-placeholder::after {
+  content: '3SD';
+}
+
+.brand-name {
+  white-space: nowrap;
+  color: black;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.brand-name:hover {
+  opacity: 0.7;
+}
+
+.header-right {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 5px;
+  padding-left: 15px;
+}
+
+.user-button {
+  background-color: white;
+  color: black;
+  width: 50px;
+  height: 50px;
+  margin: 0px 15px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  text-decoration: none;
+  border: none;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: rgb(49, 49, 49);
+  color: white;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 2px;
+  font-size: 12px;
+  bottom: -30px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: Roboto, Arial;
+}
+
+.user-button:hover .tooltip {
+  opacity: .7;
+}
+
+.user-button:active {
+  border-color: white;
+}
+
+/* User menu styles */
+.user-menu {
+  position: relative;
+}
+
+
+/* Remove underlines from header links */
+.header a {
+  text-decoration: none;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 970px) {
+  .user-button {
+    margin: 0 10px;
+  }
+}
+
+@media (max-width: 890px) {
+  .current-page-button, .category-header-button, .home-button, .homepage-home-button {
+    font-size: 10px;
+    padding: 0 3px;
+    letter-spacing: 0.5px;
+  }
+  
+}
+
+@media (max-width: 700px) {
+  .user-button {
+    margin: 0 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+  }
+  .logo, .logo-placeholder {
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    margin-right: 10px;
+  }
+  .header-left {
+    font-size: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .current-page-button, .category-header-button, .home-button, .homepage-home-button {
+    font-size: 9px;
+    padding: 0 2px;
+  }
+  .header-center {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .header-right {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
