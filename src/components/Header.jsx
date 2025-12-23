@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import UserMenu from './UserMenu'
 import './Header.css'
 
 function Header() {
@@ -58,15 +58,7 @@ function Header() {
       </div>
       
       <div className="header-right">
-        <div className="user-menu">
-          <button 
-            className="user-button"
-            onClick={() => setShowUserMenu(!showUserMenu)}
-          >
-            <i className="fa-regular fa-user"></i>
-            <div className="tooltip">Account</div>
-          </button>
-        </div>
+        <UserMenu />
       </div>
     </div>
   )
