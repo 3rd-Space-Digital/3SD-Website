@@ -1,5 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import UserMenu from './UserMenu'
+import instagramIcon from '../assets/svgs/instagram.svg'
+import discordIcon from '../assets/svgs/discord.svg'
 import './Header.css'
 
 function Header() {
@@ -17,36 +19,34 @@ function Header() {
   return (
     <div className="header">
       <div className="header-left">
-        <div className="logo-container">
-          <img 
-            className="logo" 
-            src="/logo-placeholder.png" 
-            alt="3rd Space Digital Logo"
-            onError={(e) => {
-              // Hide image and show placeholder if image doesn't exist
-              e.target.style.display = 'none'
-            }}
-          />
-          <div className="logo-placeholder"></div>
+        <div className="social-icons">
+          <a 
+            href="https://instagram.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="social-icon-link"
+          >
+            <img 
+              src={instagramIcon} 
+              alt="Instagram" 
+              className="social-icon social-icon-instagram"
+            />
+          </a>
+          <a 
+            href="https://discord.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="social-icon-link"
+          >
+            <img 
+              src={discordIcon} 
+              alt="Discord" 
+              className="social-icon social-icon-discord"
+            />
+          </a>
         </div>
         
-        <Link to="/about">
-          <button className={isCurrentPage('/about') ? "current-page-button" : "category-header-button"}>
-            about
-          </button>
-        </Link>
         
-        <Link to="/issues">
-          <button className={isCurrentPage('/issues') ? "current-page-button" : "category-header-button"}>
-            issues
-          </button>
-        </Link>
-        
-        <Link to="/contact">
-          <button className={isCurrentPage('/contact') ? "current-page-button" : "category-header-button"}>
-            contact
-          </button>
-        </Link>
       </div>
       
       <div className="header-center">
@@ -58,6 +58,23 @@ function Header() {
       </div>
       
       <div className="header-right">
+      <Link to="/issues">
+          <button className={isCurrentPage('/issues') ? "current-page-button" : "category-header-button"}>
+            Issues
+          </button>
+        </Link>
+        
+        <Link to="/events">
+          <button className={isCurrentPage('/events') ? "current-page-button" : "category-header-button"}>
+            Events
+          </button>
+        </Link>
+        
+        <Link to="/contact-us">
+          <button className={isCurrentPage('/contact-us') ? "current-page-button" : "category-header-button"}>
+            Contact Us
+          </button>
+        </Link>
         <UserMenu />
       </div>
     </div>

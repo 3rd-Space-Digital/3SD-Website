@@ -6,6 +6,7 @@ import './Header.css'
 function UserMenu() {
   const { user, signInWithGoogle, signOut, loading } = useAuth()
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const [imageError, setImageError] = useState(false)
 
   const handleSignIn = async () => {
     try {
@@ -20,6 +21,7 @@ function UserMenu() {
     try {
       await signOut()
       setShowUserMenu(false)
+      setImageError(false) // Reset error state on sign out
     } catch (error) {
       console.error('Sign out error:', error)
       alert('Failed to sign out. Please try again.')
@@ -38,18 +40,19 @@ function UserMenu() {
   }
 
   if (user) {
-    // Debug: Log user data to see what we're getting
-    console.log('User data:', user)
-    console.log('User metadata:', user.user_metadata)
-    
-    // Get avatar URL - Google OAuth might use 'picture' or 'avatar_url'
+    // Get avatar URL
     const avatarUrl = user.user_metadata?.avatar_url || 
                       user.user_metadata?.picture || 
                       user.identities?.[0]?.identity_data?.avatar_url ||
                       user.identities?.[0]?.identity_data?.picture ||
-                      `https://ui-avatars.com/api/?name=${encodeURIComponent(user.email || 'User')}&background=random`
+                      null
     
-    console.log('Avatar URL:', avatarUrl)
+    const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.email || 'User')}&background=random`
+    
+    // Use avatar URL if available, otherwise use fallback
+    const displayUrl = avatarUrl || fallbackUrl
+    const isFallback = !avatarUrl
+    
     
     return (
       <div className="user-menu">
@@ -57,22 +60,21 @@ function UserMenu() {
           className="user-button"
           onClick={() => setShowUserMenu(!showUserMenu)}
         >
-          {avatarUrl && avatarUrl.includes('ui-avatars') === false ? (
+          {!imageError ? (
             <img 
-              src={avatarUrl}
+              src={displayUrl}
               alt="User avatar"
               className="user-avatar"
               onError={(e) => {
-                console.error('Image failed to load:', avatarUrl)
+                console.error('Image failed to load:', displayUrl)
+                setImageError(true)
                 e.target.style.display = 'none'
-                const icon = e.target.nextElementSibling
-                if (icon) icon.style.display = 'flex'
               }}
             />
           ) : null}
           <i 
             className="fa-regular fa-user" 
-            style={{ display: avatarUrl && !avatarUrl.includes('ui-avatars') ? 'none' : 'flex' }}
+            style={{ display: imageError ? 'flex' : 'none' }}
           ></i>
           <div className="tooltip">Account</div>
         </button>
