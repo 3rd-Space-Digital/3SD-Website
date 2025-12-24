@@ -6,13 +6,10 @@
   flex-direction: row;
   position: fixed;
   height: 60px;
-  border-bottom: solid;
-  border-bottom-color: white;
-  border-bottom-width: 2px;
   top: 0;
   left: 0;
   right: 0;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 1);
   z-index: 100;
 }
 
@@ -589,5 +586,57 @@
       border-radius: 16px;
       font-size: 24px;
       margin-right: 3px;
+    }
+  }
+
+
+
+/* Dark Mode Styles */
+@media (prefers-color-scheme: dark) {
+    .header {
+      background-color: black;
+    }
+  
+    /* All text becomes white in dark mode */
+    .brand-name {
+      color: white;
+    }
+  
+    .category-header-button,
+    .current-page-button,
+    .home-button,
+    .homepage-home-button {
+      color: white;
+    }
+  
+    .hamburger-menu-button {
+      color: white;
+    }
+  
+    /* Social icons become white */
+    .social-icon {
+      filter: brightness(0) invert(1);
+    }
+  
+    /* Mobile navigation */
+    .mobile-nav-dropdown {
+      background: black;
+      border-color: #333;
+    }
+  
+    .mobile-nav-item {
+      color: white;
+      border-bottom-color: #333;
+    }
+  
+    .mobile-nav-item:hover {
+      background-color: #1a1a1a;
+    }
+  
+    /* User button */
+    .user-button {
+      background-color: black;
+      color: white;
+      border-color: white;
     }
   }

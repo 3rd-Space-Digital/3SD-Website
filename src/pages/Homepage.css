@@ -1,13 +1,27 @@
 .homepage {
     position: relative;
-    min-height: calc(100vh - 100px); /* Account for header height */
+    min-height: 100vh;
     width: 100%;
   }
   
   .homepage-background {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: calc(100vh - 100px);
-    background-size: cover;
-    background-position: center;
+    height: 100vh;
+    background-size: 100%;
+    background-position: center 75%;
     background-repeat: no-repeat;
+    z-index: -1;
+  }
+
+  .homepage-logo {
+    position: absolute;
+    width: 400px;
+    height: auto;
+    top: 30%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
   }
