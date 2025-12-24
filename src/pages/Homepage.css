@@ -1,0 +1,13 @@
+.homepage {
+    position: relative;
+    min-height: calc(100vh - 100px); /* Account for header height */
+    width: 100%;
+  }
+  
+  .homepage-background {
+    width: 100%;
+    height: calc(100vh - 100px);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
