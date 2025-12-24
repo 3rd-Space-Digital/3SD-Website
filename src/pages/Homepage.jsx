@@ -20,6 +20,17 @@ function Homepage() {
         }}
       />
       <img src={logo} alt="3SD Logo" className="homepage-logo" />
+
+      {/* Text elements */}
+      <div className="homepage-text homepage-text-1">
+        What is<br />3rd Space Digital?
+      </div>
+      
+      <div className="homepage-text homepage-text-2">
+        <div className="text-section-1">3rd Space Digital</div>
+        <div className="text-section-2">Noun</div>
+        <div className="text-section-3">A social events organization and visual arts editorial made by and for creatives</div>
+      </div>
     </main>
   )
 }
