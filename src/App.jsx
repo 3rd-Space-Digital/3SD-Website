@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import AuthCallback from './pages/AuthCallback'
+import Homepage from './pages/Homepage'
 import './App.css'
 
 function App() {
@@ -9,12 +10,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route path="/" element={
-          <main className="main-content">
-            <h1>3rdSpaceDigital</h1>
-            <p>A digital third place for artists to collaborate, showcase, and grow.</p>
-          </main>
-        } />
+        <Route path="/" element={<Homepage />} />
       </Routes>
     </div>
   )
