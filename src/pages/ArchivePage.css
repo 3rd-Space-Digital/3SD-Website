@@ -1,0 +1,295 @@
+.archive-page {
+  background-color: rgb(37, 37, 37);
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 40px;
+  position: relative;
+}
+
+.archive-page-title {
+  color: white;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 4.17vw;
+  font-weight: 900;
+  text-align: center;
+  padding: 4% 4%;
+  margin: 0;
+}
+
+.archive-view-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 4% 30px 4%;
+  margin-bottom: 20px;
+}
+
+.archive-back-button {
+  position: absolute;
+  left: 4%;
+  background: none;
+  border: none;
+  color: white;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: opacity 0.2s;
+}
+
+.archive-back-button:hover {
+  opacity: 0.7;
+}
+
+.archive-folder-title {
+  color: white;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  text-align: center;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.archive-folders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 40px 4%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.archive-folder-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.archive-folder-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.archive-folder-thumbnail {
+  width: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.archive-folder-thumbnail img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.archive-folder-name {
+  padding: 20px;
+  color: white;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.archive-folder-count {
+  padding: 0 20px 20px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 16px;
+  text-align: center;
+}
+
+.archive-images-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  padding: 0 4% 40px 4%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.archive-image-item {
+  width: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.archive-image-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.archive-image-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+@media (max-width: 1440px) {
+  .archive-page-title {
+    font-size: 60px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .archive-page-title {
+    font-size: 56px;
+  }
+  
+  .archive-folders-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+  }
+  
+  .archive-images-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 970px) {
+  .archive-page-title {
+    font-size: 48px;
+    padding: 30px 4% 30px 4%;
+  }
+  
+  .archive-folders-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 22px;
+    padding: 30px 4%;
+  }
+  
+  .archive-images-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  
+  .archive-view-header {
+    padding: 30px 4% 25px 4%;
+  }
+  
+  .archive-folder-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 890px) {
+  .archive-page-title {
+    font-size: 42px;
+    padding: 25px 4% 25px 4%;
+  }
+  
+  .archive-folders-grid {
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 20px;
+    padding: 25px 4%;
+  }
+  
+  .archive-images-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  
+  .archive-back-button {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .archive-page-title {
+    font-size: 36px;
+    padding: 20px 4% 20px 4%;
+  }
+  
+  .archive-folders-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 18px;
+    padding: 20px 4%;
+  }
+  
+  .archive-images-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    padding: 0 4% 20px 4%;
+  }
+  
+  .archive-view-header {
+    padding: 25px 4% 20px 4%;
+  }
+  
+  .archive-back-button {
+    left: 4%;
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+  
+  .archive-folder-title {
+    font-size: 24px;
+  }
+  
+  .archive-folder-name {
+    font-size: 20px;
+    padding: 16px;
+  }
+  
+  .archive-folder-count {
+    font-size: 14px;
+    padding: 0 16px 16px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .archive-page-title {
+    font-size: 28px;
+    padding: 15px 4% 15px 4%;
+  }
+  
+  .archive-folders-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+    padding: 15px 4%;
+  }
+  
+  .archive-images-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px;
+    padding: 0 4% 15px 4%;
+  }
+  
+  .archive-view-header {
+    padding: 20px 4% 15px 4%;
+  }
+  
+  .archive-back-button {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+  
+  .archive-folder-title {
+    font-size: 20px;
+  }
+  
+  .archive-folder-name {
+    font-size: 18px;
+    padding: 12px;
+  }
+  
+  .archive-folder-count {
+    font-size: 12px;
+    padding: 0 12px 12px 12px;
+  }
+}
+

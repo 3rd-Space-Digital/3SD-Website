@@ -157,6 +157,12 @@
     width: 60px;
     height: 60px;
     margin-top: 3px;
+    margin-right: -5px;
+  }
+
+  .social-icon-camera {
+    width: 60px;
+    height: 60px;
   }
 
 .header-right {
@@ -324,6 +330,11 @@
     width: 52px;
     height: 52px;
   }
+
+  .social-icon-camera {
+    width: 52px;
+    height: 52px;
+  }
 }
 
 /* Large tablets and small desktops */
@@ -342,6 +353,11 @@
     }
     
     .social-icon-discord {
+      width: 52px;
+      height: 52px;
+    }
+
+    .social-icon-camera {
       width: 52px;
       height: 52px;
     }
@@ -387,6 +403,11 @@
     }
     
     .social-icon-discord {
+      width: 48px;
+      height: 48px;
+    }
+
+    .social-icon-camera {
       width: 48px;
       height: 48px;
     }
@@ -441,6 +462,11 @@
     }
     
     .social-icon-discord {
+      width: 40px;
+      height: 40px;
+    }
+
+    .social-icon-camera {
       width: 40px;
       height: 40px;
     }
@@ -511,6 +537,11 @@
       height: 35px;
       margin-top: 2px;
     }
+
+    .social-icon-camera {
+      width: 35px;
+      height: 35px;
+    }
     
     .user-button {
       width: 36px;
@@ -578,6 +609,11 @@
       width: 30px;
       height: 30px;
       margin-top: 1px;
+    }
+
+    .social-icon-camera {
+      width: 30px;
+      height: 30px;
     }
     
     .user-button {
