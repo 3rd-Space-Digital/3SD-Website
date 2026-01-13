@@ -42,7 +42,9 @@ function ArchivePage() {
   if (loading) {
     return (
       <main className="archive-page">
-        <div className="archive-page-title">Loading archives...</div>
+        <div className="archive-header">
+          <div className="archive-loading">Loading archives...</div>
+        </div>
       </main>
     )
   }
@@ -57,11 +59,18 @@ function ArchivePage() {
           <h1 className="archive-folder-title">{selectedFolder}</h1>
         </div>
         <div className="archive-images-grid">
-          {folderImages.map((image, index) => (
-            <div key={index} className="archive-image-item">
-              <img src={image.url} alt={image.name} loading="lazy" />
-            </div>
-          ))}
+          {folderImages.map((image, index) => {
+            const shouldLoadEagerly = index < 9
+            return (
+              <div key={index} className="archive-image-item">
+                <img 
+                  src={image.url} 
+                  alt={image.name}
+                  loading={shouldLoadEagerly ? "eager" : "lazy"}
+                />
+              </div>
+            )
+          })}
         </div>
       </main>
     )
@@ -69,10 +78,12 @@ function ArchivePage() {
 
   return (
     <main className="archive-page">
-      <div className="archive-page-title">Image Archive</div>
+      <div className="archive-header">
+        <h1 className="archive-title">Select an archive</h1>
+      </div>
       <div className="archive-folders-grid">
         {folders.length === 0 ? (
-          <div className="homepage-text" style={{ gridColumn: '1 / -1', textAlign: 'center' }}>No archives found</div>
+          <div className="archive-empty" style={{ gridColumn: '1 / -1' }}>No archives found</div>
         ) : (
           folders.map((folder) => (
             <div

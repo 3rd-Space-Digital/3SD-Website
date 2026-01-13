@@ -2,9 +2,35 @@
   background-color: rgb(37, 37, 37);
   min-height: 100vh;
   width: 100%;
-  padding-top: 50px;
+  padding-top: 80px;
   padding-bottom: 40px;
   position: relative;
+}
+
+.archive-header {
+  text-align: center;
+  padding: 40px 20px;
+  margin-bottom: 20px;
+}
+
+.archive-title {
+  color: white;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.archive-loading,
+.archive-empty {
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
 }
 
 .archive-page-title {
@@ -70,6 +96,7 @@
   transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .archive-folder-card:hover {
@@ -79,8 +106,13 @@
 
 .archive-folder-thumbnail {
   width: 100%;
+  flex: 1;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
 }
 
 .archive-folder-thumbnail img {
@@ -123,6 +155,10 @@
   border-radius: 2px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
 }
 
 .archive-image-item:hover {
@@ -131,165 +167,48 @@
 }
 
 .archive-image-item img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: auto;
   display: block;
   object-fit: contain;
 }
 
-@media (max-width: 1440px) {
-  .archive-page-title {
-    font-size: 60px;
+@media (max-width: 768px) {
+  .archive-title {
+    font-size: 36px;
   }
-}
 
-@media (max-width: 1200px) {
-  .archive-page-title {
-    font-size: 56px;
+  .archive-loading,
+  .archive-empty {
+    font-size: 20px;
   }
-  
-  .archive-folders-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-  }
-  
-  .archive-images-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 14px;
-  }
-}
 
-@media (max-width: 970px) {
-  .archive-page-title {
-    font-size: 48px;
-    padding: 30px 4% 30px 4%;
-  }
-  
   .archive-folders-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 22px;
-    padding: 30px 4%;
-  }
-  
-  .archive-images-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 12px;
-  }
-  
-  .archive-view-header {
-    padding: 30px 4% 25px 4%;
-  }
-  
-  .archive-folder-title {
-    font-size: 28px;
-  }
-}
-
-@media (max-width: 890px) {
-  .archive-page-title {
-    font-size: 42px;
-    padding: 25px 4% 25px 4%;
-  }
-  
-  .archive-folders-grid {
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     gap: 20px;
-    padding: 25px 4%;
+    padding: 20px 4%;
   }
-  
+
   .archive-images-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 12px;
+    padding: 0 4% 20px 4%;
   }
-  
+
+  .archive-view-header {
+    padding: 30px 4% 20px 4%;
+  }
+
   .archive-back-button {
+    left: 4%;
     font-size: 16px;
     padding: 8px 16px;
   }
-}
 
-@media (max-width: 700px) {
-  .archive-page-title {
-    font-size: 36px;
-    padding: 20px 4% 20px 4%;
-  }
-  
-  .archive-folders-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 18px;
-    padding: 20px 4%;
-  }
-  
-  .archive-images-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 10px;
-    padding: 0 4% 20px 4%;
-  }
-  
-  .archive-view-header {
-    padding: 25px 4% 20px 4%;
-  }
-  
-  .archive-back-button {
-    left: 4%;
-    font-size: 14px;
-    padding: 6px 12px;
-  }
-  
   .archive-folder-title {
     font-size: 24px;
-  }
-  
-  .archive-folder-name {
-    font-size: 20px;
-    padding: 16px;
-  }
-  
-  .archive-folder-count {
-    font-size: 14px;
-    padding: 0 16px 16px 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  .archive-page-title {
-    font-size: 28px;
-    padding: 15px 4% 15px 4%;
-  }
-  
-  .archive-folders-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 15px;
-    padding: 15px 4%;
-  }
-  
-  .archive-images-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 8px;
-    padding: 0 4% 15px 4%;
-  }
-  
-  .archive-view-header {
-    padding: 20px 4% 15px 4%;
-  }
-  
-  .archive-back-button {
-    font-size: 12px;
-    padding: 5px 10px;
-  }
-  
-  .archive-folder-title {
-    font-size: 20px;
-  }
-  
-  .archive-folder-name {
-    font-size: 18px;
-    padding: 12px;
-  }
-  
-  .archive-folder-count {
-    font-size: 12px;
-    padding: 0 12px 12px 12px;
   }
 }
 
