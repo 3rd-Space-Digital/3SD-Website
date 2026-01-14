@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import UserMenu from './UserMenu'
 import instagramIcon from '../assets/svgs/instagram.svg'
 import discordIcon from '../assets/svgs/discord.svg'
+import cameraIcon from '../assets/svgs/camera.svg'
 import './Header.css'
 
 function Header() {
@@ -53,6 +54,16 @@ function Header() {
               className="social-icon social-icon-discord"
             />
           </a>
+          <Link 
+            to="/archive"
+            className="social-icon-link"
+          >
+            <img 
+              src={cameraIcon} 
+              alt="Archive" 
+              className="social-icon social-icon-camera"
+            />
+          </Link>
         </div>
       </div>
       

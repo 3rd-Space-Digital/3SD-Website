@@ -11,6 +11,9 @@
   right: 0;
   background-color: rgba(255, 255, 255, 1);
   z-index: 100;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .header-left {
@@ -25,17 +28,17 @@
   padding-right: 15px;
   padding-left: 15px;
   gap: 10px;
+  box-sizing: border-box;
 }
 
 .header-center {
-  flex: 1 1 0;
-  min-width: 0;
+  flex: 0 0 auto;
   align-items: center;
   display: flex;
   padding-right: 15px;
   padding-left: 15px;
   justify-content: center;
-  min-width: 300px;
+  box-sizing: border-box;
 }
 
 .brand-name-link {
@@ -157,6 +160,12 @@
     width: 60px;
     height: 60px;
     margin-top: 3px;
+    margin-right: -5px;
+  }
+
+  .social-icon-camera {
+    width: 60px;
+    height: 60px;
   }
 
 .header-right {
@@ -165,10 +174,11 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 5px;
+  padding-right: 15px;
   padding-left: 15px;
   gap: 20px;
   position: relative;
+  box-sizing: border-box;
 }
 
 .user-button {
@@ -324,6 +334,11 @@
     width: 52px;
     height: 52px;
   }
+
+  .social-icon-camera {
+    width: 52px;
+    height: 52px;
+  }
 }
 
 /* Large tablets and small desktops */
@@ -342,6 +357,11 @@
     }
     
     .social-icon-discord {
+      width: 52px;
+      height: 52px;
+    }
+
+    .social-icon-camera {
       width: 52px;
       height: 52px;
     }
@@ -387,6 +407,11 @@
     }
     
     .social-icon-discord {
+      width: 48px;
+      height: 48px;
+    }
+
+    .social-icon-camera {
       width: 48px;
       height: 48px;
     }
@@ -444,6 +469,11 @@
       width: 40px;
       height: 40px;
     }
+
+    .social-icon-camera {
+      width: 40px;
+      height: 40px;
+    }
     
     .user-button {
       width: 40px;
@@ -485,7 +515,7 @@
     }
     
     .header-center {
-      min-width: 150px;
+      flex: 0 0 auto;
       padding-left: 8px;
       padding-right: 8px;
     }
@@ -510,6 +540,11 @@
       width: 35px;
       height: 35px;
       margin-top: 2px;
+    }
+
+    .social-icon-camera {
+      width: 35px;
+      height: 35px;
     }
     
     .user-button {
@@ -553,15 +588,19 @@
     }
     
     .header-center {
-      min-width: 120px;
-      padding-left: 6px;
-      padding-right: 6px;
+      flex: 0 0 auto;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+    
+    .brand-name {
+      font-size: 16px;
     }
     
     .header-right {
-      padding-left: 6px;
-      padding-right: 6px;
-      gap: 6px;
+      padding-left: 4px;
+      padding-right: 4px;
+      gap: 4px;
     }
     
     .social-icons {
@@ -578,6 +617,11 @@
       width: 30px;
       height: 30px;
       margin-top: 1px;
+    }
+
+    .social-icon-camera {
+      width: 30px;
+      height: 30px;
     }
     
     .user-button {
