@@ -176,13 +176,22 @@
 }
 
 @media (max-width: 768px) {
+  .archive-page {
+    padding-top: 50px;
+  }
+
+  .archive-header {
+    padding: 20px 15px;
+  }
+
   .archive-title {
-    font-size: 36px;
+    font-size: 28px;
   }
 
   .archive-loading,
   .archive-empty {
-    font-size: 20px;
+    font-size: 18px;
+    padding: 20px 15px;
   }
 
   .archive-folders-grid {
@@ -202,7 +211,7 @@
   }
 
   .archive-view-header {
-    padding: 30px 4% 20px 4%;
+    padding: 20px 4% 15px 4%;
   }
 
   .archive-back-button {
@@ -212,7 +221,36 @@
   }
 
   .archive-folder-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .archive-page {
+    padding-top: 45px;
+  }
+
+  .archive-header {
+    padding: 15px 10px;
+  }
+
+  .archive-title {
     font-size: 24px;
+    letter-spacing: 1px;
+  }
+
+  .archive-loading,
+  .archive-empty {
+    font-size: 16px;
+    padding: 15px 10px;
+  }
+
+  .archive-view-header {
+    padding: 15px 4% 12px 4%;
+  }
+
+  .archive-folder-title {
+    font-size: 18px;
   }
 }
 
