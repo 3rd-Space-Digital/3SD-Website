@@ -1,7 +1,7 @@
 .event-detail {
-  background-color: white;
+  background-color: #f5f5f5;
   min-height: 100vh;
-  padding: 80px 4% 40px;
+  padding: 80px 4% 48px;
 }
 
 .event-detail-loading,
@@ -19,7 +19,7 @@
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   padding: 0;
 }
 
@@ -27,40 +27,155 @@
   opacity: 0.7;
 }
 
-.event-detail-title {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 40px;
-  font-weight: 900;
-  margin: 0 0 12px;
-  color: black;
+.event-detail-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto 48px;
 }
 
-.event-detail-date {
+.event-detail-left {
+  min-width: 0;
+}
+
+.event-detail-right {
+  position: sticky;
+  top: 100px;
+  margin-left: 32px;
+}
+
+.event-detail-title {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.6);
-  margin: 0 0 24px;
+  font-size: 96px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 110%;
+  letter-spacing: -2.88px;
+  color: #000;
+  margin: 0 0 35px;
+  max-width: 785px;
+}
+
+.event-detail-date,
+.event-detail-location {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 110%;
+  letter-spacing: -0.72px;
+  color: #000;
+  margin: 0 0 35px;
+}
+
+.event-detail-about-heading {
+  color: #000;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 110%;
+  letter-spacing: -1.2px;
+  margin: 24px 0 35px;
 }
 
 .event-detail-description {
+  color: #000;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 1.6;
-  color: black;
-  margin: 0 0 40px;
-  max-width: 720px;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 110%;
+  letter-spacing: -1.2px;
+  max-width: 759px;
+  margin: 0;
 }
 
-.event-detail-images {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-.event-detail-images img {
-  width: 100%;
-  height: auto;
+.event-detail-poster {
+  width: 534px;
+  height: 667px;
   display: block;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.event-detail-poster-placeholder {
+  width: 534px;
+  height: 667px;
+  background-color: #e0e0e0;
+  border-radius: 20px;
+}
+
+/* First breakpoint: image moves to top, single column, full width with 30px sides, 110px bottom */
+@media (max-width: 1440px) {
+  .event-detail {
+    padding: 80px 30px 110px;
+  }
+
+  .event-detail-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: none;
+    margin-bottom: 0;
+  }
+
+  .event-detail-left {
+    max-width: none;
+  }
+
+  .event-detail-title {
+    max-width: none;
+  }
+
+  .event-detail-description {
+    max-width: none;
+  }
+
+  .event-detail-right {
+    order: -1;
+    position: static;
+    margin-left: 0;
+  }
+
+  .event-detail-poster,
+  .event-detail-poster-placeholder {
+    width: 100%;
+    max-width: 534px;
+    height: auto;
+    aspect-ratio: 534 / 667;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Second breakpoint: smaller type, 30px sides and 110px bottom kept */
+@media (max-width: 768px) {
+  .event-detail {
+    padding: 60px 30px 110px;
+  }
+
+  .event-detail-title {
+    font-size: 48px;
+    letter-spacing: -1.44px;
+  }
+
+  .event-detail-date,
+  .event-detail-location {
+    font-size: 18px;
+    letter-spacing: -0.54px;
+  }
+
+  .event-detail-about-heading {
+    font-size: 28px;
+    letter-spacing: -0.84px;
+    margin-top: 20px;
+  }
+
+  .event-detail-description {
+    font-size: 28px;
+    letter-spacing: -0.84px;
+    max-width: 100%;
+  }
 }
