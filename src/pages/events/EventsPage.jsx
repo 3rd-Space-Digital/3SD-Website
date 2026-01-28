@@ -1,73 +1,30 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { getAllEvents } from '../../utils/eventUtils'
 import './EventsPage.css'
 
 function EventsPage() {
-  // ============================================
-  // TEMPORARY HARDCODED DATA - REMOVE WHEN REAL EVENTS ARE IMPLEMENTED
-  // ============================================
-  // TODO: Replace this section with actual database fetch (DB-only, no per-event component files)
-  // TODO: import { useState, useEffect } from 'react'
-  // TODO: import { getAllEvents } from '../utils/eventUtils'
-  // TODO: Remove all hardcoded event objects below
-  
-  const hardcodedUpcoming = [
-    {
-      id: 1,
-      title: 'Summer Gallery Opening',
-      event_date: '2024-07-15T18:00:00Z',
-      description: 'A Third Space is a location that is neither one\'s home nor workplace and provides a safe space for relaxation and recreation.',
-      thumbnailUrl: '/placeholder-thumbnail.jpg' // Will use getEventThumbnailUrl(id) later
-    },
-    {
-      id: 2,
-      title: 'Music Fest 2024',
-      event_date: '2024-08-20T19:00:00Z',
-      description: 'A Third Space is a location that is neither one\'s home nor workplace and provides a safe space for relaxation and recreation.',
-      thumbnailUrl: '/placeholder-thumbnail.jpg'
-    },
-    {
-      id: 3,
-      title: 'Art Exhibition',
-      event_date: '2024-09-10T17:00:00Z',
-      description: 'A Third Space is a location that is neither one\'s home nor workplace and provides a safe space for relaxation and recreation.',
-      thumbnailUrl: '/placeholder-thumbnail.jpg'
-    }
-  ]
+  const [events, setEvents] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const hardcodedPast = [
-    {
-      id: 4,
-      title: 'Spring Showcase',
-      event_date: '2024-04-15T18:00:00Z',
-      description: 'A Third Space is a location that is neither one\'s home nor workplace and provides a safe space for relaxation and recreation.',
-      thumbnailUrl: '/placeholder-thumbnail.jpg'
-    },
-    {
-      id: 5,
-      title: 'Winter Gathering',
-      event_date: '2024-01-20T19:00:00Z',
-      description: 'A Third Space is a location that is neither one\'s home nor workplace and provides a safe space for relaxation and recreation.',
-      thumbnailUrl: '/placeholder-thumbnail.jpg'
-    }
-  ]
+  useEffect(() => {
+    getAllEvents().then((data) => {
+      setEvents(data)
+      setLoading(false)
+    })
+  }, [])
 
-  // ============================================
-  // END OF TEMPORARY HARDCODED DATA
-  // ============================================
+  const now = new Date()
+  const upcoming = events.filter((e) => new Date(e.date) >= now)
+  const past = events.filter((e) => new Date(e.date) < now)
 
-  // TODO: Uncomment and use this code once real events are in the database:
-  // const [events, setEvents] = useState([])
-  // const [loading, setLoading] = useState(true)
-  // useEffect(() => {
-  //   getAllEvents().then(data => { setEvents(data); setLoading(false) })
-  // }, [])
-  // const now = new Date()
-  // const upcoming = events.filter(e => new Date(e.event_date) >= now)
-  // const past = events.filter(e => new Date(e.event_date) < now)
-
-  // TEMPORARY: Using hardcoded data
-  const upcoming = hardcodedUpcoming
-  const past = hardcodedPast
+  if (loading) {
+    return (
+      <div className="events-page">
+        <div className="events-loading">Loading events...</div>
+      </div>
+    )
+  }
 
   return (
     <div className="events-page">

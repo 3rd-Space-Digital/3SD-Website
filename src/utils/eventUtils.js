@@ -37,9 +37,9 @@ export const getEventImages = async (eventId) => {
 export const getAllEvents = async () => {
   try {
     const { data, error } = await supabase
-      .from('events')
+      .from('event')
       .select('*')
-      .order('event_date', { ascending: false })
+      .order('date', { ascending: false })
 
     if (error) {
       console.error('Error fetching events:', error)
@@ -62,7 +62,7 @@ export const getEventById = async (id) => {
     if (Number.isNaN(numId)) return null
 
     const { data, error } = await supabase
-      .from('events')
+      .from('event')
       .select('*')
       .eq('id', numId)
       .single()

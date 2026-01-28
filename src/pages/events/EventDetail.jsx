@@ -31,7 +31,7 @@ function EventDetail() {
       </button>
       <h1 className="event-detail-title">{event.title}</h1>
       <p className="event-detail-date">
-        {new Date(event.event_date).toLocaleDateString(undefined, {
+        {new Date(event.date).toLocaleDateString(undefined, {
           dateStyle: 'long'
         })}
       </p>
