@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { getAllEvents } from '../../utils/eventUtils'
 import './EventsPage.css'
@@ -6,6 +6,9 @@ import './EventsPage.css'
 function EventsPage() {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchOpen, setSearchOpen] = useState(false)
+  const searchInputRef = useRef(null)
 
   useEffect(() => {
     getAllEvents().then((data) => {
@@ -14,9 +17,17 @@ function EventsPage() {
     })
   }, [])
 
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) searchInputRef.current.focus()
+  }, [searchOpen])
+
   const now = new Date()
-  const upcoming = events.filter((e) => new Date(e.date) >= now)
-  const past = events.filter((e) => new Date(e.date) < now)
+  const q = searchQuery.trim().toLowerCase()
+  const filtered = q
+    ? events.filter((e) => e.title.toLowerCase().includes(q))
+    : events
+  const upcoming = filtered.filter((e) => new Date(e.date) >= now)
+  const past = filtered.filter((e) => new Date(e.date) < now)
 
   if (loading) {
     return (
@@ -31,8 +42,37 @@ function EventsPage() {
       {/* Header */}
       <div className="events-header">
         <h1 className="events-title">Events</h1>
-        <div className="events-search-icon">
-          <i className="fa-solid fa-magnifying-glass"></i>
+        <div className="events-search-wrapper">
+          {searchOpen ? (
+            <>
+              <input
+                ref={searchInputRef}
+                type="text"
+                className="events-search-input"
+                placeholder="Search by title..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label="Search events by title"
+              />
+              <button
+                type="button"
+                className="events-search-close"
+                onClick={() => setSearchOpen(false)}
+                aria-label="Close search"
+              >
+                <i className="fa-solid fa-times"></i>
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              className="events-search-icon"
+              onClick={() => setSearchOpen(true)}
+              aria-label="Open search"
+            >
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+          )}
         </div>
       </div>
 

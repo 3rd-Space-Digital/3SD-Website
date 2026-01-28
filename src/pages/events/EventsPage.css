@@ -24,15 +24,40 @@
   margin: 0;
 }
 
-.events-search-icon {
+.events-search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.events-search-icon,
+.events-search-close {
+  background: none;
+  border: none;
   color: black;
   font-size: 24px;
   cursor: pointer;
+  padding: 0;
   transition: opacity 0.2s;
 }
 
-.events-search-icon:hover {
+.events-search-icon:hover,
+.events-search-close:hover {
   opacity: 0.7;
+}
+
+.events-search-input {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 18px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-width: 200px;
+  outline: none;
+}
+
+.events-search-input:focus {
+  border-color: black;
 }
 
 /* Section Dividers */
@@ -172,8 +197,14 @@
     font-size: 48px;
   }
 
-  .events-search-icon {
+  .events-search-icon,
+  .events-search-close {
     font-size: 20px;
+  }
+
+  .events-search-input {
+    min-width: 140px;
+    font-size: 16px;
   }
 
   .events-section {
