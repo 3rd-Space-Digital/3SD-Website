@@ -1,15 +1,27 @@
 import { supabase } from '../config/supabase'
 import { getImageUrl } from './supabaseImageRetrieval'
 
-export const getEventThumbnailUrl = (eventId) => {
-  return getImageUrl(`events/event${eventId}/thumbnail.jpg`)
+export const getEventThumbnailUrl = async (eventId) => {
+  try {
+    const { data: files, error } = await supabase.storage
+      .from('images')
+      .list(`event/event${eventId}`, {
+        limit: 100,
+        sortBy: { column: 'name', order: 'asc' }
+      })
+    if (error || !files?.length) return ''
+    const img = files.find((f) => f.id != null && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
+    return img ? getImageUrl(`event/event${eventId}/${img.name}`) : ''
+  } catch (e) {
+    return ''
+  }
 }
 
 export const getEventImages = async (eventId) => {
   try {
     const { data: files, error } = await supabase.storage
       .from('images')
-      .list(`events/event${eventId}`, {
+      .list(`event/event${eventId}`, {
         limit: 1000,
         offset: 0,
         sortBy: { column: 'name', order: 'asc' }
@@ -26,7 +38,7 @@ export const getEventImages = async (eventId) => {
       .filter((f) => f.id != null && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
       .map((f) => ({
         name: f.name,
-        url: getImageUrl(`events/event${eventId}/${f.name}`)
+        url: getImageUrl(`event/event${eventId}/${f.name}`)
       }))
   } catch (e) {
     console.error('Error fetching event images:', e)
@@ -46,10 +58,13 @@ export const getAllEvents = async () => {
       return []
     }
 
-    return (data || []).map((e) => ({
-      ...e,
-      thumbnailUrl: getEventThumbnailUrl(e.id)
-    }))
+    const withThumbs = await Promise.all(
+      (data || []).map(async (e) => ({
+        ...e,
+        thumbnailUrl: await getEventThumbnailUrl(e.id)
+      }))
+    )
+    return withThumbs
   } catch (e) {
     console.error('Error fetching all events:', e)
     return []
@@ -69,10 +84,8 @@ export const getEventById = async (id) => {
 
     if (error || !data) return null
 
-    return {
-      ...data,
-      thumbnailUrl: getEventThumbnailUrl(data.id)
-    }
+    const thumbnailUrl = await getEventThumbnailUrl(data.id)
+    return { ...data, thumbnailUrl }
   } catch (e) {
     console.error('Error fetching event by id:', e)
     return null
