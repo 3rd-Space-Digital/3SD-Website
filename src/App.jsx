@@ -3,6 +3,8 @@ import Header from './components/Header'
 import AuthCallback from './pages/AuthCallback'
 import Homepage from './pages/Homepage'
 import ArchivePage from './pages/ArchivePage'
+import EventsPage from './pages/events/EventsPage'
+import EventDetail from './pages/events/EventDetail'
 import './App.css'
 
 function App() {
@@ -13,6 +15,8 @@ function App() {
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/" element={<Homepage />} />
         <Route path="/archive" element={<ArchivePage />} />
+        <Route path="/events" element={<EventsPage />} />
+        <Route path="/events/:id" element={<EventDetail />} />
       </Routes>
     </div>
   )
