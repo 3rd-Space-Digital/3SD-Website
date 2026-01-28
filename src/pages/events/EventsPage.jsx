@@ -5,8 +5,9 @@ function EventsPage() {
   // ============================================
   // TEMPORARY HARDCODED DATA - REMOVE WHEN REAL EVENTS ARE IMPLEMENTED
   // ============================================
-  // TODO: Replace this section with actual database fetch
-  // TODO: Use getAllEvents() from eventUtils.js once implemented
+  // TODO: Replace this section with actual database fetch (DB-only, no per-event component files)
+  // TODO: import { useState, useEffect } from 'react'
+  // TODO: import { getAllEvents } from '../utils/eventUtils'
   // TODO: Remove all hardcoded event objects below
   
   const hardcodedUpcoming = [
@@ -54,20 +55,15 @@ function EventsPage() {
   // END OF TEMPORARY HARDCODED DATA
   // ============================================
 
-  // TODO: Uncomment and use this code once real events are implemented:
+  // TODO: Uncomment and use this code once real events are in the database:
   // const [events, setEvents] = useState([])
   // const [loading, setLoading] = useState(true)
-  //
   // useEffect(() => {
-  //   getAllEvents().then(data => {
-  //     setEvents(data)
-  //     setLoading(false)
-  //   })
+  //   getAllEvents().then(data => { setEvents(data); setLoading(false) })
   // }, [])
-  //
   // const now = new Date()
-  // const upcoming = events.filter(event => new Date(event.event_date) >= now)
-  // const past = events.filter(event => new Date(event.event_date) < now)
+  // const upcoming = events.filter(e => new Date(e.event_date) >= now)
+  // const past = events.filter(e => new Date(e.event_date) < now)
 
   // TEMPORARY: Using hardcoded data
   const upcoming = hardcodedUpcoming
@@ -94,7 +90,6 @@ function EventsPage() {
               <Link 
                 key={event.id} 
                 to={`/events/${event.id}`}
-                state={event}
                 className="event-card"
               >
                 <div className="event-image">
@@ -123,7 +118,6 @@ function EventsPage() {
               <Link 
                 key={event.id} 
                 to={`/events/${event.id}`}
-                state={event}
                 className="event-card"
               >
                 <div className="event-image">

@@ -1,35 +1,52 @@
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { eventComponents } from '../../config/eventComponents'
+import { getEventById, getEventImages } from '../../utils/eventUtils'
+import './EventDetail.css'
 
 function EventDetail() {
   const { id } = useParams()
-  const location = useLocation()
-  const [EventComponent, setEventComponent] = useState(null)
-  
-  // Get metadata from route state (passed from EventsPage) or use ID
-  const metadata = location.state || { id: parseInt(id) }
+  const navigate = useNavigate()
+  const [event, setEvent] = useState(null)
+  const [images, setImages] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async function loadComponent() {
-      const eventId = parseInt(id)
-      
-      // Load the component for this event ID
-      if (eventComponents[eventId]) {
-        const module = await eventComponents[eventId]()
-        setEventComponent(() => module.default)
-      } else {
-        console.warn(`No component found for event ID: ${eventId}`)
-      }
+    async function load() {
+      const data = await getEventById(id)
+      setEvent(data)
+      const imgs = await getEventImages(id)
+      setImages(imgs)
+      setLoading(false)
     }
-
-    loadComponent()
+    load()
   }, [id])
 
-  if (!EventComponent) return <div>Loading...</div>
+  if (loading) return <div className="event-detail event-detail-loading">Loading...</div>
+  if (!event) return <div className="event-detail event-detail-error">Event not found</div>
 
-  // Pass metadata (id, title, event_date) to the custom component
-  return <EventComponent metadata={metadata} />
+  return (
+    <div className="event-detail">
+      <button type="button" className="event-detail-back" onClick={() => navigate('/events')}>
+        ← Back to Events
+      </button>
+      <h1 className="event-detail-title">{event.title}</h1>
+      <p className="event-detail-date">
+        {new Date(event.event_date).toLocaleDateString(undefined, {
+          dateStyle: 'long'
+        })}
+      </p>
+      {event.description && (
+        <p className="event-detail-description">{event.description}</p>
+      )}
+      {images.length > 0 && (
+        <div className="event-detail-images">
+          {images.map((img, i) => (
+            <img key={img.name} src={img.url} alt="" />
+          ))}
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default EventDetail
