@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,700;1,900&display=swap');
+
+.menu-page {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  z-index: 200;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.menu-page-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.menu-panel {
+  position: relative;
+  width: 375px;
+  flex-shrink: 0;
+  background-color: #000;
+  color: #fff;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.menu-page-inner {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px 48px;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+}
+
+.menu-close-button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  line-height: 1;
+  transition: opacity 0.2s;
+}
+
+.menu-close-button:hover {
+  opacity: 0.7;
+}
+
+.menu-close-button i {
+  font-size: 1.25em;
+}
+
+.menu-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  gap: 20px;
+}
+
+.menu-section-title {
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.menu-section-title.menu-section-title-italic {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.menu-section-link {
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.menu-section-link:hover {
+  opacity: 0.7;
+}
+
+.menu-section-icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-section-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: opacity 0.2s;
+}
+
+.menu-section-icons a:hover {
+  opacity: 0.7;
+}
+
+.menu-section-icons img {
+  display: block;
+  object-fit: contain;
+}
+
+.menu-icon-instagram {
+  width: 30px;
+  height: 30px;
+}
+
+.menu-icon-discord {
+  width: 35px;
+  height: 27px;
+}
+
+.menu-read-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  gap: 40px;
+}
+
+.menu-read-content .menu-read-title {
+  margin-bottom: 16px;
+}
+
+.menu-read-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 48px;
+}
+
+.menu-read-item {
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 400;
+}
+
+.menu-read-item a {
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.menu-read-item a:hover {
+  opacity: 0.7;
+}
+
+.menu-footer {
+  margin-top: auto;
+  padding-top: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+}
+
+.menu-footer-logo {
+  width: 48px;
+  height: 48px;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 768px) {
+  .menu-page-inner {
+    padding: 20px 20px 40px;
+  }
+
+  .menu-read-content {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .menu-read-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-footer {
+    gap: 32px;
+    padding-top: 40px;
+  }
+
+  .menu-footer-logo {
+    width: 40px;
+    height: 40px;
+  }
+}

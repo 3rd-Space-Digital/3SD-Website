@@ -1,5 +1,5 @@
 .archive-page {
-  background-color: rgb(37, 37, 37);
+  background-color: white;
   min-height: 100vh;
   width: 100%;
   padding-top: 80px;
@@ -8,24 +8,24 @@
 }
 
 .archive-header {
-  text-align: center;
-  padding: 40px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 4%;
   margin-bottom: 20px;
 }
 
 .archive-title {
-  color: white;
+  color: black;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 48px;
+  font-size: 96px;
   font-weight: 900;
   margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 2px;
 }
 
 .archive-loading,
 .archive-empty {
-  color: white;
+  color: black;
   text-align: center;
   padding: 40px 20px;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -34,7 +34,7 @@
 }
 
 .archive-page-title {
-  color: white;
+  color: black;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 4.17vw;
   font-weight: 900;
@@ -57,7 +57,7 @@
   left: 4%;
   background: none;
   border: none;
-  color: white;
+  color: black;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 18px;
   font-weight: 500;
@@ -71,7 +71,7 @@
 }
 
 .archive-folder-title {
-  color: white;
+  color: black;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 32px;
   font-weight: 400;
@@ -90,25 +90,26 @@
 }
 
 .archive-folder-card {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #f5f5f5;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
   height: 100%;
+  border: 1px solid #eee;
 }
 
 .archive-folder-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .archive-folder-thumbnail {
   width: 100%;
   flex: 1;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: #e8e8e8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,7 +125,7 @@
 
 .archive-folder-name {
   padding: 20px;
-  color: white;
+  color: black;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 24px;
   font-weight: 900;
@@ -133,7 +134,7 @@
 
 .archive-folder-count {
   padding: 0 20px 20px 20px;
-  color: rgba(255, 255, 255, 0.7);
+  color: #666;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 16px;
   text-align: center;
@@ -157,7 +158,7 @@
   break-inside: avoid;
   margin-bottom: 16px;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: #f0f0f0;
   border-radius: 2px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -166,7 +167,7 @@
 
 .archive-image-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .archive-image-item img {
@@ -185,7 +186,7 @@
   }
 
   .archive-title {
-    font-size: 28px;
+    font-size: 48px;
   }
 
   .archive-loading,
@@ -235,8 +236,7 @@
   }
 
   .archive-title {
-    font-size: 24px;
-    letter-spacing: 1px;
+    font-size: 36px;
   }
 
   .archive-loading,

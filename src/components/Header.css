@@ -4,16 +4,49 @@
 .header {
   display: flex;
   flex-direction: row;
+  align-items: center;
   position: fixed;
-  height: 60px;
+  height: 65px;
   top: 0;
   left: 0;
   right: 0;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   z-index: 100;
   width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
+  transition: transform 0.3s ease-out, background-color 0.35s ease-out, backdrop-filter 0.35s ease-out;
+  padding: 0 31px;
+}
+
+.header--hidden {
+  transform: translateY(-100%);
+}
+
+.header--transparent {
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.header--glass {
+  background-color: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Light text on dark backgrounds: homepage at top or archive page */
+.header--light-text .brand-name,
+.header--light-text .header-nav-icon,
+.header--light-text .header-menu-button,
+.header--light-text .user-button {
+  color: #fff;
+}
+
+.header--light-text .header-logo {
+  filter: brightness(0) invert(1);
 }
 
 .header-left {
@@ -21,22 +54,36 @@
   min-width: 0;
   display: flex;
   align-items: center;
-  font-size: 26px;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  letter-spacing: 1px;
-  font-weight: 500;
-  padding-right: 15px;
-  padding-left: 15px;
-  gap: 10px;
+  padding: 0;
   box-sizing: border-box;
+}
+
+.header-logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.header-logo-link:hover {
+  opacity: 0.7;
+}
+
+.header-logo {
+  height: clamp(23px, 5.85vw, 36px);
+  width: auto;
+  display: block;
+  object-fit: contain;
+  /* Dark by default so visible on white backgrounds */
+  filter: brightness(0);
 }
 
 .header-center {
   flex: 0 0 auto;
   align-items: center;
   display: flex;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding: 0 42px;
   justify-content: center;
   box-sizing: border-box;
 }
@@ -57,42 +104,46 @@
 }
 
 .brand-name {
-    white-space: nowrap;
-    color: black;
-    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-    font-weight: 900;
-    font-size: 48px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-  
-  .brand-name:hover {
-    opacity: 0.7;
-  }
+  white-space: nowrap;
+  color: black;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.brand-name:hover {
+  opacity: 0.7;
+}
 
 .current-page-button, .homepage-home-button {
   text-decoration: underline;
 }
 
 .current-page-button, .category-header-button, .home-button, .homepage-home-button {
-  flex: 1;
+  flex: none;
   color: black;
   background: none;
   border: none;
-  font-size: 28px;
+  font-size: 13px;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  letter-spacing: 1px;
-  font-weight: 900;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  text-transform: uppercase;
   cursor: pointer;
   white-space: nowrap;
-  min-width: 0;
-  padding: 0 5px;
+  padding: 0 0 2px 0;
   display: flex;
   align-items: center;
-  letter-spacing: 0.6px;
-  
+  transition: opacity 0.2s;
+}
+
+.category-header-button:hover,
+.current-page-button:hover {
+  opacity: 0.7;
 }
 
 .logo-container {
@@ -132,93 +183,92 @@
 }
 */
 
-.social-icons {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-right: 20px;
-  }
-  
-  .social-icon-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.2s;
-  }
-  
-  .social-icon-link:hover {
-    opacity: 0.7;
-  }
-  
-  .social-icon {
-    width: 48px;
-    height: 48px;
-    display: block;
-  }
-
-  .social-icon-discord {
-    width: 60px;
-    height: 60px;
-    margin-top: 3px;
-    margin-right: -5px;
-  }
-
-  .social-icon-camera {
-    width: 60px;
-    height: 60px;
-  }
-
 .header-right {
   flex: 1 1 0;
   min-width: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 15px;
-  padding-left: 15px;
-  gap: 20px;
+  padding: 0;
+  gap: 31px;
   position: relative;
   box-sizing: border-box;
 }
 
-.user-button {
-  background-color: white;
+.header-nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: black;
-  width: 50px;
-  height: 50px;
+  font-size: 23px;
+  padding: 8px;
+  transition: opacity 0.2s;
+  position: relative;
+}
+
+.header-nav-icon:hover {
+  opacity: 0.7;
+}
+
+
+.header-icon-svg {
+  width: 23px;
+  height: 23px;
+  display: block;
+  color: inherit;
+}
+
+.user-button {
+  background-color: transparent;
+  color: black;
+  width: 39px;
+  height: 39px;
   position: relative;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 23px;
   text-decoration: none;
   border: none;
   border-radius: 50%;
   padding: 0;
-  margin-right: 10px;
 }
 
-.tooltip {
+/* Shared tooltip for all header icons (issues, events, account, menu) – same medium gray and text color */
+.header-right .tooltip {
   position: absolute;
-  background-color: rgb(49, 49, 49);
-  color: white;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 8px;
-  padding-right: 8px;
-  border-radius: 2px;
-  font-size: 12px;
-  bottom: -30px;
-  opacity: 0;
-  transition: opacity 0.15s;
-  pointer-events: none;
-  white-space: nowrap;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -36px;
+  display: block;
+  background-color: rgb(109, 109, 109) !important;
+  color: rgb(224, 224, 224) !important;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+  pointer-events: none;
+  z-index: 1000;
 }
 
+.header-nav-icon:hover .tooltip,
+.header-menu-button:hover .tooltip,
 .user-button:hover .tooltip {
-  opacity: .7;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Account tooltip: use lighter gray so it matches others (parent can darken it) */
+.user-button .tooltip {
+  background-color: rgb(125, 125, 125) !important;
 }
 
 .user-button:active {
@@ -233,29 +283,24 @@
   text-decoration: none;
 }
 
-.desktop-nav {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-.hamburger-menu-button {
-  display: none;
+.header-menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 23px;
   color: black;
   padding: 8px;
-  margin-right: 10px;
-  align-items: center;
-  justify-content: center;
   transition: opacity 0.2s;
+  position: relative;
 }
 
-.hamburger-menu-button:hover {
+.header-menu-button:hover {
   opacity: 0.7;
 }
+
 
 .mobile-nav-dropdown {
   display: none;
@@ -303,191 +348,100 @@
 
 /* Responsive breakpoints */
 
-/* Large tablets and small desktops - Hamburger menu at 1440px */
+/* Large tablets and small desktops */
 @media (max-width: 1440px) {
-  .desktop-nav {
-    display: none;
-  }
-
-  .hamburger-menu-button {
-    display: flex;
-  }
-
-  .mobile-nav-dropdown {
-    display: block;
-  }
-
   .brand-name {
-    font-size: 40px;
-  }
-  
-  .header-center {
-    min-width: 250px;
-  }
-  
-  .social-icon {
-    width: 42px;
-    height: 42px;
-  }
-  
-  .social-icon-discord {
-    width: 52px;
-    height: 52px;
+    font-size: 24px;
   }
 
-  .social-icon-camera {
-    width: 52px;
-    height: 52px;
+  .header-center {
+    min-width: 180px;
+    padding: 0 20px;
+  }
+
+  .header-logo {
+    height: 26px;
   }
 }
 
 /* Large tablets and small desktops */
 @media (max-width: 1200px) {
-    .brand-name {
-      font-size: 40px;
-    }
-    
-    .header-center {
-      min-width: 250px;
-    }
-    
-    .social-icon {
-      width: 42px;
-      height: 42px;
-    }
-    
-    .social-icon-discord {
-      width: 52px;
-      height: 52px;
-    }
-
-    .social-icon-camera {
-      width: 52px;
-      height: 52px;
-    }
+  .brand-name {
+    font-size: 24px;
   }
+
+  .header-center {
+    min-width: 180px;
+    padding: 0 20px;
+  }
+
+  .header-logo {
+    height: 26px;
+  }
+}
   
   /* Tablets */
   @media (max-width: 970px) {
-    .brand-name {
-      font-size: 36px;
-    }
-    
-    .current-page-button, .category-header-button, .home-button, .homepage-home-button {
-      font-size: 20px;
-    }
-    
-    .header-left {
-      font-size: 22px;
-      padding-left: 12px;
-      padding-right: 12px;
-      gap: 8px;
-    }
-    
-    .header-center {
-      min-width: 200px;
-      padding-left: 12px;
-      padding-right: 12px;
-    }
-    
-    .header-right {
-      padding-left: 12px;
-      padding-right: 12px;
-      gap: 15px;
-    }
-    
-    .social-icons {
-      gap: 12px;
-      margin-right: 15px; 
-    }
-    
-    .social-icon {
-      width: 38px;
-      height: 38px;
-    }
-    
-    .social-icon-discord {
-      width: 48px;
-      height: 48px;
+    .header {
+      padding: 0 16px;
     }
 
-    .social-icon-camera {
-      width: 48px;
-      height: 48px;
+    .brand-name {
+      font-size: 22px;
     }
-    
+
+    .header-center {
+      min-width: 160px;
+      padding: 0 16px;
+    }
+
+    .header-right {
+      gap: 20px;
+    }
+
+    .header-logo {
+      height: 24px;
+    }
+
     .user-button {
-      width: 45px;
-      height: 45px;
-      font-size: 36px;
-      margin-right: 8px;
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
     }
   }
   
   /* Small tablets and large phones */
   @media (max-width: 890px) {
-    .brand-name {
-      font-size: 28px;
-    }
-    
-    .current-page-button, .category-header-button, .home-button, .homepage-home-button {
-      font-size: 14px;
-      padding: 0 4px;
-      letter-spacing: 0.5px;
-    }
-    
-    .header-left {
-      font-size: 18px;
-      padding-left: 10px;
-      padding-right: 10px;
-      gap: 6px;
-    }
-    
-    .header-center {
-      min-width: 180px;
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-    
-    .header-right {
-      padding-left: 10px;
-      padding-right: 10px;
-      gap: 12px;
-    }
-    
-    .social-icons {
-      gap: 10px;
-      margin-right: 12px;
-    }
-    
-    .social-icon {
-      width: 32px;
-      height: 32px;
-    }
-    
-    .social-icon-discord {
-      width: 40px;
-      height: 40px;
+    .header {
+      padding: 0 12px;
     }
 
-    .social-icon-camera {
-      width: 40px;
-      height: 40px;
+    .brand-name {
+      font-size: 20px;
     }
-    
+
+    .header-center {
+      min-width: 140px;
+      padding: 0 12px;
+    }
+
+    .header-right {
+      gap: 16px;
+    }
+
+    .header-logo {
+      height: 22px;
+    }
+
     .user-button {
-      width: 40px;
-      height: 40px;
-      font-size: 32px;
-      margin-right: 6px;
+      width: 30px;
+      height: 30px;
+      font-size: 14px;
     }
-    
-    .tooltip {
+
+    .header-right .tooltip {
       font-size: 10px;
-      padding-top: 3px;
-      padding-bottom: 3px;
-      padding-left: 6px;
-      padding-right: 6px;
+      padding: 3px 6px;
     }
   }
   
@@ -495,72 +449,41 @@
   @media (max-width: 700px) {
     .header {
       height: 50px;
-    }
-    
-    .brand-name {
-      font-size: 22px;
-    }
-    
-    .current-page-button, .category-header-button, .home-button, .homepage-home-button {
-      font-size: 11px;
-      padding: 0 3px;
-      letter-spacing: 0.3px;
-    }
-    
-    .header-left {
-      font-size: 14px;
-      padding-left: 8px;
-      padding-right: 8px;
-      gap: 4px;
-    }
-    
-    .header-center {
-      flex: 0 0 auto;
-      padding-left: 8px;
-      padding-right: 8px;
-    }
-    
-    .header-right {
-      padding-left: 8px;
-      padding-right: 8px;
-      gap: 8px;
-    }
-    
-    .social-icons {
-      gap: 8px;
-      margin-right: 8px;
-    }
-    
-    .social-icon {
-      width: 28px;
-      height: 28px;
-    }
-    
-    .social-icon-discord {
-      width: 35px;
-      height: 35px;
-      margin-top: 2px;
+      padding: 0 10px;
     }
 
-    .social-icon-camera {
-      width: 35px;
-      height: 35px;
+    .brand-name {
+      font-size: 18px;
     }
-    
+
+    .header-center {
+      flex: 0 0 auto;
+      min-width: 120px;
+      padding: 0 10px;
+    }
+
+    .header-right {
+      gap: 12px;
+    }
+
+    /* Hide Issues and Events icons on mobile; keep account and menu */
+    .header-nav-icon {
+      display: none;
+    }
+
+    .header-logo {
+      height: 20px;
+    }
+
     .user-button {
-      width: 36px;
-      height: 36px;
-      border-radius: 18px;
-      font-size: 28px;
-      margin-right: 4px;
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
     }
-    
-    .tooltip {
+
+    .header-right .tooltip {
       font-size: 9px;
-      padding-top: 2px;
-      padding-bottom: 2px;
-      padding-left: 5px;
-      padding-right: 5px;
+      padding: 2px 5px;
       bottom: -25px;
     }
   }
@@ -568,68 +491,32 @@
   /* Very small mobile phones */
   @media (max-width: 480px) {
     .header {
-      height: 45px;
+      height: 48px;
+      padding: 0 8px;
     }
-    
-    .brand-name {
-      font-size: 18px;
-    }
-    
-    .current-page-button, .category-header-button, .home-button, .homepage-home-button {
-      font-size: 9px;
-      padding: 0 2px;
-    }
-    
-    .header-left {
-      font-size: 12px;
-      padding-left: 6px;
-      padding-right: 6px;
-      gap: 3px;
-    }
-    
-    .header-center {
-      flex: 0 0 auto;
-      padding-left: 4px;
-      padding-right: 4px;
-    }
-    
+
     .brand-name {
       font-size: 16px;
     }
-    
-    .header-right {
-      padding-left: 4px;
-      padding-right: 4px;
-      gap: 4px;
-    }
-    
-    .social-icons {
-      gap: 6px;
-      margin-right: 6px;
-    }
-    
-    .social-icon {
-      width: 24px;
-      height: 24px;
-    }
-    
-    .social-icon-discord {
-      width: 30px;
-      height: 30px;
-      margin-top: 1px;
+
+    .header-center {
+      flex: 0 0 auto;
+      min-width: 100px;
+      padding: 0 8px;
     }
 
-    .social-icon-camera {
-      width: 30px;
-      height: 30px;
+    .header-right {
+      gap: 10px;
     }
-    
+
+    .header-logo {
+      height: 18px;
+    }
+
     .user-button {
-      width: 32px;
-      height: 32px;
-      border-radius: 16px;
-      font-size: 24px;
-      margin-right: 3px;
+      width: 26px;
+      height: 26px;
+      font-size: 12px;
     }
   }
 
@@ -637,13 +524,42 @@
 
 /* Dark Mode Styles */
 @media (prefers-color-scheme: dark) {
-    .header {
-      background-color: black;
+    .header--glass {
+      background-color: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
-  
-    /* All text becomes white in dark mode */
-    .brand-name {
-      color: white;
+
+    /* Glass state: light text on dark glass */
+    .header--glass .brand-name,
+    .header--glass .header-nav-icon,
+    .header--glass .header-menu-button {
+      color: #fff;
+    }
+    .header--glass .header-logo {
+      filter: brightness(0) invert(1);
+    }
+
+    /* Transparent over white pages: use dark text so visible */
+    .header--transparent:not(.header--light-text) .brand-name,
+    .header--transparent:not(.header--light-text) .header-nav-icon,
+    .header--transparent:not(.header--light-text) .header-menu-button,
+    .header--transparent:not(.header--light-text) .user-button {
+      color: #111;
+    }
+    .header--transparent:not(.header--light-text) .header-logo {
+      filter: brightness(0);
+    }
+
+    /* Homepage at top (dark hero): keep light text */
+    .header--transparent.header--light-text .brand-name,
+    .header--transparent.header--light-text .header-nav-icon,
+    .header--transparent.header--light-text .header-menu-button,
+    .header--transparent.header--light-text .user-button {
+      color: #fff;
+    }
+    .header--transparent.header--light-text .header-logo {
+      filter: brightness(0) invert(1);
     }
   
     .category-header-button,
@@ -652,16 +568,7 @@
     .homepage-home-button {
       color: white;
     }
-  
-    .hamburger-menu-button {
-      color: white;
-    }
-  
-    /* Social icons become white */
-    .social-icon {
-      filter: brightness(0) invert(1);
-    }
-  
+
     /* Mobile navigation */
     .mobile-nav-dropdown {
       background: black;
@@ -677,10 +584,9 @@
       background-color: #1a1a1a;
     }
   
-    /* User button */
+    /* User button - minimal, icon only */
     .user-button {
-      background-color: black;
+      background-color: transparent;
       color: white;
-      border-color: white;
     }
   }

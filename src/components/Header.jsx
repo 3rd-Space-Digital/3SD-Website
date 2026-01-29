@@ -1,139 +1,100 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import UserMenu from './UserMenu'
-import instagramIcon from '../assets/svgs/instagram.svg'
-import discordIcon from '../assets/svgs/discord.svg'
-import cameraIcon from '../assets/svgs/camera.svg'
+import logoIcon from '../assets/svgs/3SD.svg'
 import './Header.css'
 
-function Header() {
+const TOP_THRESHOLD = 24
+
+function Header({ onOpenMenu }) {
   const location = useLocation()
   const navigate = useNavigate()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const lastScrollY = useRef(0)
+  const [headerVisible, setHeaderVisible] = useState(true)
+  const [atTop, setAtTop] = useState(true)
 
-  const isCurrentPage = (path) => location.pathname === path
-  
+  useEffect(() => {
+    const handleScroll = () => {
+      const y = window.scrollY ?? window.pageYOffset
+      const scrollingUp = y < lastScrollY.current
+      if (y <= TOP_THRESHOLD) {
+        setAtTop(true)
+        setHeaderVisible(true)
+      } else {
+        setAtTop(false)
+        setHeaderVisible(scrollingUp)
+      }
+      lastScrollY.current = y
+    }
+    const initialY = window.scrollY ?? window.pageYOffset
+    lastScrollY.current = initialY
+    setAtTop(initialY <= TOP_THRESHOLD)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const handleBrandClick = (e) => {
     e.preventDefault()
     navigate('/')
   }
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
+  const goToMenu = () => {
+    if (onOpenMenu) onOpenMenu()
+    else navigate('/menu')
   }
 
-  const closeMenu = () => {
-    setIsMenuOpen(false)
-  }
+  const isHomepageAtTop = location.pathname === '/' && atTop
+  const useLightText = isHomepageAtTop
+  const headerClass = [
+    'header',
+    !headerVisible && 'header--hidden',
+    headerVisible && atTop && 'header--transparent',
+    headerVisible && !atTop && 'header--glass',
+    headerVisible && useLightText && 'header--light-text',
+  ].filter(Boolean).join(' ')
 
   return (
-    <div className="header">
+    <div className={headerClass}>
       <div className="header-left">
-        <div className="social-icons">
-          <a 
-            href="https://www.instagram.com/3rdspacedigital/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="social-icon-link"
-          >
-            <img 
-              src={instagramIcon} 
-              alt="Instagram" 
-              className="social-icon social-icon-instagram"
-            />
-          </a>
-          <a 
-            href="https://discord.gg/C3UeEJfjW9" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="social-icon-link"
-          >
-            <img 
-              src={discordIcon} 
-              alt="Discord" 
-              className="social-icon social-icon-discord"
-            />
-          </a>
-          <Link 
-            to="/archive"
-            className="social-icon-link"
-          >
-            <img 
-              src={cameraIcon} 
-              alt="Archive" 
-              className="social-icon social-icon-camera"
-            />
-          </Link>
-        </div>
+        <Link to="/" className="header-logo-link" aria-label="Home">
+          <img src={logoIcon} alt="" className="header-logo" />
+        </Link>
       </div>
-      
+
       <div className="header-center">
         <div className="brand-name-link" onClick={handleBrandClick}>
           <div className="brand-name">
-            3rdSpaceDigital
+            ThirdSpaceDigital
           </div>
         </div>
       </div>
-      
+
       <div className="header-right">
-        {/* Desktop Navigation - visible above breakpoint */}
-        <div className="desktop-nav">
-          <Link to="/issues">
-            <button className={isCurrentPage('/issues') ? "current-page-button" : "category-header-button"}>
-              Issues
-            </button>
-          </Link>
-          
-          <Link to="/events">
-            <button className={isCurrentPage('/events') ? "current-page-button" : "category-header-button"}>
-              Events
-            </button>
-          </Link>
-          
-          {/*
-          <Link to="/contact-us">
-            <button className={isCurrentPage('/contact-us') ? "current-page-button" : "category-header-button"}>
-              Contact Us
-            </button>
-          </Link>
-          */}
-        </div>
-
-        {/* Hamburger Menu Button - visible at breakpoint */}
-        <button 
-          className="hamburger-menu-button"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          <i className={isMenuOpen ? "fa-solid fa-xmark" : "fa-solid fa-bars"}></i>
-        </button>
-
-        {/* Mobile Navigation Dropdown */}
-        {isMenuOpen && (
-          <div className="mobile-nav-dropdown">
-            <Link to="/issues" onClick={closeMenu}>
-              <button className={isCurrentPage('/issues') ? "mobile-nav-item current" : "mobile-nav-item"}>
-                Issues
-              </button>
-            </Link>
-            
-            <Link to="/events" onClick={closeMenu}>
-              <button className={isCurrentPage('/events') ? "mobile-nav-item current" : "mobile-nav-item"}>
-                Events
-              </button>
-            </Link>
-            
-            {/*
-            <Link to="/contact-us" onClick={closeMenu}>
-              <button className={isCurrentPage('/contact-us') ? "mobile-nav-item current" : "mobile-nav-item"}>
-                Contact Us
-              </button>
-            </Link>
-            */}
-          </div>
-        )}
-
+        <Link to="/issues" className="header-nav-icon" aria-label="Issues">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="header-icon-svg">
+            <rect x="3.5" y="1.5" width="25" height="29" rx="1.5" stroke="currentColor" strokeWidth="3"/>
+            <line x1="9" y1="12.5" x2="23" y2="12.5" stroke="currentColor" strokeWidth="3"/>
+            <line x1="9" y1="18.5" x2="23" y2="18.5" stroke="currentColor" strokeWidth="3"/>
+            <line x1="9" y1="24.5" x2="23" y2="24.5" stroke="currentColor" strokeWidth="3"/>
+          </svg>
+          <span className="tooltip">issues</span>
+        </Link>
+        <Link to="/events" className="header-nav-icon" aria-label="Events">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="header-icon-svg">
+            <path d="M21.3333 2.66663V7.99996M10.6667 2.66663V7.99996M4 13.3333H28M6.66667 5.33329H25.3333C26.8061 5.33329 28 6.5272 28 7.99996V26.6666C28 28.1394 26.8061 29.3333 25.3333 29.3333H6.66667C5.19391 29.3333 4 28.1394 4 26.6666V7.99996C4 6.5272 5.19391 5.33329 6.66667 5.33329Z" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span className="tooltip">events</span>
+        </Link>
         <UserMenu />
+        <button
+          type="button"
+          className="header-menu-button"
+          onClick={goToMenu}
+          aria-label="Open menu"
+        >
+          <i className="fa-solid fa-bars" aria-hidden="true"></i>
+          <span className="tooltip">menu</span>
+        </button>
       </div>
     </div>
   )

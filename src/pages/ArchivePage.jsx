@@ -79,7 +79,7 @@ function ArchivePage() {
   return (
     <main className="archive-page">
       <div className="archive-header">
-        <h1 className="archive-title">Select an archive</h1>
+        <h1 className="archive-title">Select an Archive</h1>
       </div>
       <div className="archive-folders-grid">
         {folders.length === 0 ? (
