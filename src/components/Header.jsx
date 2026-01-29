@@ -43,7 +43,7 @@ function Header() {
             />
           </a>
           <a 
-            href="https://discord.gg/yT8u83Ga" 
+            href="https://discord.gg/C3UeEJfjW9" 
             target="_blank" 
             rel="noopener noreferrer"
             className="social-icon-link"

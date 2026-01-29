@@ -5,6 +5,7 @@ import Homepage from './pages/Homepage'
 import ArchivePage from './pages/ArchivePage'
 import EventsPage from './pages/events/EventsPage'
 import EventDetail from './pages/events/EventDetail'
+import IssuesPage from './pages/issues/IssuesPage'
 import './App.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/archive" element={<ArchivePage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/events/:id" element={<EventDetail />} />
+        <Route path="/issues" element={<IssuesPage />} />
       </Routes>
     </div>
   )
