@@ -1,36 +1,34 @@
 import { supabase } from '../config/supabase'
 import { getImageUrl } from './supabaseImageRetrieval'
 
-// used eventUtils as reference
-
-export const getIssueThumbnailUrl = async (issueId) => {
+export const getArticleThumbnailUrl = async (articleId) => {
   try {
     const { data: files, error } = await supabase.storage
       .from('images')
-      .list(`issue/issue${issueId}`, {
+      .list(`issue/article${articleId}`, {
         limit: 100,
         sortBy: { column: 'name', order: 'asc' }
       })
     if (error || !files?.length) return ''
     const img = files.find((f) => f.id != null && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
-    return img ? getImageUrl(`issue/issue${issueId}/${img.name}`) : ''
+    return img ? getImageUrl(`article/article${articleId}/${img.name}`) : ''
   } catch (e) {
     return ''
   }
 }
 
-export const getIssueImages = async (issueId) => {
+export const getArticleImages = async (articleId) => {
   try {
     const { data: files, error } = await supabase.storage
       .from('images')
-      .list(`issue/issue${issueId}`, {
+      .list(`issue/article${articleId}`, {
         limit: 1000,
         offset: 0,
         sortBy: { column: 'name', order: 'asc' }
       })
 
     if (error) {
-      console.error('Error listing issue images:', error)
+      console.error('Error listing article images:', error)
       return []
     }
 
@@ -40,56 +38,56 @@ export const getIssueImages = async (issueId) => {
       .filter((f) => f.id != null && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
       .map((f) => ({
         name: f.name,
-        url: getImageUrl(`issue/issue${issueId}/${f.name}`)
+        url: getImageUrl(`issue/article${articleId}/${f.name}`)
       }))
   } catch (e) {
-    console.error('Error fetching issue images:', e)
+    console.error('Error fetching article images:', e)
     return []
   }
 }
 
-export const getAllIssues = async () => {
+export const getAllArticles = async () => {
   try {
     const { data, error } = await supabase
-      .from('issue')
+      .from('article')
       .select('*')
-      .order('issue_date', { ascending: false })
+      .order('article_date', { ascending: false })
 
     if (error) {
-      console.error('Error fetching issues:', error)
+      console.error('Error fetching articles:', error)
       return []
     }
 
     const withThumbs = await Promise.all(
-      (data || []).map(async (i) => ({
-        ...i,
-        thumbnailUrl: await getIssueThumbnailUrl(i.id)
+      (data || []).map(async (article) => ({
+        ...article,
+        thumbnailUrl: await getArticleThumbnailUrl(article.id)
       }))
     )
     return withThumbs
   } catch (e) {
-    console.error('Error fetching all issues:', e)
+    console.error('Error fetching all articles:', e)
     return []
   }
 }
 
-export const getIssueById = async (id) => {
+export const getArticleById = async (id) => {
   try {
     const numId = parseInt(id, 10)
     if (Number.isNaN(numId)) return null
 
     const { data, error } = await supabase
-      .from('issue')
+      .from('article')
       .select('*')
       .eq('id', numId)
       .single()
 
     if (error || !data) return null
 
-    const thumbnailUrl = await getIssueThumbnailUrl(data.id)
+    const thumbnailUrl = await getArticleThumbnailUrl(data.id)
     return { ...data, thumbnailUrl }
   } catch (e) {
-    console.error('Error fetching issue by id:', e)
+    console.error('Error fetching article by id:', e)
     return null
   }
 }

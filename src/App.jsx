@@ -6,6 +6,7 @@ import ArchivePage from './pages/ArchivePage'
 import EventsPage from './pages/events/EventsPage'
 import EventDetail from './pages/events/EventDetail'
 import IssuesPage from './pages/issues/IssuesPage'
+import Article from './pages/issues/Article'
 import './App.css'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/events" element={<EventsPage />} />
         <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/issues" element={<IssuesPage />} />
+        <Route path="/issues/:id" element={<Article />} />
       </Routes>
     </div>
   )

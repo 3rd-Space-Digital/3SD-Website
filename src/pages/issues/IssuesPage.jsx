@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { getAllIssues } from '../../utils/issuesUtils'
+import { getAllArticles } from '../../utils/issuesUtils'
 import './IssuesPage.css'
 
 function IssuesPage() {
-  const [issues, setIssues] = useState([])
+  const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchOpen, setSearchOpen] = useState(false)
   const searchInputRef = useRef(null)
 
   useEffect(() => {
-    getAllIssues().then((data) => {
-      setIssues(data)
+    getAllArticles().then((data) => {
+      setArticles(data)
       setLoading(false)
     })
   }, [])
@@ -21,13 +21,16 @@ function IssuesPage() {
     if (searchOpen && searchInputRef.current) searchInputRef.current.focus()
   }, [searchOpen])
 
-  const now = new Date()
   const q = searchQuery.trim().toLowerCase()
   const filtered = q
-    ? issues.filter((i) => i.title.toLowerCase().includes(q))
-    : issues
-  const latest = filtered.filter((i) => new Date(i.issue_date) >= now)
-  const archive = filtered.filter((i) => new Date(i.issue_date) < now)
+    ? articles.filter((article) => article.title.toLowerCase().includes(q))
+    : articles
+  
+    const latest = [...filtered]
+    .sort((a, b) => new Date(b.article_date) - new Date(a.article_date))
+    .slice(0, 3)
+    const latestIds = new Set(latest.map(article => article.id))
+    const archive = filtered.filter(article => !latestIds.has(article.id))
 
   if (loading) {
     return (
@@ -76,26 +79,27 @@ function IssuesPage() {
         </div>
       </div>
 
-      {/* Latest Issues Section */}
+      {/* Latest Articles Section */}
       <div className="issues-section">
         <div className="issues-section-divider">
           <span className="issues-section-title">Latest</span>
         </div>
         <div className="issues-grid">
           {latest.length > 0 ? (
-            latest.map(issue => (
+            latest.map(article => (
               <Link 
-                key={issue.id} 
-                to={`/issues/${issue.id}`}
+                key={article.id} 
+                to={`/issues/${article.id}`}
                 className="issue-card"
               >
                 <div className="issue-image">
-                  <img src={issue.thumbnailUrl} alt={issue.title} />
+                  <img src={article.thumbnailUrl} alt={article.title} />
                 </div>
-                <h2 className="issue-title">{issue.title}</h2>
-                {issue.description && (
-                  <p className="issue-description">{issue.description}</p>
+                <h2 className="issue-title">{article.title}</h2>
+                {article.description && (
+                  <p className="issue-description">{article.description}</p>
                 )}
+                <h3 className="issue-author">{article.author}</h3>
               </Link>
             ))
           ) : (
@@ -111,18 +115,18 @@ function IssuesPage() {
         </div>
         <div className="issues-grid">
           {archive.length > 0 ? (
-            archive.map(issue => (
+            archive.map(article => (
               <Link 
-                key={issue.id} 
-                to={`/issues/${issue.id}`}
+                key={article.id} 
+                to={`/issues/${article.id}`}
                 className="issue-card"
               >
                 <div className="issue-image">
-                  <img src={issue.thumbnailUrl} alt={issue.title} />
+                  <img src={article.thumbnailUrl} alt={article.title} />
                 </div>
-                <h2 className="issue-title">{issue.title}</h2>
-                {issue.description && (
-                  <p className="issue-description">{issue.description}</p>
+                <h2 className="issue-title">{article.title}</h2>
+                {article.description && (
+                  <p className="issue-description">{article.description}</p>
                 )}
               </Link>
             ))

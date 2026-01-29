@@ -90,11 +90,13 @@ function Header() {
             </button>
           </Link>
           
+          {/*
           <Link to="/contact-us">
             <button className={isCurrentPage('/contact-us') ? "current-page-button" : "category-header-button"}>
               Contact Us
             </button>
           </Link>
+          */}
         </div>
 
         {/* Hamburger Menu Button - visible at breakpoint */}
@@ -121,11 +123,13 @@ function Header() {
               </button>
             </Link>
             
+            {/*
             <Link to="/contact-us" onClick={closeMenu}>
               <button className={isCurrentPage('/contact-us') ? "mobile-nav-item current" : "mobile-nav-item"}>
                 Contact Us
               </button>
             </Link>
+            */}
           </div>
         )}
 
