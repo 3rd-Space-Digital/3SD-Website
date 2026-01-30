@@ -83,30 +83,21 @@ function Article() {
 
       {/* Article Header */}
       <header className="article-header">
+        <h1 className="article-title">{article.title}</h1>
         <div className="article-meta">
           <span className="article-date">{formatDate(article.article_date)}</span>
           {article.author && (
-            <span className="article-author">By {article.author}</span>
+          <>
+            <span className="separator"> | </span>
+            <span className="article-author">{article.author}</span>
+          </>
           )}
         </div>
-        
-        <h1 className="article-title">{article.title}</h1>
-        
+
         {article.description && (
           <p className="article-subtitle">{article.description}</p>
         )}
       </header>
-
-      {/* Featured Image */}
-      {article.thumbnailUrl && (
-        <div className="article-featured-image">
-          <img 
-            src={article.thumbnailUrl} 
-            alt={article.title}
-            loading="lazy"
-          />
-        </div>
-      )}
 
       {/* Article Content */}
       <div className="article-content">
@@ -133,21 +124,28 @@ function Article() {
         )}
       </div>
 
-      {/* Footer */}
-      <footer className="article-footer">
-        <div className="article-share">
-          <span className="share-label">Share:</span>
-          <button className="share-button" aria-label="Share on Facebook">
-            <i className="fa-brands fa-facebook"></i>
-          </button>
-          <button className="share-button" aria-label="Share on Twitter">
-            <i className="fa-brands fa-twitter"></i>
-          </button>
-          <button className="share-button" aria-label="Copy link">
-            <i className="fa-solid fa-link"></i>
-          </button>
+      {/* Credits */}
+      {(article.author || article.photographer) && (
+        <div className="article-credits">
+          <h3 className="credits-title">Credits</h3>
+    
+          <div className="credits-grid">
+            {article.author && (
+              <div className="credit-item">
+                <span className="credit-label">Text:</span>
+                <span className="credit-value">{article.author}</span>
+              </div>
+            )}
+      
+            {article.photographer && (
+              <div className="credit-item">
+                <span className="credit-label">Photography:</span>
+                <span className="credit-value">{article.photographer}</span>
+              </div>
+            )}
+          </div>
         </div>
-      </footer>
+      )}
     </div>
   )
 }

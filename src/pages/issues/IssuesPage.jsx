@@ -99,7 +99,6 @@ function IssuesPage() {
                 {article.description && (
                   <p className="issue-description">{article.description}</p>
                 )}
-                <h3 className="issue-author">{article.author}</h3>
               </Link>
             ))
           ) : (

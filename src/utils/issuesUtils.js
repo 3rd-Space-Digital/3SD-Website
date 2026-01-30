@@ -6,14 +6,25 @@ export const getArticleThumbnailUrl = async (articleId) => {
     const { data: files, error } = await supabase.storage
       .from('images')
       .list(`issue/article${articleId}`, {
-        limit: 100,
-        sortBy: { column: 'name', order: 'asc' }
-      })
-    if (error || !files?.length) return ''
-    const img = files.find((f) => f.id != null && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
-    return img ? getImageUrl(`article/article${articleId}/${img.name}`) : ''
+        limit: 10,
+        search: 'thumbnail'
+      });
+    
+    if (error || !files?.length) return '';
+    
+    const thumbnailFile = files.find(f => 
+      f.id != null && 
+      f.name.toLowerCase().startsWith('thumbnail.') &&
+      /\.(jpg|jpeg|png|gif|webp|avif|svg)$/i.test(f.name)
+    );
+    
+    return thumbnailFile 
+      ? getImageUrl(`issue/article${articleId}/${thumbnailFile.name}`)
+      : '';
+    
   } catch (e) {
-    return ''
+    console.error('Error fetching thumbnail:', e);
+    return '';
   }
 }
 
@@ -21,14 +32,14 @@ export const getArticleImages = async (articleId) => {
   try {
     const { data: files, error } = await supabase.storage
       .from('images')
-      .list(`issue/article${articleId}`, {
+      .list(`issue/article${articleId}/gallery`, {  // Add /gallery here
         limit: 1000,
         offset: 0,
         sortBy: { column: 'name', order: 'asc' }
       })
 
     if (error) {
-      console.error('Error listing article images:', error)
+      console.error('Error listing article gallery images:', error)
       return []
     }
 
@@ -38,10 +49,10 @@ export const getArticleImages = async (articleId) => {
       .filter((f) => f.id != null && /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
       .map((f) => ({
         name: f.name,
-        url: getImageUrl(`issue/article${articleId}/${f.name}`)
+        url: getImageUrl(`issue/article${articleId}/gallery/${f.name}`)  // Add /gallery/ in path
       }))
   } catch (e) {
-    console.error('Error fetching article images:', e)
+    console.error('Error fetching article gallery images:', e)
     return []
   }
 }
