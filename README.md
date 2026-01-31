@@ -17,6 +17,24 @@ Install dependencies:
 
 `npm install`
 
+### Environment & Google OAuth
+
+For the app (and Google sign-in) to work, create a `.env.local` in the project root with:
+
+- `VITE_SUPABASE_URL` – your Supabase project URL
+- `VITE_SUPABASE_ANON_KEY` – your Supabase anon/public key
+
+**If Google sign-in fails for you (but works for someone else), check:**
+
+1. **Redirect URI** – The URL you’re using (e.g. `http://localhost:5173/auth/callback` or your production URL) must be added in:
+   - **Google Cloud Console** → APIs & Services → Credentials → your OAuth 2.0 Client ID → Authorized redirect URIs
+   - **Supabase Dashboard** → Authentication → URL Configuration → Redirect URLs  
+   Use the exact origin and path (including port for localhost).
+
+2. **Same browser** – The code exchange must happen in the same browser (and ideally same device) where you started sign-in (PKCE flow).
+
+3. **Env vars** – Ensure `.env.local` exists and has the correct `VITE_SUPABASE_*` values; restart the dev server after changing them.
+
 ### Scripts
 
 `npm run dev` - Start the development server
