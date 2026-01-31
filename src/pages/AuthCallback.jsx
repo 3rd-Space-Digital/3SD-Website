@@ -8,23 +8,27 @@ function AuthCallback() {
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {
+        // Supabase parses hash (#access_token=...) from URL and establishes session
         const { data, error } = await supabase.auth.getSession()
         
         if (error) {
           console.error('Auth callback error:', error)
-          navigate('/?error=auth_failed')
+          navigate('/?error=auth_failed', { replace: true })
           return
         }
 
         if (data.session) {
-          // Successfully authenticated
-          navigate('/')
+          // Remove auth hash from URL before navigating
+          if (window.history.replaceState) {
+            window.history.replaceState(null, '', window.location.pathname)
+          }
+          navigate('/', { replace: true })
         } else {
-          navigate('/?error=no_session')
+          navigate('/?error=no_session', { replace: true })
         }
       } catch (err) {
         console.error('Unexpected error:', err)
-        navigate('/?error=unexpected')
+        navigate('/?error=unexpected', { replace: true })
       }
     }
 

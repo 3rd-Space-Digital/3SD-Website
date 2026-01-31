@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import AuthCallback from './pages/AuthCallback'
 import Homepage from './pages/Homepage'
@@ -16,6 +16,18 @@ import './App.css'
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  // If OAuth redirect landed on wrong path (e.g. / instead of /auth/callback) with hash, send to callback so flow completes
+  useEffect(() => {
+    const hash = window.location.hash
+    const hasAuthHash = hash && /access_token|error=/.test(hash)
+    const isCallback = location.pathname === '/auth/callback'
+    if (hasAuthHash && !isCallback) {
+      navigate(`/auth/callback${hash}`, { replace: true })
+    }
+  }, [location.pathname, navigate])
 
   return (
     <div className="App">
