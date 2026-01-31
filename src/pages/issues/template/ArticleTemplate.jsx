@@ -114,16 +114,20 @@ function ArticleTemplate() {
 
         <figure className="article-template-two-images">
           <div className="article-template-two-images-grid">
-            <img
-              src={getImageUrl(`${IMAGE_PATH_PREFIX}/ecko1.png`)}
-              alt="Ecco2k visual"
-              className="article-template-image-left"
-            />
-            <img
-              src={getImageUrl(`${IMAGE_PATH_PREFIX}/ecko2.jpg`)}
-              alt="Ecco2k visual"
-              className="article-template-image-right"
-            />
+            <div className="article-template-image-wrap">
+              <img
+                src={getImageUrl(`${IMAGE_PATH_PREFIX}/ecko1.png`)}
+                alt="Ecco2k visual"
+                className="article-template-image-left"
+              />
+            </div>
+            <div className="article-template-image-wrap">
+              <img
+                src={getImageUrl(`${IMAGE_PATH_PREFIX}/ecko2.jpg`)}
+                alt="Ecco2k visual"
+                className="article-template-image-right"
+              />
+            </div>
           </div>
           <figcaption className="article-template-caption">
             "In a lot of ways I already have what I want. I don't have a goal. There's no objective, there's no end point. I just want to explore and express myself, and that's it."

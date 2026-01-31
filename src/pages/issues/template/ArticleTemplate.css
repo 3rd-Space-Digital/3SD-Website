@@ -1,7 +1,7 @@
 .article-template {
   background-color: #f5f5f5;
   min-height: 100vh;
-  padding: 80px 4% 110px;
+  padding: 150px 40px 150px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -32,18 +32,19 @@
 
 .article-template-header {
   margin-bottom: 40px;
+  text-align: center;
 }
 
 .article-template-title {
+  color: #000;
+  text-align: center;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 96px;
   font-style: normal;
   font-weight: 900;
   line-height: 110%;
   letter-spacing: -2.88px;
-  color: #000;
   margin: 0 0 35px;
-  max-width: 785px;
 }
 
 .article-template-meta {
@@ -67,22 +68,22 @@
 }
 
 .article-template-subtitle {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 40px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 110%;
-  letter-spacing: -1.2px;
   color: #000;
-  margin: 0;
-  max-width: 759px;
+  text-align: center;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 110%;
+  letter-spacing: -1.44px;
+  margin: 0 0 35px;
 }
 
 .article-template-content {
   margin-bottom: 60px;
 }
 
-/* Hero image */
+/* Hero image - full width within 40px margins */
 .article-template-hero {
   margin: 0 0 24px;
 }
@@ -91,28 +92,32 @@
   width: 100%;
   height: auto;
   max-height: 80vh;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
-  background-color: #e0e0e0;
 }
 
 .article-template-caption {
+  color: #000;
+  text-align: center;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #666;
-  margin: 12px 0 0;
+  font-size: 48px;
   font-style: italic;
+  font-weight: 400;
+  line-height: 110%;
+  letter-spacing: -1.44px;
+  margin: 12px 0 0;
 }
 
-/* Body text */
+/* Body text / Paragraph */
 .article-template-body {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 1.6;
   color: #000;
-  max-width: 759px;
+  text-align: center;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 110%;
+  letter-spacing: -1.2px;
 }
 
 .article-template-paragraph {
@@ -123,29 +128,37 @@
   margin-bottom: 0;
 }
 
-/* Two images layout: larger left, smaller right */
+/* Two images layout: larger left, smaller right, same height */
 .article-template-two-images {
   margin: 48px 0;
+  display: block;
 }
 
 .article-template-two-images-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 24px;
-  align-items: start;
+  align-items: stretch;
+  height: 400px;
+  overflow: hidden;
 }
 
-.article-template-image-left,
-.article-template-image-right {
+.article-template-image-wrap {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.article-template-image-wrap img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   display: block;
-  background-color: #e0e0e0;
 }
 
 .article-template-two-images .article-template-caption {
   margin-top: 16px;
+  display: block;
+  position: relative;
 }
 
 /* Loading & Error */
@@ -217,27 +230,21 @@
 }
 
 /* Responsive */
-@media (max-width: 1440px) {
-  .article-template {
-    padding: 80px 30px 110px;
-  }
-
-  .article-template-title {
-    max-width: none;
-  }
-
-  .article-template-subtitle {
-    max-width: none;
-  }
-
-  .article-template-body {
-    max-width: none;
-  }
-}
-
 @media (max-width: 768px) {
   .article-template {
-    padding: 60px 30px 110px;
+    padding: 150px 40px 150px;
+  }
+
+  .article-template-two-images-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    height: auto;
+  }
+
+  .article-template-image-left,
+  .article-template-image-right {
+    height: auto;
+    min-height: 280px;
   }
 
   .article-template-title {
@@ -251,34 +258,39 @@
   }
 
   .article-template-subtitle {
-    font-size: 28px;
-    letter-spacing: -0.84px;
+    font-size: 36px;
+    letter-spacing: -1.08px;
   }
 
   .article-template-body {
-    font-size: 18px;
-  }
-
-  .article-template-two-images-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    font-size: 32px;
+    letter-spacing: -0.96px;
   }
 
   .article-template-caption {
-    font-size: 14px;
+    font-size: 36px;
+    letter-spacing: -1.08px;
   }
 }
 
 @media (max-width: 480px) {
   .article-template-title {
     font-size: 36px;
+    letter-spacing: -1.08px;
   }
 
   .article-template-subtitle {
-    font-size: 24px;
+    font-size: 28px;
+    letter-spacing: -0.84px;
   }
 
   .article-template-body {
-    font-size: 16px;
+    font-size: 24px;
+    letter-spacing: -0.72px;
+  }
+
+  .article-template-caption {
+    font-size: 28px;
+    letter-spacing: -0.84px;
   }
 }
