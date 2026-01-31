@@ -101,10 +101,6 @@ function Article() {
 
       {/* Article Content */}
       <div className="article-content">
-        <div className="article-body">
-          <p>{article.description}</p>
-        </div>
-
         {/* Gallery Images */}
         {images.length > 0 && (
           <div className="article-gallery">

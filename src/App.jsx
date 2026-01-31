@@ -7,7 +7,8 @@ import ArchivePage from './pages/ArchivePage'
 import EventsPage from './pages/events/EventsPage'
 import EventDetail from './pages/events/EventDetail'
 import IssuesPage from './pages/issues/IssuesPage'
-import Article from './pages/issues/Article'
+// import Article from './pages/issues/Article'  // disabled for now
+import ArticleTemplate from './pages/issues/template/ArticleTemplate'
 import MenuPage from './pages/MenuPage'
 import PlaylistPage from './pages/PlaylistPage'
 import './App.css'
@@ -21,16 +22,19 @@ function App() {
       {menuOpen && (
         <MenuPage onClose={() => setMenuOpen(false)} />
       )}
-      <Routes>
+      <div className="app-routes" style={{ flex: 1, width: '100%' }}>
+        <Routes>
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/" element={<Homepage />} />
         <Route path="/archive" element={<ArchivePage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/issues" element={<IssuesPage />} />
-        <Route path="/issues/:id" element={<Article />} />
+        <Route path="/issues/0" element={<ArticleTemplate />} />
+        {/* <Route path="/issues/:id" element={<Article />} /> */}
         <Route path="/playlist" element={<PlaylistPage />} />
-      </Routes>
+        </Routes>
+      </div>
     </div>
   )
 }
