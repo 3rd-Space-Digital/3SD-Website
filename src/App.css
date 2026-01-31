@@ -4,6 +4,10 @@
   flex-direction: column;
 }
 
+.app-routes {
+  min-width: 0;
+}
+
 .main-content {
   flex: 1;
   max-width: 1280px;
