@@ -70,7 +70,7 @@ function MenuPage({ onClose }) {
         </section>
 
         <section className="menu-section">
-          <Link to="/" className="menu-section-link" onClick={handleClose}>
+          <Link to="/account" className="menu-section-link" onClick={handleClose}>
             <h2 className="menu-section-title">Account</h2>
           </Link>
         </section>
@@ -91,19 +91,19 @@ function MenuPage({ onClose }) {
                 <Link to="/issues" onClick={handleClose}>articles</Link>
               </div>
               <div className="menu-read-item">
-                <Link to="/issues" onClick={handleClose}>interviews</Link>
+                <Link to="/interviews" onClick={handleClose}>interviews</Link>
               </div>
               <div className="menu-read-item">
-                <Link to="/issues" onClick={handleClose}>projects</Link>
+                <Link to="/projects" onClick={handleClose}>projects</Link>
               </div>
               <div className="menu-read-item">
-                <Link to="/issues" onClick={handleClose}>artists</Link>
+                <Link to="/artists" onClick={handleClose}>artists</Link>
               </div>
               <div className="menu-read-item">
-                <Link to="/issues" onClick={handleClose}>music</Link>
+                <Link to="/music" onClick={handleClose}>music</Link>
               </div>
               <div className="menu-read-item">
-                <Link to="/issues" onClick={handleClose}>show all...</Link>
+                <Link to="/read" onClick={handleClose}>show all...</Link>
               </div>
             </div>
           </div>
