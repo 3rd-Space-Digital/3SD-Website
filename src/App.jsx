@@ -11,6 +11,7 @@ import IssuesPage from './pages/issues/IssuesPage'
 import ArticleTemplate from './pages/issues/template/ArticleTemplate'
 import MenuPage from './pages/MenuPage'
 import PlaylistPage from './pages/PlaylistPage'
+import ComingSoonPage from './pages/ComingSoonPage'
 import './App.css'
 
 function App() {
@@ -33,6 +34,12 @@ function App() {
         <Route path="/issues/0" element={<ArticleTemplate />} />
         {/* <Route path="/issues/:id" element={<Article />} /> */}
         <Route path="/playlist" element={<PlaylistPage />} />
+        <Route path="/account" element={<ComingSoonPage />} />
+        <Route path="/projects" element={<ComingSoonPage />} />
+        <Route path="/artists" element={<ComingSoonPage />} />
+        <Route path="/music" element={<ComingSoonPage />} />
+        <Route path="/interviews" element={<ComingSoonPage />} />
+        <Route path="/read" element={<ComingSoonPage />} />
         </Routes>
       </div>
     </div>

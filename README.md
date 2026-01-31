@@ -17,6 +17,12 @@ Install dependencies:
 
 `npm install`
 
+### Environment variables
+
+- `VITE_SUPABASE_URL` – Supabase project URL (required)
+- `VITE_SUPABASE_ANON_KEY` – Supabase anonymous key (required)
+- `VITE_APP_URL` – **Deployment only:** your live site URL (e.g. `https://your-site.vercel.app`). Set this in your host’s environment so login redirects back to the deployed site instead of localhost.
+
 ### Scripts
 
 `npm run dev` - Start the development server
