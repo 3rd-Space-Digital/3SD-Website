@@ -9,7 +9,7 @@
 
 .archive-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 40px 4%;
   margin-bottom: 20px;
