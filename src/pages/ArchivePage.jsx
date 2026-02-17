@@ -13,6 +13,25 @@ function ArchivePage() {
   const [loading, setLoading] = useState(true)
   const fromEventId = searchParams.get('fromEvent')
 
+  // Categorize folders into Event Photos and Photoshoots
+  const categorizeFolders = (folders) => {
+    const eventPhotos = []
+    const photoshoots = []
+    
+    folders.forEach(folder => {
+      // If folder name contains "event" (case-insensitive), add to Event Photos
+      // Otherwise, add to Photoshoots
+      const folderNameLower = folder.folderName.toLowerCase()
+      if (folderNameLower.includes('event')) {
+        eventPhotos.push(folder)
+      } else {
+        photoshoots.push(folder)
+      }
+    })
+    
+    return { eventPhotos, photoshoots }
+  }
+
   useEffect(() => {
     const fetchFolders = async () => {
       try {
@@ -101,33 +120,71 @@ function ArchivePage() {
             )
           })}
         </div>
+        <div className="archive-credits">
+          Photo Credits: <a href="https://www.instagram.com/_iso.media_/" target="_blank" rel="noopener noreferrer" className="archive-credits-link">Andrew John</a>
+        </div>
       </main>
     )
   }
+
+  const { eventPhotos, photoshoots } = categorizeFolders(folders)
 
   return (
     <main className="archive-page">
       <div className="archive-header">
         <h1 className="archive-title">Select an Archive</h1>
       </div>
-      <div className="archive-folders-grid">
-        {folders.length === 0 ? (
-          <div className="archive-empty" style={{ gridColumn: '1 / -1' }}>No archives found</div>
-        ) : (
-          folders.map((folder) => (
-            <div
-              key={folder.folderName}
-              className="archive-folder-card"
-              onClick={() => handleFolderClick(folder.folderName)}
-            >
-              <div className="archive-folder-thumbnail">
-                <img src={folder.thumbnailUrl} alt={folder.folderName} />
+
+      {/* Event Photos Section */}
+      <div className="archive-section">
+        <div className="archive-section-divider">
+          <span className="archive-section-title">Event Photos</span>
+        </div>
+        <div className="archive-folders-grid">
+          {eventPhotos.length > 0 ? (
+            eventPhotos.map((folder) => (
+              <div
+                key={folder.folderName}
+                className="archive-folder-card"
+                onClick={() => handleFolderClick(folder.folderName)}
+              >
+                <div className="archive-folder-thumbnail">
+                  <img src={folder.thumbnailUrl} alt={folder.folderName} />
+                </div>
+                <div className="archive-folder-name">{folder.folderName}</div>
+                <div className="archive-folder-count">{folder.imageCount} images</div>
               </div>
-              <div className="archive-folder-name">{folder.folderName}</div>
-              <div className="archive-folder-count">{folder.imageCount} images</div>
-            </div>
-          ))
-        )}
+            ))
+          ) : (
+            <div className="archive-empty" style={{ gridColumn: '1 / -1' }}>No event photos found</div>
+          )}
+        </div>
+      </div>
+
+      {/* Photoshoots Section */}
+      <div className="archive-section">
+        <div className="archive-section-divider">
+          <span className="archive-section-title">Photoshoots</span>
+        </div>
+        <div className="archive-folders-grid">
+          {photoshoots.length > 0 ? (
+            photoshoots.map((folder) => (
+              <div
+                key={folder.folderName}
+                className="archive-folder-card"
+                onClick={() => handleFolderClick(folder.folderName)}
+              >
+                <div className="archive-folder-thumbnail">
+                  <img src={folder.thumbnailUrl} alt={folder.folderName} />
+                </div>
+                <div className="archive-folder-name">{folder.folderName}</div>
+                <div className="archive-folder-count">{folder.imageCount} images</div>
+              </div>
+            ))
+          ) : (
+            <div className="archive-empty" style={{ gridColumn: '1 / -1' }}>No photoshoots found</div>
+          )}
+        </div>
       </div>
     </main>
   )
