@@ -40,6 +40,7 @@ function App() {
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/" element={<Homepage />} />
         <Route path="/archive" element={<ArchivePage />} />
+        <Route path="/archive/:folderName" element={<ArchivePage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/issues" element={<IssuesPage />} />

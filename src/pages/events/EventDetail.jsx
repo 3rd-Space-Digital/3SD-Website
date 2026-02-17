@@ -1,6 +1,7 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getEventById } from '../../utils/eventUtils'
+import { getArchiveFolders } from '../../utils/archiveUtils'
 import './EventDetail.css'
 
 function formatEventDate(d) {
@@ -15,12 +16,23 @@ function EventDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [event, setEvent] = useState(null)
+  const [archiveFolderName, setArchiveFolderName] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function load() {
       const data = await getEventById(id)
       setEvent(data)
+      
+      // Check if event has archive folder
+      if (data?.archive_folder_name) {
+        const folders = await getArchiveFolders()
+        const folderNames = new Set(folders.map(f => f.folderName.toLowerCase()))
+        if (folderNames.has(data.archive_folder_name.toLowerCase())) {
+          setArchiveFolderName(data.archive_folder_name)
+        }
+      }
+      
       setLoading(false)
     }
     load()
@@ -49,15 +61,25 @@ function EventDetail() {
         </div>
 
         <div className="event-detail-right">
-          {event.thumbnailUrl ? (
-            <img
-              src={event.thumbnailUrl}
-              alt={event.title}
-              className="event-detail-poster"
-            />
-          ) : (
-            <div className="event-detail-poster-placeholder" />
+          <div className="event-detail-poster-wrapper">
+            {event.thumbnailUrl ? (
+              <img
+                src={event.thumbnailUrl}
+                alt={event.title}
+                className="event-detail-poster"
+              />
+            ) : (
+              <div className="event-detail-poster-placeholder" />
+            )}
+          {archiveFolderName && (
+            <Link 
+              to={`/archive/${encodeURIComponent(archiveFolderName)}?fromEvent=${id}`}
+              className="event-detail-archive-link"
+            >
+              View Archive
+            </Link>
           )}
+          </div>
         </div>
       </div>
     </div>

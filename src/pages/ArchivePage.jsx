@@ -1,18 +1,39 @@
 import { useState, useEffect } from 'react'
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { getArchiveFolders, getArchiveFolderImages } from '../utils/archiveUtils'
 import './ArchivePage.css'
 
 function ArchivePage() {
+  const { folderName: urlFolderName } = useParams()
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [folders, setFolders] = useState([])
   const [selectedFolder, setSelectedFolder] = useState(null)
   const [folderImages, setFolderImages] = useState([])
   const [loading, setLoading] = useState(true)
+  const fromEventId = searchParams.get('fromEvent')
 
   useEffect(() => {
     const fetchFolders = async () => {
       try {
         const archiveFolders = await getArchiveFolders()
         setFolders(archiveFolders)
+        
+        // If URL parameter exists, automatically select that folder
+        if (urlFolderName) {
+          const decodedFolderName = decodeURIComponent(urlFolderName)
+          const folderExists = archiveFolders.some(f => f.folderName === decodedFolderName)
+          if (folderExists) {
+            setSelectedFolder(decodedFolderName)
+            try {
+              const images = await getArchiveFolderImages(decodedFolderName)
+              setFolderImages(images)
+            } catch (error) {
+              console.error('Error fetching folder images:', error)
+              setFolderImages([])
+            }
+          }
+        }
       } catch (error) {
         console.error('Error fetching archive folders:', error)
         setFolders([])
@@ -21,9 +42,10 @@ function ArchivePage() {
       }
     }
     fetchFolders()
-  }, [])
+  }, [urlFolderName])
 
   const handleFolderClick = async (folderName) => {
+    navigate(`/archive/${encodeURIComponent(folderName)}`)
     setSelectedFolder(folderName)
     try {
       const images = await getArchiveFolderImages(folderName)
@@ -35,6 +57,13 @@ function ArchivePage() {
   }
 
   const handleBackClick = () => {
+    if (fromEventId) {
+      // If navigated from an event, go back to that event
+      navigate(`/events/${fromEventId}`)
+    } else {
+      // Otherwise, go back to archive list
+      navigate('/archive')
+    }
     setSelectedFolder(null)
     setFolderImages([])
   }

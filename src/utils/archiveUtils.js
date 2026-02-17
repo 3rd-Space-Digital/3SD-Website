@@ -105,3 +105,40 @@ export const getArchiveFolderImages = async (folderName) => {
   }
 }
 
+/**
+ * Checks if an archive folder exists for a given folder name
+ * @param {string} folderName - The name of the archive folder to check
+ * @returns {Promise<boolean>} - True if the folder exists and has images, false otherwise
+ */
+export const archiveFolderExists = async (folderName) => {
+  if (!folderName) return false
+  
+  try {
+    const { data: files, error } = await supabase.storage
+      .from('images')
+      .list(`archive/${folderName}`, {
+        limit: 1,
+        offset: 0
+      })
+
+    if (error) {
+      return false
+    }
+
+    if (!files || files.length === 0) {
+      return false
+    }
+
+    // Check if there's at least one image file
+    const hasImages = files.some(file => 
+      file.id !== null &&
+      /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
+    )
+
+    return hasImages
+  } catch (error) {
+    console.error('Error checking archive folder:', error)
+    return false
+  }
+}
+
