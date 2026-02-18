@@ -26,11 +26,14 @@ function IssuesPage() {
     ? articles.filter((article) => article.title.toLowerCase().includes(q))
     : articles
   
-    const latest = [...filtered]
+  // Filter out template article (id 0)
+  const filteredWithoutTemplate = filtered.filter(article => article.id !== 0)
+  
+    const latest = [...filteredWithoutTemplate]
     .sort((a, b) => new Date(b.article_date) - new Date(a.article_date))
     .slice(0, 3)
     const latestIds = new Set(latest.map(article => article.id))
-    const archive = filtered.filter(article => !latestIds.has(article.id))
+    const archive = filteredWithoutTemplate.filter(article => !latestIds.has(article.id))
 
   if (loading) {
     return (
