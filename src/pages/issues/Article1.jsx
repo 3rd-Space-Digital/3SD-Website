@@ -39,9 +39,9 @@ function Article1() {
     document.documentElement.style.backgroundColor = 'white'
     
     return () => {
-      // Reset on unmount
-      document.body.style.backgroundColor = ''
-      document.documentElement.style.backgroundColor = ''
+      // Reset on unmount - remove inline styles to restore CSS
+      document.body.style.removeProperty('background-color')
+      document.documentElement.style.removeProperty('background-color')
     }
   }, [])
 
@@ -190,11 +190,15 @@ function Article1() {
         <div className="article1-credits-grid">
           <div className="article1-credit-item">
             <span className="article1-credit-label">Author:</span>
-            <span className="article1-credit-value">Emeka Ohumaegbulem</span>
+            <span className="article1-credit-value">
+              <a href="https://www.instagram.com/emeka_0/" target="_blank" rel="noopener noreferrer" className="article1-credit-link">Emeka Ohumaegbulem</a>
+            </span>
           </div>
           <div className="article1-credit-item">
             <span className="article1-credit-label">Photography:</span>
-            <span className="article1-credit-value">Emeka Ohumaegbulem</span>
+            <span className="article1-credit-value">
+              <a href="https://www.instagram.com/emeka_0/" target="_blank" rel="noopener noreferrer" className="article1-credit-link">Emeka Ohumaegbulem</a>
+            </span>
           </div>
         </div>
       </div>

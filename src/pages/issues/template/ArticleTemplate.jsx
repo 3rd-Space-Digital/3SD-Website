@@ -39,9 +39,9 @@ function ArticleTemplate() {
     document.documentElement.style.backgroundColor = 'white'
     
     return () => {
-      // Reset on unmount
-      document.body.style.backgroundColor = ''
-      document.documentElement.style.backgroundColor = ''
+      // Reset on unmount - remove inline styles to restore CSS
+      document.body.style.removeProperty('background-color')
+      document.documentElement.style.removeProperty('background-color')
     }
   }, [])
 

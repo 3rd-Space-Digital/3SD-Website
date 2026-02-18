@@ -242,6 +242,16 @@ body:has(.article1),
   text-decoration: underline;
 }
 
+.article1-credit-link {
+  color: inherit;
+  text-decoration: underline;
+  transition: opacity 0.2s;
+}
+
+.article1-credit-link:hover {
+  opacity: 0.7;
+}
+
 /* Responsive */
 @media (max-width: 1440px) {
   .article1 {
