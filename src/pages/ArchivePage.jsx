@@ -11,6 +11,7 @@ function ArchivePage() {
   const [selectedFolder, setSelectedFolder] = useState(null)
   const [folderImages, setFolderImages] = useState([])
   const [loading, setLoading] = useState(true)
+  const [modalImageIndex, setModalImageIndex] = useState(null)
   const fromEventId = searchParams.get('fromEvent')
 
   // Categorize folders into Event Photos and Photoshoots
@@ -87,6 +88,44 @@ function ArchivePage() {
     setFolderImages([])
   }
 
+  const handleImageClick = (index) => {
+    setModalImageIndex(index)
+  }
+
+  const handleCloseModal = () => {
+    setModalImageIndex(null)
+  }
+
+  const handleNextImage = () => {
+    if (modalImageIndex !== null && modalImageIndex < folderImages.length - 1) {
+      setModalImageIndex(modalImageIndex + 1)
+    }
+  }
+
+  const handlePrevImage = () => {
+    if (modalImageIndex !== null && modalImageIndex > 0) {
+      setModalImageIndex(modalImageIndex - 1)
+    }
+  }
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    if (modalImageIndex === null) return
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setModalImageIndex(null)
+      } else if (e.key === 'ArrowRight' && modalImageIndex < folderImages.length - 1) {
+        setModalImageIndex(modalImageIndex + 1)
+      } else if (e.key === 'ArrowLeft' && modalImageIndex > 0) {
+        setModalImageIndex(modalImageIndex - 1)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [modalImageIndex, folderImages.length])
+
   if (loading) {
     return (
       <main className="archive-page">
@@ -110,7 +149,11 @@ function ArchivePage() {
           {folderImages.map((image, index) => {
             const shouldLoadEagerly = index < 9
             return (
-              <div key={index} className="archive-image-item">
+              <div 
+                key={index} 
+                className="archive-image-item"
+                onClick={() => handleImageClick(index)}
+              >
                 <img 
                   src={image.url} 
                   alt={image.name}
@@ -123,6 +166,49 @@ function ArchivePage() {
         <div className="archive-credits">
           Photo Credits: <a href="https://www.instagram.com/_iso.media_/" target="_blank" rel="noopener noreferrer" className="archive-credits-link">Andrew John</a>
         </div>
+        
+        {/* Modal */}
+        {modalImageIndex !== null && (
+          <div className="archive-modal" onClick={handleCloseModal}>
+            <button 
+              className="archive-modal-close"
+              onClick={handleCloseModal}
+              aria-label="Close modal"
+            >
+              ×
+            </button>
+            {modalImageIndex > 0 && (
+              <button 
+                className="archive-modal-prev"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handlePrevImage()
+                }}
+                aria-label="Previous image"
+              >
+                ‹
+              </button>
+            )}
+            <div className="archive-modal-content" onClick={(e) => e.stopPropagation()}>
+              <img 
+                src={folderImages[modalImageIndex].url} 
+                alt={folderImages[modalImageIndex].name}
+              />
+            </div>
+            {modalImageIndex < folderImages.length - 1 && (
+              <button 
+                className="archive-modal-next"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handleNextImage()
+                }}
+                aria-label="Next image"
+              >
+                ›
+              </button>
+            )}
+          </div>
+        )}
       </main>
     )
   }

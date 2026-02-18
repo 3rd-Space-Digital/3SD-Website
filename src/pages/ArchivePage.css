@@ -231,6 +231,96 @@
   display: block;
 }
 
+/* Modal Styles */
+.archive-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.archive-modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.archive-modal-content img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+.archive-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 48px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  z-index: 1001;
+  line-height: 1;
+  padding: 0;
+}
+
+.archive-modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.archive-modal-prev,
+.archive-modal-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 48px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  z-index: 1001;
+  padding: 0;
+  line-height: 1;
+}
+
+.archive-modal-prev {
+  left: 20px;
+}
+
+.archive-modal-next {
+  right: 20px;
+}
+
+.archive-modal-prev:hover,
+.archive-modal-next:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 @media (max-width: 768px) {
   .archive-page {
     padding-top: 50px;
@@ -330,6 +420,29 @@
 
   .archive-folder-title {
     font-size: 18px;
+  }
+
+  .archive-modal-close {
+    top: 10px;
+    right: 10px;
+    font-size: 36px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .archive-modal-prev,
+  .archive-modal-next {
+    font-size: 36px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .archive-modal-prev {
+    left: 10px;
+  }
+
+  .archive-modal-next {
+    right: 10px;
   }
 }
 
