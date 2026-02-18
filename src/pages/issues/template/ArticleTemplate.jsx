@@ -33,6 +33,16 @@ function ArticleTemplate() {
       }
     }
     load()
+    
+    // Set white background on body/html when article loads
+    document.body.style.backgroundColor = 'white'
+    document.documentElement.style.backgroundColor = 'white'
+    
+    return () => {
+      // Reset on unmount
+      document.body.style.backgroundColor = ''
+      document.documentElement.style.backgroundColor = ''
+    }
   }, [])
 
   const formatDate = (dateString) => {

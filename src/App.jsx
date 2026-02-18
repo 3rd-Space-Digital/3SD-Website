@@ -9,6 +9,7 @@ import EventDetail from './pages/events/EventDetail'
 import IssuesPage from './pages/issues/IssuesPage'
 // import Article from './pages/issues/Article'  // disabled for now
 import ArticleTemplate from './pages/issues/template/ArticleTemplate'
+import Article1 from './pages/issues/Article1'
 import MenuPage from './pages/MenuPage'
 import PlaylistPage from './pages/PlaylistPage'
 import ComingSoonPage from './pages/ComingSoonPage'
@@ -45,6 +46,7 @@ function App() {
         <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/issues" element={<IssuesPage />} />
         <Route path="/issues/0" element={<ArticleTemplate />} />
+        <Route path="/issues/1" element={<Article1 />} />
         {/* <Route path="/issues/:id" element={<Article />} /> */}
         <Route path="/playlist" element={<PlaylistPage />} />
         <Route path="/account" element={<ComingSoonPage />} />
