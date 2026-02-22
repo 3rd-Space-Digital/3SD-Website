@@ -1,7 +1,7 @@
 .article1 {
   background-color: white;
   min-height: 100vh;
-  padding: 150px 40px 150px;
+  padding: 120px 40px 120px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -255,7 +255,7 @@ body:has(.article1),
 /* Responsive */
 @media (max-width: 1440px) {
   .article1 {
-    padding: 150px 40px 150px;
+    padding: 120px 40px 120px;
   }
 
   .article1-title {

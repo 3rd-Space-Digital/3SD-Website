@@ -2,8 +2,8 @@
   background-color: white;
   min-height: 100vh;
   width: 100%;
-  padding-top: 80px;
-  padding-bottom: 40px;
+  padding-top: 120px;
+  padding-bottom: 120px;
   position: relative;
 }
 
@@ -44,26 +44,25 @@
 }
 
 .archive-view-header {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 4% 30px 4%;
+  padding: 0 4% 30px 4%;
   margin-bottom: 20px;
 }
 
 .archive-back-button {
-  position: absolute;
-  left: 4%;
   background: none;
   border: none;
   color: black;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  padding: 10px 20px;
+  margin-bottom: 32px;
+  padding: 0;
   transition: opacity 0.2s;
+}
+
+.archive-folder-title {
+  margin-top: 0;
 }
 
 .archive-back-button:hover {
@@ -375,9 +374,10 @@
   }
 
   .archive-back-button {
-    left: 4%;
     font-size: 16px;
-    padding: 8px 16px;
+    font-weight: 500;
+    padding: 0;
+    margin-bottom: 32px;
   }
 
   .archive-folder-title {
