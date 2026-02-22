@@ -80,11 +80,11 @@ body:has(.article1),
   color: #000;
   text-align: center;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 48px;
+  font-size: 40px;
   font-style: normal;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 110%;
-  letter-spacing: -1.44px;
+  letter-spacing: -1.2px;
   margin: 0 0 35px;
 }
 
@@ -125,7 +125,7 @@ body:has(.article1),
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 40px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 110%;
   letter-spacing: -1.2px;
 }
@@ -186,7 +186,8 @@ body:has(.article1),
 .article1-loading-text,
 .article1-error-text {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 18px;
+  font-size: 24px;
+  font-weight: 500;
   color: #666;
   text-align: center;
 }

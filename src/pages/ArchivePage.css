@@ -349,7 +349,8 @@
 
   .archive-loading,
   .archive-empty {
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 500;
     padding: 20px 15px;
   }
 
@@ -410,7 +411,8 @@
 
   .archive-loading,
   .archive-empty {
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 500;
     padding: 15px 10px;
   }
 
