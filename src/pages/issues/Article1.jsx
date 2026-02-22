@@ -97,9 +97,6 @@ function Article1() {
             </>
           )}
         </div>
-        {article.description && (
-          <p className="article1-subtitle">{article.description}</p>
-        )}
       </header>
 
       <div className="article1-content">
@@ -108,10 +105,10 @@ function Article1() {
             src={getImageUrl(`${IMAGE_PATH_PREFIX}/tu1.jpg`)}
             alt="Tuesdaz Urban Photo Meet-Up"
           />
-          <figcaption className="article1-caption">
-            Unique People, Unique Styles.
-          </figcaption>
         </figure>
+        {article.description && (
+          <p className="article1-subtitle">{article.description}</p>
+        )}
 
         <div className="article1-body">
           <p className="article1-paragraph">

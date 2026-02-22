@@ -1,7 +1,7 @@
 .article-template {
   background-color: white;
   min-height: 100vh;
-  padding: 120px 40px 120px;
+  padding: 120px 200px 120px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -32,6 +32,8 @@
 
 .article-template-header {
   margin-bottom: 40px;
+  margin-left: -160px;
+  margin-right: -160px;
   text-align: center;
 }
 
@@ -69,7 +71,7 @@
 
 .article-template-subtitle {
   color: #000;
-  text-align: center;
+  text-align: left;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 40px;
   font-style: normal;
@@ -77,6 +79,8 @@
   line-height: 110%;
   letter-spacing: -1.2px;
   margin: 0 0 35px;
+  margin-left: 160px;
+  margin-right: 160px;
 }
 
 .article-template-content {
@@ -100,24 +104,24 @@
   color: #000;
   text-align: center;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 48px;
+  font-size: 24px;
   font-style: italic;
-  font-weight: 400;
-  line-height: 110%;
-  letter-spacing: -1.44px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0;
   margin: 12px 0 0;
 }
 
 /* Body text / Paragraph */
 .article-template-body {
   color: #000;
-  text-align: center;
+  text-align: left;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 40px;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 300;
-  line-height: 110%;
-  letter-spacing: -1.2px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0;
 }
 
 .article-template-paragraph {
@@ -231,9 +235,20 @@
 }
 
 /* Responsive */
-@media (max-width: 1440px) {
+@media (max-width: 1600px) {
   .article-template {
-    padding: 120px 40px 120px;
+    padding: 120px 120px 120px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .article-template {
+    padding: 120px 60px 120px;
+  }
+
+  .article-template-header {
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .article-template-title {
@@ -244,46 +259,20 @@
   .article-template-subtitle {
     font-size: 40px;
     letter-spacing: -1.2px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .article-template-caption {
-    font-size: 40px;
-    letter-spacing: -1.2px;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0;
   }
 
   .article-template-body {
-    font-size: 36px;
-    letter-spacing: -1.08px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .article-template {
-    padding: 120px 40px 120px;
-  }
-
-  .article-template-title {
-    font-size: 64px;
-    letter-spacing: -1.92px;
-  }
-
-  .article-template-subtitle {
-    font-size: 36px;
-    letter-spacing: -1.08px;
-  }
-
-  .article-template-caption {
-    font-size: 36px;
-    letter-spacing: -1.08px;
-  }
-
-  .article-template-body {
-    font-size: 32px;
-    letter-spacing: -0.96px;
-  }
-
-  .article-template-two-images-grid {
-    height: 350px;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0;
   }
 }
 
@@ -304,6 +293,11 @@
     min-height: 280px;
   }
 
+  .article-template-header {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .article-template-title {
     font-size: 48px;
     letter-spacing: -1.44px;
@@ -317,22 +311,31 @@
   .article-template-subtitle {
     font-size: 36px;
     letter-spacing: -1.08px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .article-template-body {
-    font-size: 32px;
-    letter-spacing: -0.96px;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0;
   }
 
   .article-template-caption {
-    font-size: 36px;
-    letter-spacing: -1.08px;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0;
   }
 }
 
 @media (max-width: 480px) {
   .article-template {
     padding: 80px 20px 80px;
+  }
+
+  .article-template-header {
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .article-template-title {
@@ -343,15 +346,19 @@
   .article-template-subtitle {
     font-size: 28px;
     letter-spacing: -0.84px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .article-template-body {
-    font-size: 24px;
-    letter-spacing: -0.72px;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0;
   }
 
   .article-template-caption {
-    font-size: 28px;
-    letter-spacing: -0.84px;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0;
   }
 }

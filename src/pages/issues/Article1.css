@@ -1,7 +1,7 @@
 .article1 {
   background-color: white;
   min-height: 100vh;
-  padding: 120px 40px 120px;
+  padding: 120px 200px 120px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -41,6 +41,8 @@ body:has(.article1),
 
 .article1-header {
   margin-bottom: 40px;
+  margin-left: -160px;
+  margin-right: -160px;
   text-align: center;
 }
 
@@ -78,14 +80,14 @@ body:has(.article1),
 
 .article1-subtitle {
   color: #000;
-  text-align: center;
+  text-align: left;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 40px;
   font-style: normal;
   font-weight: 700;
   line-height: 110%;
   letter-spacing: -1.2px;
-  margin: 0 0 35px;
+  margin: 12px 0 35px;
 }
 
 .article1-content {
@@ -94,9 +96,10 @@ body:has(.article1),
 
 /* Hero image - full width within 40px margins */
 .article1-hero {
-  margin: 0 0 24px;
-  min-height: 400px;
+  margin: 0;
+  padding: 0;
   background-color: white;
+  display: block;
 }
 
 .article1-hero img {
@@ -104,30 +107,32 @@ body:has(.article1),
   height: auto;
   display: block;
   background-color: white;
+  margin: 0;
+  padding: 0;
 }
 
 .article1-caption {
   color: #000;
   text-align: center;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 48px;
+  font-size: 24px;
   font-style: italic;
-  font-weight: 400;
-  line-height: 110%;
-  letter-spacing: -1.44px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0;
   margin: 12px 0 0;
 }
 
 /* Body text / Paragraph */
 .article1-body {
   color: #000;
-  text-align: center;
+  text-align: left;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 40px;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 300;
-  line-height: 110%;
-  letter-spacing: -1.2px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0;
 }
 
 .article1-paragraph {
@@ -254,9 +259,20 @@ body:has(.article1),
 }
 
 /* Responsive */
-@media (max-width: 1440px) {
+@media (max-width: 1600px) {
   .article1 {
-    padding: 120px 40px 120px;
+    padding: 120px 120px 120px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .article1 {
+    padding: 120px 60px 120px;
+  }
+
+  .article1-header {
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .article1-title {
@@ -267,44 +283,21 @@ body:has(.article1),
   .article1-subtitle {
     font-size: 40px;
     letter-spacing: -1.2px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .article1-caption {
-    font-size: 40px;
-    letter-spacing: -1.2px;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0;
   }
 
   .article1-body {
-    font-size: 36px;
-    letter-spacing: -1.08px;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0;
   }
-}
-
-@media (max-width: 1200px) {
-  .article1 {
-    padding: 120px 40px 120px;
-  }
-
-  .article1-title {
-    font-size: 64px;
-    letter-spacing: -1.92px;
-  }
-
-  .article1-subtitle {
-    font-size: 36px;
-    letter-spacing: -1.08px;
-  }
-
-  .article1-caption {
-    font-size: 36px;
-    letter-spacing: -1.08px;
-  }
-
-  .article1-body {
-    font-size: 32px;
-    letter-spacing: -0.96px;
-  }
-
 }
 
 @media (max-width: 768px) {
@@ -323,30 +316,44 @@ body:has(.article1),
     min-height: 280px;
   }
 
+  .article1-header {
+    margin-left: 0;
+    margin-right: 0;
+  }
 
   .article1-title {
     font-size: 48px;
     letter-spacing: -1.44px;
   }
 
-  .article1-meta {
-    font-size: 18px;
-    letter-spacing: -0.54px;
-  }
-
   .article1-subtitle {
     font-size: 36px;
     letter-spacing: -1.08px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 12px;
+  }
+
+  .article1-meta {
+    font-size: 18px;
+    letter-spacing: -0.54px;
+    white-space: nowrap;
+  }
+
+  .article1-hero {
+    margin-bottom: 0;
   }
 
   .article1-body {
-    font-size: 32px;
-    letter-spacing: -0.96px;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0;
   }
 
   .article1-caption {
-    font-size: 36px;
-    letter-spacing: -1.08px;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0;
   }
 }
 
@@ -355,6 +362,11 @@ body:has(.article1),
     padding: 80px 20px 80px;
   }
 
+  .article1-header {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .article1-title {
     font-size: 36px;
     letter-spacing: -1.08px;
@@ -363,15 +375,28 @@ body:has(.article1),
   .article1-subtitle {
     font-size: 28px;
     letter-spacing: -0.84px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 12px;
+  }
+
+  .article1-meta {
+    white-space: nowrap;
+  }
+
+  .article1-hero {
+    margin-bottom: 0;
   }
 
   .article1-body {
-    font-size: 24px;
-    letter-spacing: -0.72px;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0;
   }
 
   .article1-caption {
-    font-size: 28px;
-    letter-spacing: -0.84px;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0;
   }
 }
