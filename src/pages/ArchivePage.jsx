@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { getArchiveFolders, getArchiveFolderImages, getArchiveByFolderName } from '../utils/archiveUtils'
 import './ArchivePage.css'
@@ -13,6 +13,9 @@ function ArchivePage() {
   const [folderImages, setFolderImages] = useState([])
   const [loading, setLoading] = useState(true)
   const [modalImageIndex, setModalImageIndex] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchOpen, setSearchOpen] = useState(false)
+  const searchInputRef = useRef(null)
   const fromEventId = searchParams.get('fromEvent')
 
   // Categorize folders into Event Photos and Photoshoots based on category field
@@ -45,6 +48,10 @@ function ArchivePage() {
     
     return { eventPhotos, photoshoots }
   }
+
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) searchInputRef.current.focus()
+  }, [searchOpen])
 
   useEffect(() => {
     const fetchFolders = async () => {
@@ -248,12 +255,50 @@ function ArchivePage() {
     )
   }
 
-  const { eventPhotos, photoshoots } = categorizeFolders(folders)
+  // Filter folders by search query
+  const q = searchQuery.trim().toLowerCase()
+  const filtered = q
+    ? folders.filter((f) => f.folderName.toLowerCase().includes(q))
+    : folders
+
+  const { eventPhotos, photoshoots } = categorizeFolders(filtered)
 
   return (
     <main className="archive-page">
       <div className="archive-header">
-        <h1 className="archive-title">Select an Archive</h1>
+        <h1 className="archive-title">Archives</h1>
+        <div className="archive-search-wrapper">
+          {searchOpen ? (
+            <>
+              <input
+                ref={searchInputRef}
+                type="text"
+                className="archive-search-input"
+                placeholder="Search by name..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label="Search archives by name"
+              />
+              <button
+                type="button"
+                className="archive-search-close"
+                onClick={() => setSearchOpen(false)}
+                aria-label="Close search"
+              >
+                <i className="fa-solid fa-times"></i>
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              className="archive-search-icon"
+              onClick={() => setSearchOpen(true)}
+              aria-label="Open search"
+            >
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Event Photos Section */}
