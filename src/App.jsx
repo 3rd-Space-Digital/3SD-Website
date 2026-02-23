@@ -30,6 +30,21 @@ function App() {
     }
   }, [location.pathname, navigate])
 
+  // Set html/body background color based on route
+  useEffect(() => {
+    const isHomepage = location.pathname === '/'
+    const backgroundColor = isHomepage ? '#000' : '#fff'
+    
+    document.documentElement.style.backgroundColor = backgroundColor
+    document.body.style.backgroundColor = backgroundColor
+
+    return () => {
+      // Cleanup on unmount
+      document.documentElement.style.removeProperty('background-color')
+      document.body.style.removeProperty('background-color')
+    }
+  }, [location.pathname])
+
   return (
     <div className="App">
       <Header onOpenMenu={() => setMenuOpen(true)} />
