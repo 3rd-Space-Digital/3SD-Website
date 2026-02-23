@@ -29,6 +29,12 @@ function EventsPage() {
   const upcoming = filtered.filter((e) => new Date(e.date) >= now)
   const past = filtered.filter((e) => new Date(e.date) < now)
 
+  const truncateDescription = (text, maxLength = 100) => {
+    if (!text) return ''
+    if (text.length <= maxLength) return text
+    return text.substring(0, maxLength).trim() + '...'
+  }
+
   if (loading) {
     return (
       <div className="events-page">
@@ -94,7 +100,7 @@ function EventsPage() {
                 </div>
                 <h2 className="event-title">{event.title}</h2>
                 {event.description && (
-                  <p className="event-description">{event.description}</p>
+                  <p className="event-description">{truncateDescription(event.description)}</p>
                 )}
               </Link>
             ))
@@ -122,7 +128,7 @@ function EventsPage() {
                 </div>
                 <h2 className="event-title">{event.title}</h2>
                 {event.description && (
-                  <p className="event-description">{event.description}</p>
+                  <p className="event-description">{truncateDescription(event.description)}</p>
                 )}
               </Link>
             ))
