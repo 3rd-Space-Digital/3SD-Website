@@ -7,11 +7,141 @@ import './Article2.css'
 const ARTICLE_ID = '2'
 const IMAGE_PATH_PREFIX = 'issue/article2'
 
+function ImageCarousel({ images, carouselId, onImageClick }) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const imagesPerView = 4
+  const totalImages = images.length
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => {
+      const nextIndex = prevIndex + 1
+      if (nextIndex >= totalImages) {
+        return 0
+      }
+      return nextIndex
+    })
+  }
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => {
+      const prevIndexNew = prevIndex - 1
+      if (prevIndexNew < 0) {
+        return totalImages - 1
+      }
+      return prevIndexNew
+    })
+  }
+
+  const getVisibleImages = () => {
+    const visible = []
+    for (let i = 0; i < imagesPerView; i++) {
+      const index = (currentIndex + i) % totalImages
+      visible.push({
+        image: images[index],
+        key: `${carouselId}-${currentIndex}-${i}`,
+        actualIndex: index
+      })
+    }
+    return visible
+  }
+
+  return (
+    <div className="article2-carousel">
+      <button
+        type="button"
+        className="article2-carousel-arrow article2-carousel-arrow-left"
+        onClick={prevSlide}
+        aria-label="Previous images"
+      >
+        <i className="fa-solid fa-chevron-left"></i>
+      </button>
+      <div className="article2-carousel-images">
+        {getVisibleImages().map((item, idx) => (
+          <div 
+            key={item.key} 
+            className="article2-carousel-image-wrap"
+            onClick={() => onImageClick(item.actualIndex)}
+          >
+            <img
+              src={item.image}
+              alt={`We The People ${idx + 1}`}
+              className="article2-carousel-image"
+            />
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        className="article2-carousel-arrow article2-carousel-arrow-right"
+        onClick={nextSlide}
+        aria-label="Next images"
+      >
+        <i className="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  )
+}
+
 function Article2() {
   const navigate = useNavigate()
   const [article, setArticle] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [modalImageIndex, setModalImageIndex] = useState(null)
+  
+  // Create array alternating between thumbnail.png and nails.png
+  const carouselImages = Array.from({ length: 10 }, (_, index) => 
+    getImageUrl(`${IMAGE_PATH_PREFIX}/${index % 2 === 0 ? 'thumbnail.png' : 'nails.png'}`)
+  )
+
+  const handleImageClick = (index) => {
+    setModalImageIndex(index)
+  }
+
+  const handleCloseModal = () => {
+    setModalImageIndex(null)
+  }
+
+  const handleNextImage = () => {
+    if (modalImageIndex !== null && modalImageIndex < carouselImages.length - 1) {
+      setModalImageIndex(modalImageIndex + 1)
+    } else if (modalImageIndex === carouselImages.length - 1) {
+      setModalImageIndex(0)
+    }
+  }
+
+  const handlePrevImage = () => {
+    if (modalImageIndex !== null && modalImageIndex > 0) {
+      setModalImageIndex(modalImageIndex - 1)
+    } else if (modalImageIndex === 0) {
+      setModalImageIndex(carouselImages.length - 1)
+    }
+  }
+
+  useEffect(() => {
+    if (modalImageIndex === null) return
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setModalImageIndex(null)
+      } else if (e.key === 'ArrowRight') {
+        if (modalImageIndex < carouselImages.length - 1) {
+          setModalImageIndex(modalImageIndex + 1)
+        } else {
+          setModalImageIndex(0)
+        }
+      } else if (e.key === 'ArrowLeft') {
+        if (modalImageIndex > 0) {
+          setModalImageIndex(modalImageIndex - 1)
+        } else {
+          setModalImageIndex(carouselImages.length - 1)
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [modalImageIndex, carouselImages.length])
 
   useEffect(() => {
     const load = async () => {
@@ -112,51 +242,25 @@ function Article2() {
           <p className="article2-paragraph">
             Black history month for many is a time of communal retrospection. As a people and a county the struggles of the black persons through enslavement, jim crowe, and the lasting effects of systemic injustice often has served as a benchmark in which we measure social progress. Branded with the survivor tag, the identity of Blackness, though full of joy, expression, and diversity, is still too often reduced. Stories of trauma and pain remain overexposed and commodified, overshadowing the fullness of who we are.
           </p>
+        </div>
+
+        <ImageCarousel images={carouselImages} carouselId="carousel-1" onImageClick={handleImageClick} />
+
+        <div className="article2-body">
           <p className="article2-paragraph">
             "We The People" moves in a different direction. This three part series, captured through the eyes of three photographers, explores the breadth of expression, identity, and subculture that exists under the umbrella of Blackness. Each model embodies a distinct facet of this spectrum, from Punk and Alternative culture to Streetwear, Traditionalism and Spiritualism, and Dandyism.
           </p>
+        </div>
+
+        <ImageCarousel images={carouselImages} carouselId="carousel-2" onImageClick={handleImageClick} />
+
+        <div className="article2-body">
           <p className="article2-paragraph">
             The series examines how these identities coexist, contrast, and expand what Blackness looks like in public space. Our goal was to create work that felt alive, self possessed, and reflective of the multiplicity within our community.
           </p>
         </div>
 
-        <figure className="article2-two-images">
-          <div className="article2-two-images-grid">
-            <div className="article2-image-wrap">
-              <img
-                src={getImageUrl(`${IMAGE_PATH_PREFIX}/tu2.jpg`)}
-                alt="We The People"
-                className="article2-image-left"
-              />
-            </div>
-            <div className="article2-image-wrap">
-              <img
-                src={getImageUrl(`${IMAGE_PATH_PREFIX}/tu3.jpg`)}
-                alt="We The People"
-                className="article2-image-right"
-              />
-            </div>
-          </div>
-        </figure>
-
-        <figure className="article2-two-images">
-          <div className="article2-two-images-grid">
-            <div className="article2-image-wrap">
-              <img
-                src={getImageUrl(`${IMAGE_PATH_PREFIX}/tu4.jpg`)}
-                alt="We The People"
-                className="article2-image-left"
-              />
-            </div>
-            <div className="article2-image-wrap">
-              <img
-                src={getImageUrl(`${IMAGE_PATH_PREFIX}/tu5.jpg`)}
-                alt="We The People"
-                className="article2-image-right"
-              />
-            </div>
-          </div>
-        </figure>
+        <ImageCarousel images={carouselImages} carouselId="carousel-3" onImageClick={handleImageClick} />
       </div>
 
       <div className="article2-credits">
@@ -198,6 +302,45 @@ function Article2() {
           </div>
         </div>
       </div>
+
+      {modalImageIndex !== null && (
+        <div className="article2-modal" onClick={handleCloseModal}>
+          <button 
+            className="article2-modal-close"
+            onClick={handleCloseModal}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
+          <button 
+            className="article2-modal-prev"
+            onClick={(e) => {
+              e.stopPropagation()
+              handlePrevImage()
+            }}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+          <div className="article2-modal-content" onClick={(e) => e.stopPropagation()}>
+            <img 
+              src={carouselImages[modalImageIndex]} 
+              alt={`We The People ${modalImageIndex + 1}`}
+              className="article2-modal-image"
+            />
+          </div>
+          <button 
+            className="article2-modal-next"
+            onClick={(e) => {
+              e.stopPropagation()
+              handleNextImage()
+            }}
+            aria-label="Next image"
+          >
+            ›
+          </button>
+        </div>
+      )}
     </div>
   )
 }

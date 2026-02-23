@@ -159,6 +159,156 @@ body:has(.article2),
   margin-bottom: 0;
 }
 
+.article2-carousel {
+  position: relative;
+  margin: 48px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.article2-carousel-images {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.article2-carousel-image-wrap {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.article2-carousel-image-wrap:hover {
+  opacity: 0.9;
+}
+
+.article2-carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+
+
+.article2-carousel-arrow {
+  background: transparent;
+  border: none;
+  color: black;
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.article2-carousel-arrow:hover {
+  background: #e0e0e0;
+}
+
+.article2-carousel-arrow:active {
+  background: #d0d0d0;
+}
+
+.article2-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.article2-modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.article2-modal-content img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+
+.article2-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 48px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.2s;
+  z-index: 1001;
+}
+
+.article2-modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.article2-modal-prev,
+.article2-modal-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 48px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.2s;
+  z-index: 1001;
+}
+
+.article2-modal-prev {
+  left: 20px;
+}
+
+.article2-modal-next {
+  right: 20px;
+}
+
+.article2-modal-prev:hover,
+.article2-modal-next:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 .article2-two-images {
   margin: 48px 0;
   display: block;
@@ -317,6 +467,40 @@ body:has(.article2),
     padding: 100px 30px 100px;
   }
 
+  .article2-carousel-images {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .article2-carousel-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .article2-modal-close {
+    top: 10px;
+    right: 10px;
+    font-size: 36px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .article2-modal-prev,
+  .article2-modal-next {
+    font-size: 36px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .article2-modal-prev {
+    left: 10px;
+  }
+
+  .article2-modal-next {
+    right: 10px;
+  }
+
   .article2-two-images-grid {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -372,6 +556,17 @@ body:has(.article2),
 @media (max-width: 480px) {
   .article2 {
     padding: 80px 20px 80px;
+  }
+
+  .article2-carousel-images {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .article2-carousel-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
   }
 
   .article2-header {
