@@ -119,20 +119,22 @@
 .archive-folders-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
+  gap: 20px;
   padding: 0 4%;
 }
 
 .archive-folder-card {
-  background-color: #f5f5f5;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  border: 1px solid #eee;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
   border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  height: 100%;
 }
 
 .archive-folder-card:hover {
@@ -356,7 +358,7 @@
 
   .archive-folders-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 40px;
     padding: 20px 4%;
   }
 

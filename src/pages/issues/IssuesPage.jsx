@@ -28,6 +28,12 @@ function IssuesPage() {
   
   // Filter out template article (id 0)
   const filteredWithoutTemplate = filtered.filter(article => article.id !== 0)
+
+  const truncateDescription = (text, maxLength = 100) => {
+    if (!text) return ''
+    if (text.length <= maxLength) return text
+    return text.substring(0, maxLength).trim() + '...'
+  }
   
     const latest = [...filteredWithoutTemplate]
     .sort((a, b) => new Date(b.article_date) - new Date(a.article_date))
@@ -100,7 +106,7 @@ function IssuesPage() {
                 </div>
                 <h2 className="issue-title">{article.title}</h2>
                 {article.description && (
-                  <p className="issue-description">{article.description}</p>
+                  <p className="issue-description">{truncateDescription(article.description)}</p>
                 )}
               </Link>
             ))
@@ -128,7 +134,7 @@ function IssuesPage() {
                 </div>
                 <h2 className="issue-title">{article.title}</h2>
                 {article.description && (
-                  <p className="issue-description">{article.description}</p>
+                  <p className="issue-description">{truncateDescription(article.description)}</p>
                 )}
               </Link>
             ))
