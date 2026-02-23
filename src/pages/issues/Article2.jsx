@@ -164,8 +164,8 @@ function Article2() {
     }
     load()
     
-    document.body.style.backgroundColor = 'white'
-    document.documentElement.style.backgroundColor = 'white'
+    document.body.style.backgroundColor = '#FAF0E6'
+    document.documentElement.style.backgroundColor = '#FAF0E6'
     
     return () => {
       document.body.style.removeProperty('background-color')
