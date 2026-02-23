@@ -1,4 +1,4 @@
-.article1 {
+.article2 {
   background-color: white;
   min-height: 100vh;
   padding: 120px 200px 120px;
@@ -10,17 +10,17 @@
   overflow-x: hidden;
 }
 
-html:has(.article1),
-body:has(.article1),
-#root:has(.article1) {
+html:has(.article2),
+body:has(.article2),
+#root:has(.article2) {
   background-color: white;
 }
 
-.article1-nav {
+.article2-nav {
   margin-bottom: 32px;
 }
 
-.article1-back {
+.article2-back {
   background: none;
   border: none;
   color: black;
@@ -35,18 +35,18 @@ body:has(.article1),
   transition: opacity 0.2s;
 }
 
-.article1-back:hover {
+.article2-back:hover {
   opacity: 0.7;
 }
 
-.article1-header {
+.article2-header {
   margin-bottom: 40px;
   margin-left: -160px;
   margin-right: -160px;
   text-align: center;
 }
 
-.article1-title {
+.article2-title {
   color: #000;
   text-align: center;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -58,7 +58,7 @@ body:has(.article1),
   margin: 0 0 35px;
 }
 
-.article1-meta {
+.article2-meta {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 24px;
   font-style: normal;
@@ -73,30 +73,30 @@ body:has(.article1),
   position: relative;
 }
 
-.article1-date,
-.article1-author {
+.article2-date,
+.article2-author {
   color: #000;
 }
 
-.article1-date {
+.article2-date {
   position: absolute;
   right: 50%;
   margin-right: 8px;
 }
 
-.article1-sep {
+.article2-sep {
   margin: 0 4px;
   position: relative;
   z-index: 1;
 }
 
-.article1-author {
+.article2-author {
   position: absolute;
   left: 50%;
   margin-left: 8px;
 }
 
-.article1-subtitle {
+.article2-subtitle {
   color: #000;
   text-align: left;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -108,18 +108,18 @@ body:has(.article1),
   margin: 12px 0 35px;
 }
 
-.article1-content {
+.article2-content {
   margin-bottom: 60px;
 }
 
-.article1-hero {
+.article2-hero {
   margin: 0;
   padding: 0;
   background-color: white;
   display: block;
 }
 
-.article1-hero img {
+.article2-hero img {
   width: 100%;
   height: auto;
   display: block;
@@ -128,7 +128,7 @@ body:has(.article1),
   padding: 0;
 }
 
-.article1-caption {
+.article2-caption {
   color: #000;
   text-align: center;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -140,7 +140,7 @@ body:has(.article1),
   margin: 12px 0 0;
 }
 
-.article1-body {
+.article2-body {
   color: #000;
   text-align: left;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -151,20 +151,20 @@ body:has(.article1),
   letter-spacing: 0;
 }
 
-.article1-paragraph {
+.article2-paragraph {
   margin: 0 0 24px;
 }
 
-.article1-paragraph:last-child {
+.article2-paragraph:last-child {
   margin-bottom: 0;
 }
 
-.article1-two-images {
+.article2-two-images {
   margin: 48px 0;
   display: block;
 }
 
-.article1-two-images-grid {
+.article2-two-images-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
@@ -175,12 +175,12 @@ body:has(.article1),
   margin: 0 auto;
 }
 
-.article1-image-wrap {
+.article2-image-wrap {
   min-height: 0;
   overflow: hidden;
 }
 
-.article1-image-wrap img {
+.article2-image-wrap img {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -188,22 +188,22 @@ body:has(.article1),
   background-color: white;
 }
 
-.article1-two-images .article1-caption {
+.article2-two-images .article2-caption {
   margin-top: 16px;
   display: block;
   position: relative;
 }
 
-.article1-loading,
-.article1-error {
+.article2-loading,
+.article2-error {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 60vh;
 }
 
-.article1-loading-text,
-.article1-error-text {
+.article2-loading-text,
+.article2-error-text {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 24px;
   font-weight: 500;
@@ -211,28 +211,28 @@ body:has(.article1),
   text-align: center;
 }
 
-.article1-error-text h2 {
+.article2-error-text h2 {
   color: #d32f2f;
   margin-bottom: 20px;
 }
 
-.article1-back-link {
+.article2-back-link {
   color: black;
   font-weight: 600;
   text-decoration: none;
 }
 
-.article1-back-link:hover {
+.article2-back-link:hover {
   text-decoration: underline;
 }
 
-.article1-credits {
+.article2-credits {
   margin-top: 48px;
   padding-top: 24px;
   border-top: 1px solid #ccc;
 }
 
-.article1-credits-title {
+.article2-credits-title {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 24px;
   font-weight: 600;
@@ -240,72 +240,72 @@ body:has(.article1),
   margin: 0 0 16px;
 }
 
-.article1-credits-grid {
+.article2-credits-grid {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.article1-credit-item {
+.article2-credit-item {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 20px;
   font-weight: 500;
   color: #333;
 }
 
-.article1-credit-label {
+.article2-credit-label {
   margin-right: 6px;
 }
 
-.article1-credit-value {
+.article2-credit-value {
   text-decoration: underline;
 }
 
-.article1-credit-link {
+.article2-credit-link {
   color: inherit;
   text-decoration: underline;
   transition: opacity 0.2s;
 }
 
-.article1-credit-link:hover {
+.article2-credit-link:hover {
   opacity: 0.7;
 }
 
 @media (max-width: 1600px) {
-  .article1 {
+  .article2 {
     padding: 120px 120px 120px;
   }
 }
 
 @media (max-width: 1200px) {
-  .article1 {
+  .article2 {
     padding: 120px 60px 120px;
   }
 
-  .article1-header {
+  .article2-header {
     margin-left: 0;
     margin-right: 0;
   }
 
-  .article1-title {
+  .article2-title {
     font-size: 80px;
     letter-spacing: -2.4px;
   }
 
-  .article1-subtitle {
+  .article2-subtitle {
     font-size: 40px;
     letter-spacing: -1.2px;
     margin-left: 0;
     margin-right: 0;
   }
 
-  .article1-caption {
+  .article2-caption {
     font-size: 24px;
     font-weight: 500;
     letter-spacing: 0;
   }
 
-  .article1-body {
+  .article2-body {
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 0;
@@ -313,32 +313,32 @@ body:has(.article1),
 }
 
 @media (max-width: 768px) {
-  .article1 {
+  .article2 {
     padding: 100px 30px 100px;
   }
 
-  .article1-two-images-grid {
+  .article2-two-images-grid {
     grid-template-columns: 1fr;
     gap: 16px;
     height: auto;
   }
 
-  .article1-image-wrap {
+  .article2-image-wrap {
     height: auto;
     min-height: 280px;
   }
 
-  .article1-header {
+  .article2-header {
     margin-left: 0;
     margin-right: 0;
   }
 
-  .article1-title {
+  .article2-title {
     font-size: 48px;
     letter-spacing: -1.44px;
   }
 
-  .article1-subtitle {
+  .article2-subtitle {
     font-size: 36px;
     letter-spacing: -1.08px;
     margin-left: 0;
@@ -346,23 +346,23 @@ body:has(.article1),
     margin-top: 12px;
   }
 
-  .article1-meta {
+  .article2-meta {
     font-size: 18px;
     letter-spacing: -0.54px;
     white-space: nowrap;
   }
 
-  .article1-hero {
+  .article2-hero {
     margin-bottom: 0;
   }
 
-  .article1-body {
+  .article2-body {
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 0;
   }
 
-  .article1-caption {
+  .article2-caption {
     font-size: 24px;
     font-weight: 500;
     letter-spacing: 0;
@@ -370,21 +370,21 @@ body:has(.article1),
 }
 
 @media (max-width: 480px) {
-  .article1 {
+  .article2 {
     padding: 80px 20px 80px;
   }
 
-  .article1-header {
+  .article2-header {
     margin-left: 0;
     margin-right: 0;
   }
 
-  .article1-title {
+  .article2-title {
     font-size: 36px;
     letter-spacing: -1.08px;
   }
 
-  .article1-subtitle {
+  .article2-subtitle {
     font-size: 28px;
     letter-spacing: -0.84px;
     margin-left: 0;
@@ -392,21 +392,21 @@ body:has(.article1),
     margin-top: 12px;
   }
 
-  .article1-meta {
+  .article2-meta {
     white-space: nowrap;
   }
 
-  .article1-hero {
+  .article2-hero {
     margin-bottom: 0;
   }
 
-  .article1-body {
+  .article2-body {
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 0;
   }
 
-  .article1-caption {
+  .article2-caption {
     font-size: 24px;
     font-weight: 500;
     letter-spacing: 0;
