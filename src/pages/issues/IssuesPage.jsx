@@ -51,7 +51,6 @@ function IssuesPage() {
 
   return (
     <div className="issues-page">
-      {/* Header */}
       <div className="issues-header">
         <h1 className="issues-title">Issues</h1>
         <div className="issues-search-wrapper">
@@ -88,7 +87,6 @@ function IssuesPage() {
         </div>
       </div>
 
-      {/* Latest Articles Section */}
       <div className="issues-section">
         <div className="issues-section-divider">
           <span className="issues-section-title">Latest</span>
@@ -116,7 +114,6 @@ function IssuesPage() {
         </div>
       </div>
 
-      {/* Archive Section */}
       <div className="issues-section">
         <div className="issues-section-divider">
           <span className="issues-section-title">Archive</span>

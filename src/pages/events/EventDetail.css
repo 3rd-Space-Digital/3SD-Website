@@ -152,7 +152,6 @@
   opacity: 0.9;
 }
 
-/* First breakpoint: image moves to top, single column, full width with 30px sides, 110px bottom */
 @media (max-width: 1024px) {
   .event-detail {
     padding: 80px 30px 110px;
@@ -198,7 +197,6 @@
   }
 }
 
-/* Second breakpoint: smaller type, 30px sides and 110px bottom kept */
 @media (max-width: 768px) {
   .event-detail {
     padding: 60px 30px 110px;

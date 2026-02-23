@@ -24,7 +24,6 @@ function EventDetail() {
       const data = await getEventById(id)
       setEvent(data)
       
-      // Check if event has archive folder
       if (data?.archive_folder_name) {
         const folders = await getArchiveFolders()
         const folderNames = new Set(folders.map(f => f.folderName.toLowerCase()))

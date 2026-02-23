@@ -7,7 +7,6 @@
   position: relative;
 }
 
-/* Header Section */
 .events-header {
   display: flex;
   justify-content: space-between;
@@ -97,7 +96,6 @@
   margin-left: 40px;
 }
 
-/* Events Grid */
 .events-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -189,7 +187,6 @@
   font-weight: 500;
 }
 
-/* Responsive Design */
 @media (max-width: 1200px) {
   .events-grid {
     grid-template-columns: repeat(2, 1fr);

@@ -45,7 +45,6 @@ function EventsPage() {
 
   return (
     <div className="events-page">
-      {/* Header */}
       <div className="events-header">
         <h1 className="events-title">Events</h1>
         <div className="events-search-wrapper">
@@ -82,7 +81,6 @@ function EventsPage() {
         </div>
       </div>
 
-      {/* Upcoming Events Section */}
       <div className="events-section">
         <div className="events-section-divider">
           <span className="events-section-title">Upcoming</span>
@@ -105,12 +103,11 @@ function EventsPage() {
               </Link>
             ))
           ) : (
-            <p className="events-empty">No upcoming events</p>
+            <p className="events-empty">To be announced!</p>
           )}
         </div>
       </div>
 
-      {/* Past Events Section */}
       <div className="events-section">
         <div className="events-section-divider">
           <span className="events-section-title">Past Events</span>

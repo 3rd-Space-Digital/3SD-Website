@@ -7,7 +7,7 @@ import ArchivePage from './pages/ArchivePage'
 import EventsPage from './pages/events/EventsPage'
 import EventDetail from './pages/events/EventDetail'
 import IssuesPage from './pages/issues/IssuesPage'
-// import Article from './pages/issues/Article'  // disabled for now
+// import Article from './pages/issues/Article'
 import ArticleTemplate from './pages/issues/template/ArticleTemplate'
 import Article1 from './pages/issues/Article1'
 import MenuPage from './pages/MenuPage'
@@ -30,16 +30,18 @@ function App() {
     }
   }, [location.pathname, navigate])
 
-  // Set html/body background color based on route
   useEffect(() => {
     const isHomepage = location.pathname === '/'
-    const backgroundColor = isHomepage ? '#000' : '#fff'
     
-    document.documentElement.style.backgroundColor = backgroundColor
-    document.body.style.backgroundColor = backgroundColor
+    if (isHomepage) {
+      document.documentElement.style.removeProperty('background-color')
+      document.body.style.removeProperty('background-color')
+    } else {
+      document.documentElement.style.backgroundColor = '#fff'
+      document.body.style.backgroundColor = '#fff'
+    }
 
     return () => {
-      // Cleanup on unmount
       document.documentElement.style.removeProperty('background-color')
       document.body.style.removeProperty('background-color')
     }

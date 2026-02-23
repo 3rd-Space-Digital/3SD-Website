@@ -112,7 +112,6 @@ export const getArchiveFolders = async () => {
                 instagram: links[index] || ''
               }))
             } else {
-              // Single photographer
               photographers = [{
                 name: record.photographer_name,
                 instagram: record.photographer_instagram
@@ -126,14 +125,12 @@ export const getArchiveFolders = async () => {
             }]
           }
         } else {
-          // Default photographer
           photographers = [{
             name: 'Andrew John',
             instagram: 'https://www.instagram.com/_iso.media_/'
           }]
         }
         
-        // Use database record if exists, otherwise use defaults
         const archive = {
           id: record?.id || null,
           folderName: folderName,

@@ -87,7 +87,6 @@
   margin-bottom: 60px;
 }
 
-/* Hero image - full width within 40px margins */
 .article-template-hero {
   margin: 0 0 24px;
 }
@@ -132,7 +131,6 @@
   margin-bottom: 0;
 }
 
-/* Two images layout: larger left, smaller right, same height */
 .article-template-two-images {
   margin: 48px 0;
   display: block;
@@ -198,7 +196,6 @@
   text-decoration: underline;
 }
 
-/* Credits */
 .article-template-credits {
   margin-top: 48px;
   padding-top: 24px;
@@ -234,7 +231,6 @@
   text-decoration: underline;
 }
 
-/* Responsive */
 @media (max-width: 1600px) {
   .article-template {
     padding: 120px 120px 120px;

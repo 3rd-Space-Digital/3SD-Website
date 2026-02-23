@@ -18,14 +18,11 @@ function ArchivePage() {
   const searchInputRef = useRef(null)
   const fromEventId = searchParams.get('fromEvent')
 
-  // Categorize folders into Event Photos and Photoshoots based on category field
-  // Each category is sorted independently by date
   const categorizeFolders = (folders) => {
     const eventPhotos = []
     const photoshoots = []
     
     folders.forEach(folder => {
-      // Use category field from database instead of folder name
       if (folder.category === 'event') {
         eventPhotos.push(folder)
       } else {
@@ -33,7 +30,6 @@ function ArchivePage() {
       }
     })
     
-    // Sort each category by date (newest first), then by name if no date
     const sortByDate = (a, b) => {
       if (a.date && b.date) {
         return new Date(b.date) - new Date(a.date)
@@ -59,13 +55,11 @@ function ArchivePage() {
         const archiveFolders = await getArchiveFolders()
         setFolders(archiveFolders)
         
-        // If URL parameter exists, automatically select that folder
         if (urlFolderName) {
           const decodedFolderName = decodeURIComponent(urlFolderName)
           const folderExists = archiveFolders.some(f => f.folderName === decodedFolderName)
           if (folderExists) {
             setSelectedFolder(decodedFolderName)
-            // Fetch metadata for the selected archive
             const metadata = await getArchiveByFolderName(decodedFolderName)
             setSelectedArchiveMetadata(metadata)
             try {
@@ -90,7 +84,6 @@ function ArchivePage() {
   const handleFolderClick = async (folderName) => {
     navigate(`/archive/${encodeURIComponent(folderName)}`)
     setSelectedFolder(folderName)
-    // Fetch metadata for the selected archive
     const metadata = await getArchiveByFolderName(folderName)
     setSelectedArchiveMetadata(metadata)
     try {
@@ -104,10 +97,8 @@ function ArchivePage() {
 
   const handleBackClick = () => {
     if (fromEventId) {
-      // If navigated from an event, go back to that event
       navigate(`/events/${fromEventId}`)
     } else {
-      // Otherwise, go back to archive list
       navigate('/archive')
     }
     setSelectedFolder(null)
@@ -135,7 +126,6 @@ function ArchivePage() {
     }
   }
 
-  // Handle keyboard navigation
   useEffect(() => {
     if (modalImageIndex === null) return
 
@@ -209,7 +199,6 @@ function ArchivePage() {
           </div>
         )}
         
-        {/* Modal */}
         {modalImageIndex !== null && (
           <div className="archive-modal" onClick={handleCloseModal}>
             <button 
@@ -255,7 +244,6 @@ function ArchivePage() {
     )
   }
 
-  // Filter folders by search query
   const q = searchQuery.trim().toLowerCase()
   const filtered = q
     ? folders.filter((f) => f.folderName.toLowerCase().includes(q))
@@ -301,7 +289,6 @@ function ArchivePage() {
         </div>
       </div>
 
-      {/* Event Photos Section */}
       <div className="archive-section">
         <div className="archive-section-divider">
           <span className="archive-section-title">Event Photos</span>
@@ -327,7 +314,6 @@ function ArchivePage() {
         </div>
       </div>
 
-      {/* Photoshoots Section */}
       <div className="archive-section">
         <div className="archive-section-divider">
           <span className="archive-section-title">Photoshoots</span>

@@ -115,7 +115,6 @@
   margin: 0;
 }
 
-/* Section Dividers */
 .archive-section {
   margin-bottom: 60px;
 }
@@ -271,7 +270,6 @@
   display: block;
 }
 
-/* Modal Styles */
 .archive-modal {
   position: fixed;
   top: 0;
