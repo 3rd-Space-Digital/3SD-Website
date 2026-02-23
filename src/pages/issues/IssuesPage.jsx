@@ -28,6 +28,12 @@ function IssuesPage() {
   
   // Filter out template article (id 0)
   const filteredWithoutTemplate = filtered.filter(article => article.id !== 0)
+
+  const truncateDescription = (text, maxLength = 100) => {
+    if (!text) return ''
+    if (text.length <= maxLength) return text
+    return text.substring(0, maxLength).trim() + '...'
+  }
   
     const latest = [...filteredWithoutTemplate]
     .sort((a, b) => new Date(b.article_date) - new Date(a.article_date))
@@ -45,7 +51,6 @@ function IssuesPage() {
 
   return (
     <div className="issues-page">
-      {/* Header */}
       <div className="issues-header">
         <h1 className="issues-title">Issues</h1>
         <div className="issues-search-wrapper">
@@ -82,7 +87,6 @@ function IssuesPage() {
         </div>
       </div>
 
-      {/* Latest Articles Section */}
       <div className="issues-section">
         <div className="issues-section-divider">
           <span className="issues-section-title">Latest</span>
@@ -100,7 +104,7 @@ function IssuesPage() {
                 </div>
                 <h2 className="issue-title">{article.title}</h2>
                 {article.description && (
-                  <p className="issue-description">{article.description}</p>
+                  <p className="issue-description">{truncateDescription(article.description)}</p>
                 )}
               </Link>
             ))
@@ -110,7 +114,6 @@ function IssuesPage() {
         </div>
       </div>
 
-      {/* Archive Section */}
       <div className="issues-section">
         <div className="issues-section-divider">
           <span className="issues-section-title">Archive</span>
@@ -128,7 +131,7 @@ function IssuesPage() {
                 </div>
                 <h2 className="issue-title">{article.title}</h2>
                 {article.description && (
-                  <p className="issue-description">{article.description}</p>
+                  <p className="issue-description">{truncateDescription(article.description)}</p>
                 )}
               </Link>
             ))

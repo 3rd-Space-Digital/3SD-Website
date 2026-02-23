@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import { getArchiveFolders, getArchiveFolderImages } from '../utils/archiveUtils'
+import { getArchiveFolders, getArchiveFolderImages, getArchiveByFolderName } from '../utils/archiveUtils'
 import './ArchivePage.css'
 
 function ArchivePage() {
@@ -9,29 +9,45 @@ function ArchivePage() {
   const [searchParams] = useSearchParams()
   const [folders, setFolders] = useState([])
   const [selectedFolder, setSelectedFolder] = useState(null)
+  const [selectedArchiveMetadata, setSelectedArchiveMetadata] = useState(null)
   const [folderImages, setFolderImages] = useState([])
   const [loading, setLoading] = useState(true)
   const [modalImageIndex, setModalImageIndex] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchOpen, setSearchOpen] = useState(false)
+  const searchInputRef = useRef(null)
   const fromEventId = searchParams.get('fromEvent')
 
-  // Categorize folders into Event Photos and Photoshoots
   const categorizeFolders = (folders) => {
     const eventPhotos = []
     const photoshoots = []
     
     folders.forEach(folder => {
-      // If folder name contains "event" (case-insensitive), add to Event Photos
-      // Otherwise, add to Photoshoots
-      const folderNameLower = folder.folderName.toLowerCase()
-      if (folderNameLower.includes('event')) {
+      if (folder.category === 'event') {
         eventPhotos.push(folder)
       } else {
         photoshoots.push(folder)
       }
     })
     
+    const sortByDate = (a, b) => {
+      if (a.date && b.date) {
+        return new Date(b.date) - new Date(a.date)
+      }
+      if (a.date) return -1
+      if (b.date) return 1
+      return a.folderName.localeCompare(b.folderName)
+    }
+    
+    eventPhotos.sort(sortByDate)
+    photoshoots.sort(sortByDate)
+    
     return { eventPhotos, photoshoots }
   }
+
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) searchInputRef.current.focus()
+  }, [searchOpen])
 
   useEffect(() => {
     const fetchFolders = async () => {
@@ -39,12 +55,13 @@ function ArchivePage() {
         const archiveFolders = await getArchiveFolders()
         setFolders(archiveFolders)
         
-        // If URL parameter exists, automatically select that folder
         if (urlFolderName) {
           const decodedFolderName = decodeURIComponent(urlFolderName)
           const folderExists = archiveFolders.some(f => f.folderName === decodedFolderName)
           if (folderExists) {
             setSelectedFolder(decodedFolderName)
+            const metadata = await getArchiveByFolderName(decodedFolderName)
+            setSelectedArchiveMetadata(metadata)
             try {
               const images = await getArchiveFolderImages(decodedFolderName)
               setFolderImages(images)
@@ -67,6 +84,8 @@ function ArchivePage() {
   const handleFolderClick = async (folderName) => {
     navigate(`/archive/${encodeURIComponent(folderName)}`)
     setSelectedFolder(folderName)
+    const metadata = await getArchiveByFolderName(folderName)
+    setSelectedArchiveMetadata(metadata)
     try {
       const images = await getArchiveFolderImages(folderName)
       setFolderImages(images)
@@ -78,13 +97,12 @@ function ArchivePage() {
 
   const handleBackClick = () => {
     if (fromEventId) {
-      // If navigated from an event, go back to that event
       navigate(`/events/${fromEventId}`)
     } else {
-      // Otherwise, go back to archive list
       navigate('/archive')
     }
     setSelectedFolder(null)
+    setSelectedArchiveMetadata(null)
     setFolderImages([])
   }
 
@@ -108,7 +126,6 @@ function ArchivePage() {
     }
   }
 
-  // Handle keyboard navigation
   useEffect(() => {
     if (modalImageIndex === null) return
 
@@ -163,11 +180,25 @@ function ArchivePage() {
             )
           })}
         </div>
-        <div className="archive-credits">
-          Photo Credits: <a href="https://www.instagram.com/_iso.media_/" target="_blank" rel="noopener noreferrer" className="archive-credits-link">Andrew John</a>
-        </div>
+        {selectedArchiveMetadata && selectedArchiveMetadata.photographers && (
+          <div className="archive-credits">
+            Photo Credits:{' '}
+            {selectedArchiveMetadata.photographers.map((photographer, index) => (
+              <span key={index}>
+                {index > 0 && ', '}
+                <a 
+                  href={photographer.instagram} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="archive-credits-link"
+                >
+                  {photographer.name}
+                </a>
+              </span>
+            ))}
+          </div>
+        )}
         
-        {/* Modal */}
         {modalImageIndex !== null && (
           <div className="archive-modal" onClick={handleCloseModal}>
             <button 
@@ -213,15 +244,51 @@ function ArchivePage() {
     )
   }
 
-  const { eventPhotos, photoshoots } = categorizeFolders(folders)
+  const q = searchQuery.trim().toLowerCase()
+  const filtered = q
+    ? folders.filter((f) => f.folderName.toLowerCase().includes(q))
+    : folders
+
+  const { eventPhotos, photoshoots } = categorizeFolders(filtered)
 
   return (
     <main className="archive-page">
       <div className="archive-header">
-        <h1 className="archive-title">Select an Archive</h1>
+        <h1 className="archive-title">Archives</h1>
+        <div className="archive-search-wrapper">
+          {searchOpen ? (
+            <>
+              <input
+                ref={searchInputRef}
+                type="text"
+                className="archive-search-input"
+                placeholder="Search by name..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label="Search archives by name"
+              />
+              <button
+                type="button"
+                className="archive-search-close"
+                onClick={() => setSearchOpen(false)}
+                aria-label="Close search"
+              >
+                <i className="fa-solid fa-times"></i>
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              className="archive-search-icon"
+              onClick={() => setSearchOpen(true)}
+              aria-label="Open search"
+            >
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Event Photos Section */}
       <div className="archive-section">
         <div className="archive-section-divider">
           <span className="archive-section-title">Event Photos</span>
@@ -247,7 +314,6 @@ function ArchivePage() {
         </div>
       </div>
 
-      {/* Photoshoots Section */}
       <div className="archive-section">
         <div className="archive-section-divider">
           <span className="archive-section-title">Photoshoots</span>

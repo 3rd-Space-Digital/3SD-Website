@@ -8,7 +8,6 @@ function AuthCallback() {
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {
-        // Supabase parses hash (#access_token=...) from URL and establishes session
         const { data, error } = await supabase.auth.getSession()
         
         if (error) {
@@ -18,7 +17,6 @@ function AuthCallback() {
         }
 
         if (data.session) {
-          // Remove auth hash from URL before navigating
           if (window.history.replaceState) {
             window.history.replaceState(null, '', window.location.pathname)
           }

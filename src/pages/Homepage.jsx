@@ -21,7 +21,6 @@ function Homepage() {
       />
       <img src={logo} alt="3SD Logo" className="homepage-logo" />
 
-      {/* Text elements */}
       <div className="homepage-text homepage-text-1">
         What is<br />3rd Space Digital?
       </div>

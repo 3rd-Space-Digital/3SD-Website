@@ -23,6 +23,42 @@
   margin: 0;
 }
 
+.archive-search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.archive-search-icon,
+.archive-search-close {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+
+.archive-search-icon:hover,
+.archive-search-close:hover {
+  opacity: 0.7;
+}
+
+.archive-search-input {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 18px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-width: 200px;
+  outline: none;
+}
+
+.archive-search-input:focus {
+  border-color: black;
+}
+
 .archive-loading,
 .archive-empty {
   color: black;
@@ -79,7 +115,6 @@
   margin: 0;
 }
 
-/* Section Dividers */
 .archive-section {
   margin-bottom: 60px;
 }
@@ -119,20 +154,22 @@
 .archive-folders-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
+  gap: 20px;
   padding: 0 4%;
 }
 
 .archive-folder-card {
-  background-color: #f5f5f5;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  border: 1px solid #eee;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
   border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  height: 100%;
 }
 
 .archive-folder-card:hover {
@@ -168,10 +205,13 @@
 }
 
 .archive-folder-count {
-  padding: 0 20px 20px 20px;
   color: #666;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0 16px 16px 16px;
   text-align: center;
 }
 
@@ -230,7 +270,6 @@
   display: block;
 }
 
-/* Modal Styles */
 .archive-modal {
   position: fixed;
   top: 0;
@@ -333,6 +372,16 @@
     font-size: 48px;
   }
 
+  .archive-search-icon,
+  .archive-search-close {
+    font-size: 20px;
+  }
+
+  .archive-search-input {
+    min-width: 140px;
+    font-size: 16px;
+  }
+
   .archive-section {
     margin-bottom: 40px;
   }
@@ -356,7 +405,7 @@
 
   .archive-folders-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 40px;
     padding: 20px 4%;
   }
 
@@ -397,6 +446,16 @@
 
   .archive-title {
     font-size: 36px;
+  }
+
+  .archive-search-icon,
+  .archive-search-close {
+    font-size: 18px;
+  }
+
+  .archive-search-input {
+    min-width: 120px;
+    font-size: 14px;
   }
 
   .archive-section-divider {

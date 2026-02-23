@@ -13,7 +13,7 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  padding-top: 120px; /* Account for fixed header (100px height + 20px spacing) */
+  padding-top: 120px;
   text-align: center;
   width: 100%;
 }
