@@ -2,8 +2,8 @@
   background-color: white;
   min-height: 100vh;
   width: 100%;
-  padding-top: 80px;
-  padding-bottom: 40px;
+  padding-top: 120px;
+  padding-bottom: 120px;
   position: relative;
 }
 
@@ -21,6 +21,42 @@
   font-size: 96px;
   font-weight: 900;
   margin: 0;
+}
+
+.archive-search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.archive-search-icon,
+.archive-search-close {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+
+.archive-search-icon:hover,
+.archive-search-close:hover {
+  opacity: 0.7;
+}
+
+.archive-search-input {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 18px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-width: 200px;
+  outline: none;
+}
+
+.archive-search-input:focus {
+  border-color: black;
 }
 
 .archive-loading,
@@ -44,26 +80,25 @@
 }
 
 .archive-view-header {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 4% 30px 4%;
+  padding: 0 4% 30px 4%;
   margin-bottom: 20px;
 }
 
 .archive-back-button {
-  position: absolute;
-  left: 4%;
   background: none;
   border: none;
   color: black;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  padding: 10px 20px;
+  margin-bottom: 32px;
+  padding: 0;
   transition: opacity 0.2s;
+}
+
+.archive-folder-title {
+  margin-top: 0;
 }
 
 .archive-back-button:hover {
@@ -71,33 +106,70 @@
 }
 
 .archive-folder-title {
-  color: black;
+  color: #000;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 32px;
-  font-weight: 400;
+  font-size: 96px;
+  font-style: normal;
+  font-weight: 900;
   text-align: center;
   margin: 0;
-  letter-spacing: 0.5px;
+}
+
+.archive-section {
+  margin-bottom: 60px;
+}
+
+.archive-section-divider {
+  position: relative;
+  margin: 40px 4% 30px 4%;
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.archive-section-divider::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 3px;
+  background-color: black;
+}
+
+.archive-section-title {
+  color: black;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  background-color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
+  z-index: 1;
+  margin-left: 40px;
 }
 
 .archive-folders-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-  padding: 40px 4%;
-  max-width: 1400px;
-  margin: 0 auto;
+  gap: 20px;
+  padding: 0 4%;
 }
 
 .archive-folder-card {
-  background-color: #f5f5f5;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  overflow: hidden;
   border: 1px solid #eee;
+  height: 100%;
 }
 
 .archive-folder-card:hover {
@@ -133,11 +205,33 @@
 }
 
 .archive-folder-count {
-  padding: 0 20px 20px 20px;
+  color: #666;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0 16px 16px 16px;
+  text-align: center;
+}
+
+.archive-credits {
+  padding: 40px 4%;
   color: #666;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 16px;
   text-align: center;
+  font-style: italic;
+}
+
+.archive-credits-link {
+  color: #666;
+  text-decoration: underline;
+  transition: opacity 0.2s;
+}
+
+.archive-credits-link:hover {
+  opacity: 0.7;
 }
 
 .archive-images-grid {
@@ -176,6 +270,95 @@
   display: block;
 }
 
+.archive-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.archive-modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.archive-modal-content img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+.archive-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 48px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  z-index: 1001;
+  line-height: 1;
+  padding: 0;
+}
+
+.archive-modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.archive-modal-prev,
+.archive-modal-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 48px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  z-index: 1001;
+  padding: 0;
+  line-height: 1;
+}
+
+.archive-modal-prev {
+  left: 20px;
+}
+
+.archive-modal-next {
+  right: 20px;
+}
+
+.archive-modal-prev:hover,
+.archive-modal-next:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 @media (max-width: 768px) {
   .archive-page {
     padding-top: 50px;
@@ -189,15 +372,40 @@
     font-size: 48px;
   }
 
+  .archive-search-icon,
+  .archive-search-close {
+    font-size: 20px;
+  }
+
+  .archive-search-input {
+    min-width: 140px;
+    font-size: 16px;
+  }
+
+  .archive-section {
+    margin-bottom: 40px;
+  }
+
+  .archive-section-divider {
+    margin: 30px 4% 20px 4%;
+  }
+
+  .archive-section-title {
+    font-size: 28px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
   .archive-loading,
   .archive-empty {
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 500;
     padding: 20px 15px;
   }
 
   .archive-folders-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 40px;
     padding: 20px 4%;
   }
 
@@ -216,9 +424,10 @@
   }
 
   .archive-back-button {
-    left: 4%;
     font-size: 16px;
-    padding: 8px 16px;
+    font-weight: 500;
+    padding: 0;
+    margin-bottom: 32px;
   }
 
   .archive-folder-title {
@@ -239,9 +448,30 @@
     font-size: 36px;
   }
 
+  .archive-search-icon,
+  .archive-search-close {
+    font-size: 18px;
+  }
+
+  .archive-search-input {
+    min-width: 120px;
+    font-size: 14px;
+  }
+
+  .archive-section-divider {
+    margin: 25px 4% 15px 4%;
+  }
+
+  .archive-section-title {
+    font-size: 24px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
   .archive-loading,
   .archive-empty {
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 500;
     padding: 15px 10px;
   }
 
@@ -251,6 +481,29 @@
 
   .archive-folder-title {
     font-size: 18px;
+  }
+
+  .archive-modal-close {
+    top: 10px;
+    right: 10px;
+    font-size: 36px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .archive-modal-prev,
+  .archive-modal-next {
+    font-size: 36px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .archive-modal-prev {
+    left: 10px;
+  }
+
+  .archive-modal-next {
+    right: 10px;
   }
 }
 

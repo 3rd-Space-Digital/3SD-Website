@@ -34,10 +34,12 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   const signInWithGoogle = async () => {
+    // Use VITE_APP_URL in production so redirect goes to deployment URL, not localhost
+    const baseUrl = import.meta.env.VITE_APP_URL || window.location.origin
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${baseUrl}/auth/callback`,
       },
     })
     if (error) {
