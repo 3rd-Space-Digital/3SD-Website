@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { HomepageRevealProvider } from './context/HomepageRevealContext'
 import Header from './components/Header'
 import AuthCallback from './pages/AuthCallback'
 import Homepage from './pages/Homepage'
@@ -56,35 +57,37 @@ function App() {
   }, [location.pathname])
 
   return (
-    <div className="App">
-      <Header onOpenMenu={() => setMenuOpen(true)} />
-      {menuOpen && (
-        <MenuPage onClose={() => setMenuOpen(false)} />
-      )}
-      <div className="app-routes" style={{ flex: 1, width: '100%' }}>
-        <Routes>
-        <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route path="/" element={<Homepage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/archive" element={<ArchivePage />} />
-        <Route path="/archive/:folderName" element={<ArchivePage />} />
-        <Route path="/events" element={<EventsPage />} />
-        <Route path="/events/:id" element={<EventDetail />} />
-        <Route path="/issues" element={<IssuesPage />} />
-        <Route path="/issues/0" element={<ArticleTemplate />} />
-        <Route path="/issues/1" element={<Article1 />} />
-        <Route path="/issues/2" element={<Article2 />} />
-        {/* <Route path="/issues/:id" element={<Article />} /> */}
-        <Route path="/playlist" element={<PlaylistPage />} />
-        <Route path="/account" element={<ComingSoonPage />} />
-        <Route path="/projects" element={<ComingSoonPage />} />
-        <Route path="/artists" element={<ComingSoonPage />} />
-        <Route path="/music" element={<ComingSoonPage />} />
-        <Route path="/interviews" element={<ComingSoonPage />} />
-        <Route path="/read" element={<ComingSoonPage />} />
-        </Routes>
+    <HomepageRevealProvider>
+      <div className="App">
+        <Header onOpenMenu={() => setMenuOpen(true)} />
+        {menuOpen && (
+          <MenuPage onClose={() => setMenuOpen(false)} />
+        )}
+        <div className="app-routes" style={{ flex: 1, width: '100%' }}>
+          <Routes>
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/archive" element={<ArchivePage />} />
+          <Route path="/archive/:folderName" element={<ArchivePage />} />
+          <Route path="/events" element={<EventsPage />} />
+          <Route path="/events/:id" element={<EventDetail />} />
+          <Route path="/issues" element={<IssuesPage />} />
+          <Route path="/issues/0" element={<ArticleTemplate />} />
+          <Route path="/issues/1" element={<Article1 />} />
+          <Route path="/issues/2" element={<Article2 />} />
+          {/* <Route path="/issues/:id" element={<Article />} /> */}
+          <Route path="/playlist" element={<PlaylistPage />} />
+          <Route path="/account" element={<ComingSoonPage />} />
+          <Route path="/projects" element={<ComingSoonPage />} />
+          <Route path="/artists" element={<ComingSoonPage />} />
+          <Route path="/music" element={<ComingSoonPage />} />
+          <Route path="/interviews" element={<ComingSoonPage />} />
+          <Route path="/read" element={<ComingSoonPage />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </HomepageRevealProvider>
   )
 }
 

@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
+import logoIcon from '../assets/svgs/3SD.svg'
+import { useHomepageReveal } from '../context/HomepageRevealContext'
 import './Homepage.css'
 
 const PHRASE = 'Third Space Digital'
@@ -18,6 +20,7 @@ const EXPAND_RAMP_DURATION = 800
 function Homepage() {
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
+  const logoRef = useRef(null)
   const [mouse, setMouse] = useState({ x: -9999, y: -9999 })
   const [revealed, setRevealed] = useState(false)
   const [expanding, setExpanding] = useState(false)
@@ -26,8 +29,13 @@ function Homepage() {
   const scrollOffsetsRef = useRef(Array(COLUMN_COUNT).fill(0))
   const smoothedOffsetsRef = useRef({})
   const mousePosRef = useRef({ x: -9999, y: -9999 })
+  const { setHomepageRevealed } = useHomepageReveal()
 
   mousePosRef.current = mouse
+
+  useEffect(() => {
+    return () => setHomepageRevealed(false)
+  }, [setHomepageRevealed])
 
   const handleMouseMove = useCallback((e) => {
     setMouse({ x: e.clientX, y: e.clientY })
@@ -37,12 +45,28 @@ function Homepage() {
     setMouse({ x: -9999, y: -9999 })
   }, [])
 
-  const handleClick = useCallback((e) => {
+  const handleTouchMove = useCallback((e) => {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0]
+      setMouse({ x: touch.clientX, y: touch.clientY })
+    }
+  }, [])
+
+  const handleTouchEnd = useCallback(() => {
+    setMouse({ x: -9999, y: -9999 })
+  }, [])
+
+  const handleLogoClick = useCallback((e) => {
+    e.stopPropagation()
     if (revealed || expanding) return
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const rect = canvas.getBoundingClientRect()
-    clickPosRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+    const container = containerRef.current
+    if (!container) return
+    const containerRect = container.getBoundingClientRect()
+    // Set click position to the center of the screen
+    clickPosRef.current = {
+      x: containerRect.width / 2,
+      y: containerRect.height / 2,
+    }
     setExpanding(true)
     expandStartRef.current = performance.now()
   }, [revealed, expanding])
@@ -196,8 +220,9 @@ function Homepage() {
       }
 
       if (scrollFrozen && rampComplete && !anyVisible) {
-        setRevealed(true)
         setExpanding(false)
+        setRevealed(true)
+        setHomepageRevealed(true)
       }
 
       ctx.save()
@@ -228,18 +253,41 @@ function Homepage() {
       className="homepage"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <section className="homepage-canvas-container" ref={containerRef}>
-        <div className={`homepage-reveal ${revealed || expanding ? 'homepage-reveal--visible' : ''}`}>
+        <div className={`homepage-reveal ${revealed ? 'homepage-reveal--visible' : ''}`}>
           <div className="homepage-reveal-content">
-            <h2 className="homepage-reveal-title">Who are we</h2>
+            <h2 className="homepage-reveal-title">You asked. We answered.</h2>
             <p className="homepage-reveal-text">
-              A digital third place for artists to collaborate, showcase, and grow.
-              A platform for our collective&apos;s creative work and community.
+              3rd Space Digital is a social events organization and visual arts editorial made for creatives, by creatives. 
+              We exist to build what so many people were looking for – a third space. Not home, not work, but somewhere in between.
+            </p>
+            <p className="homepage-reveal-text">
+              Our organization gives people a place to connect outside the mundane routine of classes and deadlines. 
+              We bring photographers, writers, designers, models, dancers, and many more altogether through immersive events 
+              and collaborative storytelling. We facilitate experiences where growth is collective.
+            </p>
+            <p className="homepage-reveal-text">
+              Every gathering has a purpose.<br />
+              Every article is collaborative.<br />
+              Every moment in 3rd Space Digital is designed to spark something new.
+            </p>
+            <p className="homepage-reveal-text" style={{ fontStyle: 'italic', marginTop: '1.5rem' }}>
+              It's time to create more than you consume.
             </p>
           </div>
         </div>
+        <button
+          ref={logoRef}
+          type="button"
+          className="homepage-logo"
+          onClick={handleLogoClick}
+          aria-label="Explore"
+        >
+          <img src={logoIcon} alt="" />
+        </button>
         {!revealed && (
           <canvas ref={canvasRef} className="homepage-canvas" />
         )}

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useHomepageReveal } from '../context/HomepageRevealContext'
 import UserMenu from './UserMenu'
 import logoIcon from '../assets/svgs/3SD.svg'
 import './Header.css'
@@ -12,6 +13,7 @@ function Header({ onOpenMenu }) {
   const lastScrollY = useRef(0)
   const [headerVisible, setHeaderVisible] = useState(true)
   const [atTop, setAtTop] = useState(true)
+  const { homepageRevealed } = useHomepageReveal()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +46,7 @@ function Header({ onOpenMenu }) {
   }
 
   const isHomepage = location.pathname === '/'
-  const useLightText = false /* homepage uses black text; light text only for dark heroes */
+  const useLightText = isHomepage && homepageRevealed
   const showHeader = isHomepage ? true : headerVisible
   const headerClass = [
     'header',

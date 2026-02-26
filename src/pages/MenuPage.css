@@ -16,6 +16,11 @@
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
+  animation: menu-overlay-fade-in 0.3s ease;
+}
+
+.menu-page--closing .menu-page-overlay {
+  animation: menu-overlay-fade-out 0.3s ease forwards;
 }
 
 .menu-panel {
@@ -26,6 +31,47 @@
   color: #fff;
   overflow-y: auto;
   height: 100%;
+  animation: menu-slide-in 0.3s ease;
+}
+
+.menu-page--closing .menu-panel {
+  animation: menu-slide-out 0.3s ease forwards;
+}
+
+@keyframes menu-slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes menu-slide-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes menu-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes menu-overlay-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .menu-page-inner {

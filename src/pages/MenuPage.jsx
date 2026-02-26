@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import instagramIcon from '../assets/svgs/instagram.svg'
 import discordIcon from '../assets/svgs/discord.svg'
@@ -7,17 +7,20 @@ import './MenuPage.css'
 
 function MenuPage({ onClose }) {
   const navigate = useNavigate()
+  const [isClosing, setIsClosing] = useState(false)
 
   const handleClose = () => {
-    if (onClose) onClose()
-    else navigate(-1)
+    setIsClosing(true)
+    setTimeout(() => {
+      if (onClose) onClose()
+      else navigate(-1)
+    }, 300) // Match animation duration
   }
 
   useEffect(() => {
     const onKeyDown = (e) => {
       if (e.key === 'Escape') {
-        if (onClose) onClose()
-        else navigate(-1)
+        handleClose()
       }
     }
     window.addEventListener('keydown', onKeyDown)
@@ -25,7 +28,7 @@ function MenuPage({ onClose }) {
   }, [onClose, navigate])
 
   return (
-    <main className="menu-page" role="dialog" aria-label="Navigation menu">
+    <main className={`menu-page ${isClosing ? 'menu-page--closing' : ''}`} role="dialog" aria-label="Navigation menu">
       <div
         className="menu-page-overlay"
         onClick={handleClose}
