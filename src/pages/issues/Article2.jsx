@@ -1,16 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { supabase } from '../../config/supabase'
 import { getArticleById } from '../../utils/issuesUtils'
 import { getImageUrl } from '../../utils/supabaseImageRetrieval'
 import './Article2.css'
 
 const ARTICLE_ID = '2'
-const IMAGE_PATH_PREFIX = 'issue/article2'
+const CAROUSEL_IMAGE_PATH_PREFIXES = ['issues/article2', 'issue/article2']
+const HERO_THUMBNAIL_PATH = 'issue/article2/thumbnail.webp'
+
+const IMAGE_EXTENSIONS_REGEX = /\.(jpg|jpeg|png|gif|webp|avif)$/i
+const CAROUSEL_IMAGES_PER_VIEW = 4
 
 function ImageCarousel({ images, carouselId, onImageClick }) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const imagesPerView = 4
   const totalImages = images.length
+  const viewportRef = useRef(null)
+  const trackRef = useRef(null)
+  const [slideStep, setSlideStep] = useState(0)
+
+  if (totalImages === 0) {
+    return null
+  }
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => {
@@ -32,18 +43,24 @@ function ImageCarousel({ images, carouselId, onImageClick }) {
     })
   }
 
-  const getVisibleImages = () => {
-    const visible = []
-    for (let i = 0; i < imagesPerView; i++) {
-      const index = (currentIndex + i) % totalImages
-      visible.push({
-        image: images[index],
-        key: `${carouselId}-${currentIndex}-${i}`,
-        actualIndex: index
-      })
+  const trackImages = useMemo(() => [...images, ...images], [images])
+
+  useEffect(() => {
+    const updateSlideStep = () => {
+      if (!viewportRef.current || !trackRef.current) return
+
+      const viewportWidth = viewportRef.current.clientWidth
+      const trackStyles = window.getComputedStyle(trackRef.current)
+      const gap = parseFloat(trackStyles.columnGap || trackStyles.gap || '0') || 0
+      const columns = parseInt(trackStyles.getPropertyValue('--carousel-columns'), 10) || CAROUSEL_IMAGES_PER_VIEW
+      const itemWidth = (viewportWidth - gap * (columns - 1)) / columns
+      setSlideStep(itemWidth + gap)
     }
-    return visible
-  }
+
+    updateSlideStep()
+    window.addEventListener('resize', updateSlideStep)
+    return () => window.removeEventListener('resize', updateSlideStep)
+  }, [totalImages])
 
   return (
     <div className="article2-carousel">
@@ -55,20 +72,29 @@ function ImageCarousel({ images, carouselId, onImageClick }) {
       >
         <i className="fa-solid fa-chevron-left"></i>
       </button>
-      <div className="article2-carousel-images">
-        {getVisibleImages().map((item, idx) => (
+      <div className="article2-carousel-images" ref={viewportRef}>
+        <div
+          className="article2-carousel-track"
+          ref={trackRef}
+          style={{ transform: `translateX(-${currentIndex * slideStep}px)` }}
+        >
+          {trackImages.map((image, idx) => (
           <div 
-            key={item.key} 
-            className="article2-carousel-image-wrap"
-            onClick={() => onImageClick(item.actualIndex)}
+            key={`${carouselId}-track-${idx}`}
+            className="article2-carousel-track-item article2-carousel-image-wrap"
+            onClick={() => onImageClick(idx % totalImages)}
           >
             <img
-              src={item.image}
-              alt={`We The People ${idx + 1}`}
+              src={image}
+              alt={`We The People ${(idx % totalImages) + 1}`}
               className="article2-carousel-image"
+              loading={idx < totalImages ? 'eager' : 'lazy'}
+              fetchPriority={idx < CAROUSEL_IMAGES_PER_VIEW ? 'high' : 'auto'}
+              decoding="async"
             />
           </div>
-        ))}
+          ))}
+        </div>
       </div>
       <button
         type="button"
@@ -88,24 +114,53 @@ function Article2() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [modalImageIndex, setModalImageIndex] = useState(null)
-  
-  // Create array alternating between thumbnail.png and nails.png
-  const carouselImages = Array.from({ length: 10 }, (_, index) => 
-    getImageUrl(`${IMAGE_PATH_PREFIX}/${index % 2 === 0 ? 'thumbnail.png' : 'nails.png'}`)
-  )
+  const [modalImages, setModalImages] = useState([])
+  const [emekaImages, setEmekaImages] = useState([])
+  const [tamiloreImages, setTamiloreImages] = useState([])
+  const [tariqImages, setTariqImages] = useState([])
 
-  const handleImageClick = (index) => {
+  const loadCarouselImages = async (folderName) => {
+    for (const basePath of CAROUSEL_IMAGE_PATH_PREFIXES) {
+      const folderPath = `${basePath}/${folderName}`
+      const { data: files, error: listError } = await supabase.storage
+        .from('images')
+        .list(folderPath, {
+          limit: 1000,
+          offset: 0,
+          sortBy: { column: 'name', order: 'asc' }
+        })
+
+      if (listError) {
+        console.error(`Error listing images in ${folderPath}:`, listError)
+        continue
+      }
+
+      const urls = (files || [])
+        .filter((file) => file.id != null && IMAGE_EXTENSIONS_REGEX.test(file.name))
+        .map((file) => getImageUrl(`${folderPath}/${file.name}`))
+
+      if (urls.length > 0) {
+        return urls
+      }
+    }
+
+    return []
+  }
+
+  const handleImageClick = (images, index) => {
+    setModalImages(images)
     setModalImageIndex(index)
   }
 
   const handleCloseModal = () => {
     setModalImageIndex(null)
+    setModalImages([])
   }
 
   const handleNextImage = () => {
-    if (modalImageIndex !== null && modalImageIndex < carouselImages.length - 1) {
+    if (modalImageIndex !== null && modalImageIndex < modalImages.length - 1) {
       setModalImageIndex(modalImageIndex + 1)
-    } else if (modalImageIndex === carouselImages.length - 1) {
+    } else if (modalImageIndex === modalImages.length - 1) {
       setModalImageIndex(0)
     }
   }
@@ -114,7 +169,7 @@ function Article2() {
     if (modalImageIndex !== null && modalImageIndex > 0) {
       setModalImageIndex(modalImageIndex - 1)
     } else if (modalImageIndex === 0) {
-      setModalImageIndex(carouselImages.length - 1)
+      setModalImageIndex(modalImages.length - 1)
     }
   }
 
@@ -125,7 +180,7 @@ function Article2() {
       if (e.key === 'Escape') {
         setModalImageIndex(null)
       } else if (e.key === 'ArrowRight') {
-        if (modalImageIndex < carouselImages.length - 1) {
+        if (modalImageIndex < modalImages.length - 1) {
           setModalImageIndex(modalImageIndex + 1)
         } else {
           setModalImageIndex(0)
@@ -134,16 +189,18 @@ function Article2() {
         if (modalImageIndex > 0) {
           setModalImageIndex(modalImageIndex - 1)
         } else {
-          setModalImageIndex(carouselImages.length - 1)
+          setModalImageIndex(modalImages.length - 1)
         }
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [modalImageIndex, carouselImages.length])
+  }, [modalImageIndex, modalImages.length])
 
   useEffect(() => {
+    let isMounted = true
+
     const load = async () => {
       try {
         setLoading(true)
@@ -153,13 +210,46 @@ function Article2() {
           setLoading(false)
           return
         }
+
+        if (!isMounted) return
         setArticle(data)
         setError(null)
+        setLoading(false)
+
+        loadCarouselImages('emeka')
+          .then((images) => {
+            if (!isMounted) return
+            setEmekaImages(images)
+          })
+          .catch((carouselErr) => {
+            console.error('Error loading emeka carousel images:', carouselErr)
+          })
+
+        loadCarouselImages('tamilore')
+          .then((images) => {
+            if (!isMounted) return
+            setTamiloreImages(images)
+          })
+          .catch((carouselErr) => {
+            console.error('Error loading tamilore carousel images:', carouselErr)
+          })
+
+        loadCarouselImages('tariq')
+          .then((images) => {
+            if (!isMounted) return
+            setTariqImages(images)
+          })
+          .catch((carouselErr) => {
+            console.error('Error loading tariq carousel images:', carouselErr)
+          })
       } catch (err) {
         console.error('Error loading article:', err)
+        if (!isMounted) return
         setError('Failed to load article')
       } finally {
-        setLoading(false)
+        if (isMounted) {
+          setLoading(false)
+        }
       }
     }
     load()
@@ -168,6 +258,7 @@ function Article2() {
     document.documentElement.style.backgroundColor = '#FAF0E6'
     
     return () => {
+      isMounted = false
       document.body.style.removeProperty('background-color')
       document.documentElement.style.removeProperty('background-color')
     }
@@ -230,7 +321,7 @@ function Article2() {
       <div className="article2-content">
         <figure className="article2-hero">
           <img
-            src={getImageUrl(`${IMAGE_PATH_PREFIX}/thumbnail.png`)}
+            src={getImageUrl(HERO_THUMBNAIL_PATH)}
             alt="We The People"
           />
         </figure>
@@ -244,7 +335,13 @@ function Article2() {
           </p>
         </div>
 
-        <ImageCarousel images={carouselImages} carouselId="carousel-1" onImageClick={handleImageClick} />
+        {emekaImages.length > 0 && (
+          <ImageCarousel
+            images={emekaImages}
+            carouselId="carousel-1"
+            onImageClick={(index) => handleImageClick(emekaImages, index)}
+          />
+        )}
 
         <div className="article2-body">
           <p className="article2-paragraph">
@@ -252,7 +349,13 @@ function Article2() {
           </p>
         </div>
 
-        <ImageCarousel images={carouselImages} carouselId="carousel-2" onImageClick={handleImageClick} />
+        {tamiloreImages.length > 0 && (
+          <ImageCarousel
+            images={tamiloreImages}
+            carouselId="carousel-2"
+            onImageClick={(index) => handleImageClick(tamiloreImages, index)}
+          />
+        )}
 
         <div className="article2-body">
           <p className="article2-paragraph">
@@ -260,7 +363,13 @@ function Article2() {
           </p>
         </div>
 
-        <ImageCarousel images={carouselImages} carouselId="carousel-3" onImageClick={handleImageClick} />
+        {tariqImages.length > 0 && (
+          <ImageCarousel
+            images={tariqImages}
+            carouselId="carousel-3"
+            onImageClick={(index) => handleImageClick(tariqImages, index)}
+          />
+        )}
       </div>
 
       <div className="article2-credits">
@@ -324,7 +433,7 @@ function Article2() {
           </button>
           <div className="article2-modal-content" onClick={(e) => e.stopPropagation()}>
             <img 
-              src={carouselImages[modalImageIndex]} 
+              src={modalImages[modalImageIndex]} 
               alt={`We The People ${modalImageIndex + 1}`}
               className="article2-modal-image"
             />

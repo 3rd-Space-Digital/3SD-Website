@@ -160,6 +160,7 @@ body:has(.article2),
 }
 
 .article2-carousel {
+  --carousel-columns: 4;
   position: relative;
   margin: 48px 0;
   display: flex;
@@ -168,11 +169,20 @@ body:has(.article2),
 }
 
 .article2-carousel-images {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
   flex: 1;
   overflow: hidden;
+}
+
+.article2-carousel-track {
+  --carousel-gap: 16px;
+  --carousel-columns: 4;
+  display: flex;
+  gap: var(--carousel-gap);
+  will-change: transform;
+}
+
+.article2-carousel-track-item {
+  flex: 0 0 calc((100% - (var(--carousel-gap) * (var(--carousel-columns) - 1))) / var(--carousel-columns));
 }
 
 .article2-carousel-image-wrap {
@@ -467,9 +477,13 @@ body:has(.article2),
     padding: 100px 30px 100px;
   }
 
-  .article2-carousel-images {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+  .article2-carousel {
+    --carousel-columns: 2;
+  }
+
+  .article2-carousel-track {
+    --carousel-gap: 12px;
+    --carousel-columns: 2;
   }
 
   .article2-carousel-arrow {
@@ -558,9 +572,13 @@ body:has(.article2),
     padding: 80px 20px 80px;
   }
 
-  .article2-carousel-images {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+  .article2-carousel {
+    --carousel-columns: 2;
+  }
+
+  .article2-carousel-track {
+    --carousel-gap: 8px;
+    --carousel-columns: 2;
   }
 
   .article2-carousel-arrow {
