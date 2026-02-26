@@ -13,6 +13,7 @@ import Article1 from './pages/issues/Article1'
 import MenuPage from './pages/MenuPage'
 import PlaylistPage from './pages/PlaylistPage'
 import ComingSoonPage from './pages/ComingSoonPage'
+import AboutPage from './pages/AboutPage'
 import './App.css'
 
 function App() {
@@ -36,14 +37,20 @@ function App() {
     if (isHomepage) {
       document.documentElement.style.removeProperty('background-color')
       document.body.style.removeProperty('background-color')
+      document.documentElement.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden'
     } else {
       document.documentElement.style.backgroundColor = '#fff'
       document.body.style.backgroundColor = '#fff'
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
     }
 
     return () => {
       document.documentElement.style.removeProperty('background-color')
       document.body.style.removeProperty('background-color')
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
     }
   }, [location.pathname])
 
@@ -57,6 +64,7 @@ function App() {
         <Routes>
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/" element={<Homepage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/archive" element={<ArchivePage />} />
         <Route path="/archive/:folderName" element={<ArchivePage />} />
         <Route path="/events" element={<EventsPage />} />

@@ -43,14 +43,15 @@ function Header({ onOpenMenu }) {
     else navigate('/menu')
   }
 
-  const isHomepageAtTop = location.pathname === '/' && atTop
-  const useLightText = isHomepageAtTop
+  const isHomepage = location.pathname === '/'
+  const useLightText = false /* homepage uses black text; light text only for dark heroes */
+  const showHeader = isHomepage ? true : headerVisible
   const headerClass = [
     'header',
-    !headerVisible && 'header--hidden',
-    headerVisible && atTop && 'header--transparent',
-    headerVisible && !atTop && 'header--glass',
-    headerVisible && useLightText && 'header--light-text',
+    !showHeader && 'header--hidden',
+    showHeader && atTop && 'header--transparent',
+    showHeader && !atTop && 'header--glass',
+    showHeader && useLightText && 'header--light-text',
   ].filter(Boolean).join(' ')
 
   return (
