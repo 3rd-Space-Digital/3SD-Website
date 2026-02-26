@@ -431,6 +431,31 @@ body:has(.article2),
   opacity: 0.7;
 }
 
+.article2-archive-cta {
+  margin: 24px 0 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.article2-archive-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: 1px solid #26170F;
+  color: #26170F;
+  text-decoration: none;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.article2-archive-link:hover {
+  background-color: #26170F;
+  color: #FAF0E6;
+}
+
 @media (max-width: 1600px) {
   .article2 {
     padding: 120px 120px 120px;
@@ -545,9 +570,26 @@ body:has(.article2),
   }
 
   .article2-meta {
-    font-size: 18px;
+    font-size: clamp(13px, 3.8vw, 18px);
     letter-spacing: -0.54px;
     white-space: nowrap;
+    position: static;
+    justify-content: center;
+    max-width: 100%;
+    padding: 0 8px;
+    text-align: center;
+    gap: 0;
+  }
+
+  .article2-date,
+  .article2-author {
+    position: static;
+    margin: 0;
+  }
+
+  .article2-sep {
+    position: static;
+    margin: 0 6px;
   }
 
   .article2-hero {
@@ -607,6 +649,9 @@ body:has(.article2),
 
   .article2-meta {
     white-space: nowrap;
+    font-size: clamp(12px, 4.2vw, 16px);
+    line-height: 1.3;
+    padding: 0 6px;
   }
 
   .article2-hero {
