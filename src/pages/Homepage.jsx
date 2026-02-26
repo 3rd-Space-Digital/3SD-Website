@@ -4,7 +4,7 @@ import './Homepage.css'
 const PHRASE = 'Third Space Digital'
 const REPULSION_DISTANCE = 1000
 const REPULSION_STRENGTH = 50
-const EXPAND_REPULSION_STRENGTH = 1900
+const EXPAND_REPULSION_STRENGTH = 2700
 const EXPAND_REPULSION_DISTANCE = 5000
 const LERP = 0.33
 const COLUMN_COUNT = 6
@@ -233,17 +233,11 @@ function Homepage() {
       <section className="homepage-canvas-container" ref={containerRef}>
         <div className={`homepage-reveal ${revealed || expanding ? 'homepage-reveal--visible' : ''}`}>
           <div className="homepage-reveal-content">
-            <h2 className="homepage-reveal-title">Who Are We?</h2>
+            <h2 className="homepage-reveal-title">Who are we</h2>
             <p className="homepage-reveal-text">
               A digital third place for artists to collaborate, showcase, and grow.
               A platform for our collective&apos;s creative work and community.
             </p>
-          </div>
-          <div className="homepage-reveal-cta">
-            <svg className="homepage-reveal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 5v14M5 12l7 7 7-7" />
-            </svg>
-            <span className="homepage-reveal-cta-text">Read Our Featured Articles</span>
           </div>
         </div>
         {!revealed && (
