@@ -10,6 +10,7 @@ import IssuesPage from './pages/issues/IssuesPage'
 // import Article from './pages/issues/Article'
 import ArticleTemplate from './pages/issues/template/ArticleTemplate'
 import Article1 from './pages/issues/Article1'
+import Article2 from './pages/issues/Article2'
 import MenuPage from './pages/MenuPage'
 import PlaylistPage from './pages/PlaylistPage'
 import ComingSoonPage from './pages/ComingSoonPage'
@@ -72,6 +73,7 @@ function App() {
         <Route path="/issues" element={<IssuesPage />} />
         <Route path="/issues/0" element={<ArticleTemplate />} />
         <Route path="/issues/1" element={<Article1 />} />
+        <Route path="/issues/2" element={<Article2 />} />
         {/* <Route path="/issues/:id" element={<Article />} /> */}
         <Route path="/playlist" element={<PlaylistPage />} />
         <Route path="/account" element={<ComingSoonPage />} />

@@ -58,6 +58,10 @@
   letter-spacing: -0.72px;
   color: #000;
   margin: 0 0 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .article-template-date,
@@ -65,8 +69,22 @@
   color: #000;
 }
 
+.article-template-date {
+  position: absolute;
+  right: 50%;
+  margin-right: 8px;
+}
+
 .article-template-sep {
   margin: 0 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.article-template-author {
+  position: absolute;
+  left: 50%;
+  margin-left: 8px;
 }
 
 .article-template-subtitle {
@@ -261,7 +279,7 @@
 
   .article-template-caption {
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 0;
   }
 
@@ -319,7 +337,7 @@
 
   .article-template-caption {
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 0;
   }
 }
@@ -354,7 +372,7 @@
 
   .article-template-caption {
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 0;
   }
 }

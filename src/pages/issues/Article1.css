@@ -67,6 +67,10 @@ body:has(.article1),
   letter-spacing: -0.72px;
   color: #000;
   margin: 0 0 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .article1-date,
@@ -74,8 +78,22 @@ body:has(.article1),
   color: #000;
 }
 
+.article1-date {
+  position: absolute;
+  right: 50%;
+  margin-right: 8px;
+}
+
 .article1-sep {
   margin: 0 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.article1-author {
+  position: absolute;
+  left: 50%;
+  margin-left: 8px;
 }
 
 .article1-subtitle {
@@ -283,7 +301,7 @@ body:has(.article1),
 
   .article1-caption {
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 0;
   }
 
@@ -346,7 +364,7 @@ body:has(.article1),
 
   .article1-caption {
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 0;
   }
 }
@@ -390,7 +408,7 @@ body:has(.article1),
 
   .article1-caption {
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 0;
   }
 }
