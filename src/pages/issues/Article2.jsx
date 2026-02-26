@@ -8,6 +8,7 @@ import './Article2.css'
 const ARTICLE_ID = '2'
 const CAROUSEL_IMAGE_PATH_PREFIXES = ['issues/article2', 'issue/article2']
 const HERO_THUMBNAIL_PATH = 'issue/article2/thumbnail.webp'
+const ARCHIVE_FOLDER_NAME = 'We The People'
 
 const IMAGE_EXTENSIONS_REGEX = /\.(jpg|jpeg|png|gif|webp|avif)$/i
 const CAROUSEL_IMAGES_PER_VIEW = 4
@@ -370,6 +371,15 @@ function Article2() {
             onImageClick={(index) => handleImageClick(tariqImages, index)}
           />
         )}
+
+        <div className="article2-archive-cta">
+          <Link
+            to={`/archive/${encodeURIComponent(ARCHIVE_FOLDER_NAME)}`}
+            className="article2-archive-link"
+          >
+            View Archive
+          </Link>
+        </div>
       </div>
 
       <div className="article2-credits">

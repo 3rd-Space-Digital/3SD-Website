@@ -347,9 +347,26 @@ body:has(.article1),
   }
 
   .article1-meta {
-    font-size: 18px;
+    font-size: clamp(13px, 3.8vw, 18px);
     letter-spacing: -0.54px;
     white-space: nowrap;
+    position: static;
+    justify-content: center;
+    max-width: 100%;
+    padding: 0 8px;
+    text-align: center;
+    gap: 0;
+  }
+
+  .article1-date,
+  .article1-author {
+    position: static;
+    margin: 0;
+  }
+
+  .article1-sep {
+    position: static;
+    margin: 0 6px;
   }
 
   .article1-hero {
@@ -394,6 +411,9 @@ body:has(.article1),
 
   .article1-meta {
     white-space: nowrap;
+    font-size: clamp(12px, 4.2vw, 16px);
+    line-height: 1.3;
+    padding: 0 6px;
   }
 
   .article1-hero {
