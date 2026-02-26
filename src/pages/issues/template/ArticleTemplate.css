@@ -320,6 +320,20 @@
   .article-template-meta {
     font-size: 18px;
     letter-spacing: -0.54px;
+    position: static;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .article-template-date,
+  .article-template-author {
+    position: static;
+    margin: 0;
+  }
+
+  .article-template-sep {
+    position: static;
+    margin: 0 6px;
   }
 
   .article-template-subtitle {
