@@ -9,8 +9,8 @@ const REPULSION_STRENGTH = 50
 const EXPAND_REPULSION_STRENGTH = 2700
 const EXPAND_REPULSION_DISTANCE = 5000
 const LERP = 0.33
-const COLUMN_COUNT = 12
-const ROWS_PER_COLUMN = 24
+const COLUMN_COUNT = 8
+const ROWS_PER_COLUMN = 12
 const SCROLL_SPEED = 1
 const COLUMN_GAP = 0
 const ROW_GAP = 0.2
@@ -96,7 +96,7 @@ function Homepage() {
       layout.fontSize = Math.min(FONT_SIZE_MAX, Math.max(FONT_SIZE_MIN, Math.min(container.clientWidth, container.clientHeight) * FONT_SIZE_SCALE))
       layout.letterSpacing = layout.fontSize * LETTER_SPACING_MULTIPLIER
       ctx.font = `${FONT_WEIGHT} ${layout.fontSize}px ${FONT_FAMILY}`
-      layout.charWidths = chars.map((c) => ctx.measureText(c).width)
+      layout.charWidths = chars.map((c) => ctx.measureText(c).width * 1.5)
       layout.phraseWidth = layout.charWidths.reduce((a, w) => a + w, 0) + layout.letterSpacing * (chars.length - 1)
       layout.rowHeight = layout.fontSize * FONT_HEIGHT_SCALE * (1 + ROW_GAP)
       layout.columnWidth = layout.phraseWidth * (1 + COLUMN_GAP)
@@ -224,7 +224,7 @@ function Homepage() {
             ctx.fillStyle = FONT_COLOR
             ctx.save()
             ctx.translate(drawX, drawY)
-            ctx.scale(1, FONT_HEIGHT_SCALE)
+            ctx.scale(1.5, FONT_HEIGHT_SCALE)
             ctx.fillText(c, 0, 0)
             ctx.restore()
             x += cw + letterSpacing
