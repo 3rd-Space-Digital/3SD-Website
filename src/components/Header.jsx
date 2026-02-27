@@ -17,6 +17,15 @@ function Header({ onOpenMenu }) {
 
   useEffect(() => {
     const isHomepage = location.pathname === '/'
+    // On the homepage intro (before reveal), keep header transparent/visible.
+    // iOS Safari can report a non-zero scroll position on load, which would
+    // incorrectly push the header into the "glass" state.
+    if (isHomepage && !homepageRevealed) {
+      lastScrollY.current = 0
+      setAtTop(true)
+      setHeaderVisible(true)
+      return
+    }
     const useRevealScrollContainer = isHomepage && homepageRevealed
     const revealScrollEl = useRevealScrollContainer
       ? document.querySelector('.homepage-reveal')
@@ -60,14 +69,15 @@ function Header({ onOpenMenu }) {
   }
 
   const isHomepage = location.pathname === '/'
+  const isHomepageIntro = isHomepage && !homepageRevealed
   const useLightText = false
   // Show header based on scroll behavior, even on homepage when revealed
   const showHeader = isHomepage && !homepageRevealed ? true : headerVisible
   const headerClass = [
     'header',
     !showHeader && 'header--hidden',
-    showHeader && atTop && 'header--transparent',
-    showHeader && !atTop && 'header--glass',
+    showHeader && (isHomepageIntro || atTop) && 'header--transparent',
+    showHeader && !isHomepageIntro && !atTop && 'header--glass',
     showHeader && useLightText && 'header--light-text',
   ].filter(Boolean).join(' ')
 
