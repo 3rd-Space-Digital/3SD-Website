@@ -9,13 +9,22 @@ const REPULSION_STRENGTH = 50
 const EXPAND_REPULSION_STRENGTH = 2700
 const EXPAND_REPULSION_DISTANCE = 5000
 const LERP = 0.33
-const COLUMN_COUNT = 6
+const COLUMN_COUNT = 12
 const ROWS_PER_COLUMN = 24
 const SCROLL_SPEED = 1
 const COLUMN_GAP = 0
 const ROW_GAP = 0.2
 const FADE_HEIGHT = 0.12
 const EXPAND_RAMP_DURATION = 800
+
+// Font configuration variables
+const FONT_FAMILY = 'Inter, system-ui, sans-serif'
+const FONT_WEIGHT = '90'
+const FONT_SIZE_MIN = 24
+const FONT_SIZE_MAX = 48
+const FONT_SIZE_SCALE = 0.001
+const LETTER_SPACING_MULTIPLIER = -0.02
+const FONT_COLOR = '#000'
 
 function Homepage() {
   const canvasRef = useRef(null)
@@ -83,9 +92,9 @@ function Homepage() {
     let layout = { fontSize: 14, letterSpacing: 0, charWidths: [], phraseWidth: 0, rowHeight: 0, columnWidth: 0, totalContentHeight: 0 }
 
     const updateLayout = () => {
-      layout.fontSize = Math.min(48, Math.max(24, Math.min(container.clientWidth, container.clientHeight) * 0.05))
-      layout.letterSpacing = layout.fontSize * -0.02
-      ctx.font = `900 ${layout.fontSize}px Inter, system-ui, sans-serif`
+      layout.fontSize = Math.min(FONT_SIZE_MAX, Math.max(FONT_SIZE_MIN, Math.min(container.clientWidth, container.clientHeight) * FONT_SIZE_SCALE))
+      layout.letterSpacing = layout.fontSize * LETTER_SPACING_MULTIPLIER
+      ctx.font = `${FONT_WEIGHT} ${layout.fontSize}px ${FONT_FAMILY}`
       layout.charWidths = chars.map((c) => ctx.measureText(c).width)
       layout.phraseWidth = layout.charWidths.reduce((a, w) => a + w, 0) + layout.letterSpacing * (chars.length - 1)
       layout.rowHeight = layout.fontSize * (1 + ROW_GAP)
@@ -211,7 +220,7 @@ function Homepage() {
                 charBottom >= -buffer
               if (overlapsViewport) anyVisible = true
             }
-            ctx.fillStyle = '#000'
+            ctx.fillStyle = FONT_COLOR
             ctx.fillText(c, drawX, drawY)
             x += cw + letterSpacing
           }
