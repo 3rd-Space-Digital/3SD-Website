@@ -260,16 +260,15 @@ function Homepage() {
         <div className={`homepage-reveal ${revealed ? 'homepage-reveal--visible' : ''}`}>
           <div className="homepage-reveal-content">
             <h2 className="homepage-reveal-title">
-              <span className="homepage-reveal-line1">You asked.</span>
+              <span className="homepage-reveal-line1">Who We Are</span>
               <br />
-              <span className="homepage-reveal-line2">We answered.</span>
             </h2>
             <p className="homepage-reveal-text homepage-reveal-p1">
-              3rd Space Digital is a social events organization and visual arts editorial made for creatives, by creatives. 
-              We exist to build what so many people were looking for – a third space. Not home, not work, but somewhere in between.
+              3rd Space Digital is a social events organization and visual arts editorial. 
+              We exist to build what so many people are looking for – a third space. Not home, not work, but somewhere in between.
             </p>
             <p className="homepage-reveal-text homepage-reveal-p2">
-              Our organization gives people a place to connect outside the mundane routine of classes and deadlines. 
+              Our organization gives people a place to connect. 
               We bring photographers, writers, designers, models, dancers, and many more altogether through immersive events 
               and collaborative storytelling. We facilitate experiences where growth is collective.
             </p>
