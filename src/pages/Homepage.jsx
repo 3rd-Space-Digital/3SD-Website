@@ -9,13 +9,23 @@ const REPULSION_STRENGTH = 50
 const EXPAND_REPULSION_STRENGTH = 2700
 const EXPAND_REPULSION_DISTANCE = 5000
 const LERP = 0.33
-const COLUMN_COUNT = 6
+const COLUMN_COUNT = 12
 const ROWS_PER_COLUMN = 24
 const SCROLL_SPEED = 1
 const COLUMN_GAP = 0
 const ROW_GAP = 0.2
 const FADE_HEIGHT = 0.12
 const EXPAND_RAMP_DURATION = 800
+
+// Font configuration variables
+const FONT_FAMILY = 'Inter, system-ui, sans-serif'
+const FONT_WEIGHT = '150'
+const FONT_SIZE_MIN = 24
+const FONT_SIZE_MAX = 48
+const FONT_SIZE_SCALE = 0.025
+const LETTER_SPACING_MULTIPLIER = -0.1
+const FONT_COLOR = '#000'
+const FONT_HEIGHT_SCALE = 0.78
 
 function Homepage() {
   const canvasRef = useRef(null)
@@ -83,12 +93,12 @@ function Homepage() {
     let layout = { fontSize: 14, letterSpacing: 0, charWidths: [], phraseWidth: 0, rowHeight: 0, columnWidth: 0, totalContentHeight: 0 }
 
     const updateLayout = () => {
-      layout.fontSize = Math.min(48, Math.max(24, Math.min(container.clientWidth, container.clientHeight) * 0.05))
-      layout.letterSpacing = layout.fontSize * -0.02
-      ctx.font = `900 ${layout.fontSize}px Inter, system-ui, sans-serif`
+      layout.fontSize = Math.min(FONT_SIZE_MAX, Math.max(FONT_SIZE_MIN, Math.min(container.clientWidth, container.clientHeight) * FONT_SIZE_SCALE))
+      layout.letterSpacing = layout.fontSize * LETTER_SPACING_MULTIPLIER
+      ctx.font = `${FONT_WEIGHT} ${layout.fontSize}px ${FONT_FAMILY}`
       layout.charWidths = chars.map((c) => ctx.measureText(c).width)
       layout.phraseWidth = layout.charWidths.reduce((a, w) => a + w, 0) + layout.letterSpacing * (chars.length - 1)
-      layout.rowHeight = layout.fontSize * (1 + ROW_GAP)
+      layout.rowHeight = layout.fontSize * FONT_HEIGHT_SCALE * (1 + ROW_GAP)
       layout.columnWidth = layout.phraseWidth * (1 + COLUMN_GAP)
       layout.totalContentHeight = layout.rowHeight * ROWS_PER_COLUMN
     }
@@ -179,7 +189,7 @@ function Homepage() {
             const c = chars[i]
             const cw = charWidths[i]
             const centerX = x + cw / 2
-            const centerY = baseY + fontSize / 2
+            const centerY = baseY + (fontSize * FONT_HEIGHT_SCALE) / 2
 
             let targetDx = 0
             let targetDy = 0
@@ -197,7 +207,7 @@ function Homepage() {
             s.dy += (targetDy - s.dy) * lerp
 
             const drawX = x + s.dx
-            const drawY = baseY + fontSize + s.dy
+            const drawY = baseY + fontSize * FONT_HEIGHT_SCALE + s.dy
 
             if (scrollFrozen) {
               const buffer = Math.max(fontSize * 4, 150)
@@ -211,8 +221,12 @@ function Homepage() {
                 charBottom >= -buffer
               if (overlapsViewport) anyVisible = true
             }
-            ctx.fillStyle = '#000'
-            ctx.fillText(c, drawX, drawY)
+            ctx.fillStyle = FONT_COLOR
+            ctx.save()
+            ctx.translate(drawX, drawY)
+            ctx.scale(1, FONT_HEIGHT_SCALE)
+            ctx.fillText(c, 0, 0)
+            ctx.restore()
             x += cw + letterSpacing
           }
         }
@@ -260,16 +274,15 @@ function Homepage() {
         <div className={`homepage-reveal ${revealed ? 'homepage-reveal--visible' : ''}`}>
           <div className="homepage-reveal-content">
             <h2 className="homepage-reveal-title">
-              <span className="homepage-reveal-line1">You asked.</span>
+              <span className="homepage-reveal-line1">Who We Are</span>
               <br />
-              <span className="homepage-reveal-line2">We answered.</span>
             </h2>
             <p className="homepage-reveal-text homepage-reveal-p1">
-              3rd Space Digital is a social events organization and visual arts editorial made for creatives, by creatives. 
-              We exist to build what so many people were looking for – a third space. Not home, not work, but somewhere in between.
+              3rd Space Digital is a social events organization and visual arts editorial. 
+              We exist to build what so many people are looking for – a third space. Not home, not work, but somewhere in between.
             </p>
             <p className="homepage-reveal-text homepage-reveal-p2">
-              Our organization gives people a place to connect outside the mundane routine of classes and deadlines. 
+              Our organization gives people a place to connect. 
               We bring photographers, writers, designers, models, dancers, and many more altogether through immersive events 
               and collaborative storytelling. We facilitate experiences where growth is collective.
             </p>

@@ -64,6 +64,17 @@
   justify-content: center;
   text-decoration: none;
   transition: opacity 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.header-logo-link:focus,
+.header-logo-link:focus-visible {
+  outline: none;
 }
 
 .header-logo-link:hover {
@@ -71,12 +82,21 @@
 }
 
 .header-logo {
-  height: clamp(23px, 5.85vw, 36px);
+  height: 30px;
   width: auto;
   display: block;
   object-fit: contain;
   /* Dark by default so visible on white backgrounds */
   filter: brightness(0);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  pointer-events: none;
 }
 
 .header-center {
@@ -108,7 +128,7 @@
   color: black;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-weight: 900;
-  font-size: 36px;
+  font-size: 24px;
   line-height: 1;
   letter-spacing: -0.02em;
   cursor: pointer;
@@ -352,33 +372,17 @@
 
 /* Large tablets and small desktops */
 @media (max-width: 1440px) {
-  .brand-name {
-    font-size: 24px;
-  }
-
   .header-center {
     min-width: 180px;
     padding: 0 20px;
-  }
-
-  .header-logo {
-    height: 26px;
   }
 }
 
 /* Large tablets and small desktops */
 @media (max-width: 1200px) {
-  .brand-name {
-    font-size: 24px;
-  }
-
   .header-center {
     min-width: 180px;
     padding: 0 20px;
-  }
-
-  .header-logo {
-    height: 26px;
   }
 }
   
@@ -388,10 +392,6 @@
       padding: 0 16px;
     }
 
-    .brand-name {
-      font-size: 22px;
-    }
-
     .header-center {
       min-width: 160px;
       padding: 0 16px;
@@ -399,10 +399,6 @@
 
     .header-right {
       gap: 20px;
-    }
-
-    .header-logo {
-      height: 24px;
     }
 
     .user-button {
@@ -418,10 +414,6 @@
       padding: 0 12px;
     }
 
-    .brand-name {
-      font-size: 20px;
-    }
-
     .header-center {
       min-width: 140px;
       padding: 0 12px;
@@ -429,10 +421,6 @@
 
     .header-right {
       gap: 16px;
-    }
-
-    .header-logo {
-      height: 22px;
     }
 
     .user-button {
@@ -450,12 +438,8 @@
   /* Mobile phones */
   @media (max-width: 700px) {
     .header {
-      height: 50px;
+      height: 65px;
       padding: 0 10px;
-    }
-
-    .brand-name {
-      font-size: 18px;
     }
 
     .header-center {
@@ -465,7 +449,7 @@
     }
 
     .header-right {
-      gap: 12px;
+      gap: 14px;
     }
 
     /* Hide Issues and Events icons on mobile; keep account and menu */
@@ -473,32 +457,24 @@
       display: none;
     }
 
-    .header-logo {
-      height: 20px;
-    }
-
     .user-button {
-      width: 28px;
-      height: 28px;
-      font-size: 14px;
+      width: 34px;
+      height: 34px;
+      font-size: 18px;
     }
 
     .header-right .tooltip {
-      font-size: 9px;
-      padding: 2px 5px;
-      bottom: -25px;
+      font-size: 11px;
+      padding: 4px 8px;
+      bottom: -30px;
     }
   }
   
   /* Very small mobile phones */
   @media (max-width: 480px) {
     .header {
-      height: 48px;
+      height: 60px;
       padding: 0 8px;
-    }
-
-    .brand-name {
-      font-size: 16px;
     }
 
     .header-center {
@@ -508,17 +484,20 @@
     }
 
     .header-right {
-      gap: 10px;
-    }
-
-    .header-logo {
-      height: 18px;
+      gap: 12px;
     }
 
     .user-button {
-      width: 26px;
-      height: 26px;
-      font-size: 12px;
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+    }
+  }
+
+  /* Extra small mobile phones */
+  @media (max-width: 422px) {
+    .user-button {
+      display: none;
     }
   }
 
