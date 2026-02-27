@@ -19,12 +19,13 @@ const EXPAND_RAMP_DURATION = 800
 
 // Font configuration variables
 const FONT_FAMILY = 'Inter, system-ui, sans-serif'
-const FONT_WEIGHT = '90'
+const FONT_WEIGHT = '150'
 const FONT_SIZE_MIN = 24
 const FONT_SIZE_MAX = 48
-const FONT_SIZE_SCALE = 0.001
-const LETTER_SPACING_MULTIPLIER = -0.02
+const FONT_SIZE_SCALE = 0.025
+const LETTER_SPACING_MULTIPLIER = -0.1
 const FONT_COLOR = '#000'
+const FONT_HEIGHT_SCALE = 0.78
 
 function Homepage() {
   const canvasRef = useRef(null)
@@ -97,7 +98,7 @@ function Homepage() {
       ctx.font = `${FONT_WEIGHT} ${layout.fontSize}px ${FONT_FAMILY}`
       layout.charWidths = chars.map((c) => ctx.measureText(c).width)
       layout.phraseWidth = layout.charWidths.reduce((a, w) => a + w, 0) + layout.letterSpacing * (chars.length - 1)
-      layout.rowHeight = layout.fontSize * (1 + ROW_GAP)
+      layout.rowHeight = layout.fontSize * FONT_HEIGHT_SCALE * (1 + ROW_GAP)
       layout.columnWidth = layout.phraseWidth * (1 + COLUMN_GAP)
       layout.totalContentHeight = layout.rowHeight * ROWS_PER_COLUMN
     }
@@ -188,7 +189,7 @@ function Homepage() {
             const c = chars[i]
             const cw = charWidths[i]
             const centerX = x + cw / 2
-            const centerY = baseY + fontSize / 2
+            const centerY = baseY + (fontSize * FONT_HEIGHT_SCALE) / 2
 
             let targetDx = 0
             let targetDy = 0
@@ -206,7 +207,7 @@ function Homepage() {
             s.dy += (targetDy - s.dy) * lerp
 
             const drawX = x + s.dx
-            const drawY = baseY + fontSize + s.dy
+            const drawY = baseY + fontSize * FONT_HEIGHT_SCALE + s.dy
 
             if (scrollFrozen) {
               const buffer = Math.max(fontSize * 4, 150)
@@ -221,7 +222,11 @@ function Homepage() {
               if (overlapsViewport) anyVisible = true
             }
             ctx.fillStyle = FONT_COLOR
-            ctx.fillText(c, drawX, drawY)
+            ctx.save()
+            ctx.translate(drawX, drawY)
+            ctx.scale(1, FONT_HEIGHT_SCALE)
+            ctx.fillText(c, 0, 0)
+            ctx.restore()
             x += cw + letterSpacing
           }
         }
