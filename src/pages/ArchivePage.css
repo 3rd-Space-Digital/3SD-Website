@@ -11,13 +11,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 40px 4%;
-  margin-bottom: 8px;
+  padding: 40px 4% 10px 4%;
+  margin-bottom: 0;
 }
 
 /* Reduce title → first divider gap */
 .archive-header + .archive-section .archive-section-divider {
-  margin-top: 18px;
+  margin-top: 20px;
 }
 
 .archive-title {
@@ -390,6 +390,10 @@
     padding: 20px 15px;
   }
 
+  .archive-header + .archive-section .archive-section-divider {
+    margin-top: 12px;
+  }
+
   .archive-title {
     font-size: 48px;
   }
@@ -478,6 +482,10 @@
 
   .archive-header {
     padding: 15px 10px;
+  }
+
+  .archive-header + .archive-section .archive-section-divider {
+    margin-top: 9px;
   }
 
   .archive-title {
