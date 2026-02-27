@@ -108,7 +108,7 @@
   color: black;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-weight: 900;
-  font-size: 36px;
+  font-size: 24px;
   line-height: 1;
   letter-spacing: -0.02em;
   cursor: pointer;
@@ -352,10 +352,6 @@
 
 /* Large tablets and small desktops */
 @media (max-width: 1440px) {
-  .brand-name {
-    font-size: 24px;
-  }
-
   .header-center {
     min-width: 180px;
     padding: 0 20px;
@@ -368,10 +364,6 @@
 
 /* Large tablets and small desktops */
 @media (max-width: 1200px) {
-  .brand-name {
-    font-size: 24px;
-  }
-
   .header-center {
     min-width: 180px;
     padding: 0 20px;
@@ -386,10 +378,6 @@
   @media (max-width: 970px) {
     .header {
       padding: 0 16px;
-    }
-
-    .brand-name {
-      font-size: 22px;
     }
 
     .header-center {
@@ -416,10 +404,6 @@
   @media (max-width: 890px) {
     .header {
       padding: 0 12px;
-    }
-
-    .brand-name {
-      font-size: 20px;
     }
 
     .header-center {
@@ -452,10 +436,6 @@
     .header {
       height: 65px;
       padding: 0 10px;
-    }
-
-    .brand-name {
-      font-size: 22px;
     }
 
     .header-center {
@@ -497,10 +477,6 @@
       padding: 0 8px;
     }
 
-    .brand-name {
-      font-size: 20px;
-    }
-
     .header-center {
       flex: 0 0 auto;
       min-width: 100px;
@@ -519,6 +495,13 @@
       width: 32px;
       height: 32px;
       font-size: 16px;
+    }
+  }
+
+  /* Extra small mobile phones */
+  @media (max-width: 390px) {
+    .user-button {
+      display: none;
     }
   }
 

@@ -54,7 +54,7 @@
   max-width: 100%;
   width: calc(100% - 400px);
   text-align: left;
-  padding: 100px 200px 40px;
+  padding: 200px 200px 40px;
   background: transparent;
   overflow-y: auto;
   max-height: 100%;
@@ -194,7 +194,7 @@
 @media (max-width: 768px) {
   .homepage-reveal-content {
     width: calc(100% - 60px);
-    padding: 85px 30px 20px;
+    padding: 150px 30px 20px;
   }
 }
 
@@ -213,14 +213,14 @@
   
   .homepage-reveal-content {
     width: calc(100% - 40px);
-    padding: 80px 20px 15px;
+    padding: 130px 20px 15px;
   }
 }
 
 @media (max-width: 320px) {
   .homepage-reveal-content {
     width: calc(100% - 30px);
-    padding: 75px 15px 10px;
+    padding: 120px 15px 10px;
   }
   
   .homepage-reveal-title {
