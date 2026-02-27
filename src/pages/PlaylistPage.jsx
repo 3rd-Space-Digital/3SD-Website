@@ -1,10 +1,8 @@
-import './PlaylistPage.css'
+import LoadingScreen from '../components/LoadingScreen'
 
 function PlaylistPage() {
   return (
-    <main className="playlist-page">
-      <h1 className="playlist-page-title">Coming Soon...</h1>
-    </main>
+    <LoadingScreen text="Coming Soon..." />
   )
 }
 

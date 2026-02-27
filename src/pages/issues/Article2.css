@@ -7,13 +7,40 @@
   box-sizing: border-box;
   position: relative;
   z-index: 1;
-  overflow-x: hidden;
+  overflow-x: visible;
 }
 
 html:has(.article2),
 body:has(.article2),
 #root:has(.article2) {
   background-color: #FAF0E6;
+  overflow-x: clip;
+}
+
+.article2-fullbleed {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: none;
+  box-sizing: border-box;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@supports (width: 100dvw) {
+  .article2-fullbleed {
+    width: 100dvw;
+  }
+}
+
+.article2-reading {
+  max-width: 65ch;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .article2-nav {
@@ -119,6 +146,11 @@ body:has(.article2),
   display: block;
 }
 
+.article2-hero.article2-fullbleed {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .article2-hero img {
   width: 100%;
   height: auto;
@@ -166,6 +198,11 @@ body:has(.article2),
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.article2-carousel.article2-fullbleed {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .article2-carousel-images {

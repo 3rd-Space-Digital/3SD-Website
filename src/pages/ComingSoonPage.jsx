@@ -1,10 +1,8 @@
-import './ComingSoonPage.css'
+import LoadingScreen from '../components/LoadingScreen'
 
 function ComingSoonPage() {
   return (
-    <main className="coming-soon-page">
-      <h1 className="coming-soon-page-title">Coming Soon...</h1>
-    </main>
+    <LoadingScreen text="Coming Soon..." />
   )
 }
 

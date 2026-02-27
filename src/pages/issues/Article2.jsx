@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { supabase } from '../../config/supabase'
 import { getArticleById } from '../../utils/issuesUtils'
 import { getImageUrl } from '../../utils/supabaseImageRetrieval'
+import LoadingScreen from '../../components/LoadingScreen'
 import './Article2.css'
 
 const ARTICLE_ID = '2'
@@ -64,7 +65,7 @@ function ImageCarousel({ images, carouselId, onImageClick }) {
   }, [totalImages])
 
   return (
-    <div className="article2-carousel">
+    <div className="article2-carousel article2-fullbleed">
       <button
         type="button"
         className="article2-carousel-arrow article2-carousel-arrow-left"
@@ -275,11 +276,7 @@ function Article2() {
   }
 
   if (loading) {
-    return (
-      <div className="article2 article2-loading">
-        <div className="article2-loading-text">Loading article...</div>
-      </div>
-    )
+    return <LoadingScreen label="Article" />
   }
 
   if (error || !article) {
@@ -320,20 +317,22 @@ function Article2() {
       </header>
 
       <div className="article2-content">
-        <figure className="article2-hero">
+        <figure className="article2-hero article2-fullbleed">
           <img
             src={getImageUrl(HERO_THUMBNAIL_PATH)}
             alt="We The People"
           />
         </figure>
-        {article.description && (
-          <p className="article2-subtitle">{article.description}</p>
-        )}
+        <div className="article2-reading">
+          {article.description && (
+            <p className="article2-subtitle">{article.description}</p>
+          )}
 
-        <div className="article2-body">
-          <p className="article2-paragraph">
-            Black history month for many is a time of communal retrospection. As a people and a county the struggles of the black persons through enslavement, jim crowe, and the lasting effects of systemic injustice often has served as a benchmark in which we measure social progress. Branded with the survivor tag, the identity of Blackness, though full of joy, expression, and diversity, is still too often reduced. Stories of trauma and pain remain overexposed and commodified, overshadowing the fullness of who we are.
-          </p>
+          <div className="article2-body">
+            <p className="article2-paragraph">
+              Black history month for many is a time of communal retrospection. As a people and a county the struggles of the black persons through enslavement, jim crowe, and the lasting effects of systemic injustice often has served as a benchmark in which we measure social progress. Branded with the survivor tag, the identity of Blackness, though full of joy, expression, and diversity, is still too often reduced. Stories of trauma and pain remain overexposed and commodified, overshadowing the fullness of who we are.
+            </p>
+          </div>
         </div>
 
         {emekaImages.length > 0 && (
@@ -344,10 +343,12 @@ function Article2() {
           />
         )}
 
-        <div className="article2-body">
-          <p className="article2-paragraph">
-            "We The People" moves in a different direction. This three part series, captured through the eyes of three photographers, explores the breadth of expression, identity, and subculture that exists under the umbrella of Blackness. Each model embodies a distinct facet of this spectrum, from Punk and Alternative culture to Streetwear, Traditionalism and Spiritualism, and Dandyism.
-          </p>
+        <div className="article2-reading">
+          <div className="article2-body">
+            <p className="article2-paragraph">
+              "We The People" moves in a different direction. This three part series, captured through the eyes of three photographers, explores the breadth of expression, identity, and subculture that exists under the umbrella of Blackness. Each model embodies a distinct facet of this spectrum, from Punk and Alternative culture to Streetwear, Traditionalism and Spiritualism, and Dandyism.
+            </p>
+          </div>
         </div>
 
         {tamiloreImages.length > 0 && (
@@ -358,10 +359,12 @@ function Article2() {
           />
         )}
 
-        <div className="article2-body">
-          <p className="article2-paragraph">
-            The series examines how these identities coexist, contrast, and expand what Blackness looks like in public space. Our goal was to create work that felt alive, self possessed, and reflective of the multiplicity within our community.
-          </p>
+        <div className="article2-reading">
+          <div className="article2-body">
+            <p className="article2-paragraph">
+              The series examines how these identities coexist, contrast, and expand what Blackness looks like in public space. Our goal was to create work that felt alive, self possessed, and reflective of the multiplicity within our community.
+            </p>
+          </div>
         </div>
 
         {tariqImages.length > 0 && (
