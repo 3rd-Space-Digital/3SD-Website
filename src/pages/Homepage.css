@@ -152,6 +152,15 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.8s linear;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.homepage-logo:focus,
+.homepage-logo:focus-visible {
+  outline: none;
 }
 .homepage-logo--dropping {
   transform: translate(-50%, 150vh);
@@ -168,6 +177,13 @@
   height: auto;
   display: block;
   filter: brightness(0) invert(1);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  pointer-events: none;
 }
 .homepage-logo:hover img {
   filter: brightness(0);

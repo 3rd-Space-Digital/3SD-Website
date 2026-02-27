@@ -64,6 +64,17 @@
   justify-content: center;
   text-decoration: none;
   transition: opacity 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.header-logo-link:focus,
+.header-logo-link:focus-visible {
+  outline: none;
 }
 
 .header-logo-link:hover {
@@ -77,6 +88,15 @@
   object-fit: contain;
   /* Dark by default so visible on white backgrounds */
   filter: brightness(0);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  pointer-events: none;
 }
 
 .header-center {
