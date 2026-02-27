@@ -71,7 +71,7 @@
 }
 
 .header-logo {
-  height: clamp(23px, 5.85vw, 36px);
+  height: 30px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -356,10 +356,6 @@
     min-width: 180px;
     padding: 0 20px;
   }
-
-  .header-logo {
-    height: 26px;
-  }
 }
 
 /* Large tablets and small desktops */
@@ -367,10 +363,6 @@
   .header-center {
     min-width: 180px;
     padding: 0 20px;
-  }
-
-  .header-logo {
-    height: 26px;
   }
 }
   
@@ -387,10 +379,6 @@
 
     .header-right {
       gap: 20px;
-    }
-
-    .header-logo {
-      height: 24px;
     }
 
     .user-button {
@@ -413,10 +401,6 @@
 
     .header-right {
       gap: 16px;
-    }
-
-    .header-logo {
-      height: 22px;
     }
 
     .user-button {
@@ -453,10 +437,6 @@
       display: none;
     }
 
-    .header-logo {
-      height: 30px;
-    }
-
     .user-button {
       width: 34px;
       height: 34px;
@@ -487,10 +467,6 @@
       gap: 12px;
     }
 
-    .header-logo {
-      height: 28px;
-    }
-
     .user-button {
       width: 32px;
       height: 32px;
@@ -499,7 +475,7 @@
   }
 
   /* Extra small mobile phones */
-  @media (max-width: 390px) {
+  @media (max-width: 422px) {
     .user-button {
       display: none;
     }
