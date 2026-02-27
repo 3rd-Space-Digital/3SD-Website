@@ -450,12 +450,12 @@
   /* Mobile phones */
   @media (max-width: 700px) {
     .header {
-      height: 50px;
+      height: 65px;
       padding: 0 10px;
     }
 
     .brand-name {
-      font-size: 18px;
+      font-size: 22px;
     }
 
     .header-center {
@@ -465,7 +465,7 @@
     }
 
     .header-right {
-      gap: 12px;
+      gap: 14px;
     }
 
     /* Hide Issues and Events icons on mobile; keep account and menu */
@@ -474,31 +474,31 @@
     }
 
     .header-logo {
-      height: 20px;
+      height: 30px;
     }
 
     .user-button {
-      width: 28px;
-      height: 28px;
-      font-size: 14px;
+      width: 34px;
+      height: 34px;
+      font-size: 18px;
     }
 
     .header-right .tooltip {
-      font-size: 9px;
-      padding: 2px 5px;
-      bottom: -25px;
+      font-size: 11px;
+      padding: 4px 8px;
+      bottom: -30px;
     }
   }
   
   /* Very small mobile phones */
   @media (max-width: 480px) {
     .header {
-      height: 48px;
+      height: 60px;
       padding: 0 8px;
     }
 
     .brand-name {
-      font-size: 16px;
+      font-size: 20px;
     }
 
     .header-center {
@@ -508,17 +508,17 @@
     }
 
     .header-right {
-      gap: 10px;
+      gap: 12px;
     }
 
     .header-logo {
-      height: 18px;
+      height: 28px;
     }
 
     .user-button {
-      width: 26px;
-      height: 26px;
-      font-size: 12px;
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
     }
   }
 

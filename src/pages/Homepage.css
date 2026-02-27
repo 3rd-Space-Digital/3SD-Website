@@ -48,14 +48,16 @@
 .homepage-reveal-content {
   position: absolute;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  transform: none;
   z-index: 2;
   max-width: 100%;
   width: calc(100% - 400px);
   text-align: left;
-  padding: 40px 200px;
+  padding: 100px 200px 40px;
   background: transparent;
+  overflow-y: auto;
+  max-height: 100%;
 }
 .homepage-reveal-title {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -192,40 +194,41 @@
 @media (max-width: 768px) {
   .homepage-reveal-content {
     width: calc(100% - 60px);
-    padding: 40px 30px;
+    padding: 85px 30px 20px;
   }
 }
 
 /* Mobile */
 @media (max-width: 700px) {
   .homepage-canvas-container {
-    min-height: calc(100vh - 50px);
-    padding-top: 50px;
+    min-height: calc(100vh - 65px);
+    padding-top: 65px;
   }
 }
 
 @media (max-width: 480px) {
   .homepage-canvas-container {
-    padding-top: 48px;
+    padding-top: 60px;
   }
   
   .homepage-reveal-content {
-    width: calc(100% - 60px);
-    padding: 40px 30px;
+    width: calc(100% - 40px);
+    padding: 80px 20px 15px;
   }
 }
 
 @media (max-width: 320px) {
   .homepage-reveal-content {
-    width: calc(100% - 40px);
-    padding: 20px;
+    width: calc(100% - 30px);
+    padding: 75px 15px 10px;
   }
   
   .homepage-reveal-title {
-    margin: 0 0 1rem;
+    margin: 0 0 0.75rem;
   }
   
   .homepage-reveal-text {
-    margin: 0 0 1rem;
+    margin: 0 0 0.75rem;
+    font-size: 16px;
   }
 }
