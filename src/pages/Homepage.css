@@ -34,12 +34,12 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-color: #000;
+  background-color: white;
   padding: 2rem;
   padding-top: calc(65px + 2rem);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 1.8s ease;
+  transition: opacity 0.8s ease 1.2s;
 }
 .homepage-reveal--visible {
   opacity: 1;
@@ -59,18 +59,19 @@
 }
 .homepage-reveal-title {
   font-family: Inter, system-ui, sans-serif;
-  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+  font-size: 96px;
   font-weight: 900;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
+  line-height: 1;
   margin: 0 0 1.5rem;
-  color: #fff;
+  color: #000;
   text-align: center;
 }
 .homepage-reveal-text {
   font-family: Inter, system-ui, sans-serif;
   font-size: clamp(0.95rem, 2.2vw, 1.05rem);
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.92);
+  color: #000;
   margin: 0 0 1.25rem;
 }
 .homepage-reveal-text:last-child {
@@ -123,17 +124,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 1.8s ease;
+  transition: transform 1.2s linear;
+}
+.homepage-logo--dropping {
+  transform: translate(-50%, 150vh);
+  pointer-events: none;
+  z-index: 1;
 }
 .homepage-reveal--visible ~ .homepage-logo {
-  opacity: 0;
+  transform: translate(-50%, 150vh);
   pointer-events: none;
+  z-index: 1;
 }
 .homepage-logo img {
   width: 100%;
   height: auto;
   display: block;
-  filter: brightness(0) invert(1);
+  filter: brightness(0);
 }
 .homepage-logo:hover img {
   filter: brightness(0);
