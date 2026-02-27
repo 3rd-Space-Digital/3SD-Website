@@ -39,7 +39,7 @@
   padding-top: calc(65px + 2rem);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.8s ease 1.2s;
+  transition: opacity 0.8s ease 0.1s;
 }
 .homepage-reveal--visible {
   opacity: 1;
@@ -59,7 +59,7 @@
 }
 .homepage-reveal-title {
   font-family: Inter, system-ui, sans-serif;
-  font-size: 96px;
+  font-size: clamp(28px, 9vw, 96px);
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 1;
@@ -69,13 +69,37 @@
 }
 .homepage-reveal-text {
   font-family: Inter, system-ui, sans-serif;
-  font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+  font-size: clamp(0.875rem, 3.5vw, 1.05rem);
   line-height: 1.7;
   color: #000;
   margin: 0 0 1.25rem;
 }
 .homepage-reveal-text:last-child {
   margin-bottom: 0;
+}
+.homepage-reveal-line1,
+.homepage-reveal-line2,
+.homepage-reveal-p1,
+.homepage-reveal-p2,
+.homepage-reveal-p3,
+.homepage-reveal-p4 {
+  opacity: 0;
+}
+.homepage-reveal--visible .homepage-reveal-line1 {
+  animation: homepage-reveal-fade-in 0.4s ease 0.1s forwards;
+}
+.homepage-reveal--visible .homepage-reveal-line2 {
+  animation: homepage-reveal-fade-in 0.4s ease 0.6s forwards;
+}
+.homepage-reveal--visible .homepage-reveal-p1,
+.homepage-reveal--visible .homepage-reveal-p2,
+.homepage-reveal--visible .homepage-reveal-p3,
+.homepage-reveal--visible .homepage-reveal-p4 {
+  animation: homepage-reveal-fade-in 0.4s ease 1.2s forwards;
+}
+@keyframes homepage-reveal-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .homepage-reveal-cta {
   position: absolute;
@@ -124,7 +148,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 1.2s linear;
+  transition: transform 0.8s linear;
 }
 .homepage-logo--dropping {
   transform: translate(-50%, 150vh);
@@ -175,5 +199,25 @@
 @media (max-width: 480px) {
   .homepage-canvas-container {
     padding-top: 48px;
+  }
+  
+  .homepage-reveal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .homepage-reveal-content {
+    width: 98%;
+    padding: 1rem;
+  }
+  
+  .homepage-reveal-title {
+    margin: 0 0 1rem;
+  }
+  
+  .homepage-reveal-text {
+    margin: 0 0 1rem;
   }
 }
