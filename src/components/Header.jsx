@@ -16,8 +16,20 @@ function Header({ onOpenMenu }) {
   const { homepageRevealed } = useHomepageReveal()
 
   useEffect(() => {
+    const isHomepage = location.pathname === '/'
+    const useRevealScrollContainer = isHomepage && homepageRevealed
+    const revealScrollEl = useRevealScrollContainer
+      ? document.querySelector('.homepage-reveal')
+      : null
+    const scrollTarget = revealScrollEl || window
+
+    const getScrollY = () => {
+      if (scrollTarget === window) return window.scrollY ?? window.pageYOffset ?? 0
+      return scrollTarget.scrollTop ?? 0
+    }
+
     const handleScroll = () => {
-      const y = window.scrollY ?? window.pageYOffset
+      const y = getScrollY()
       const scrollingUp = y < lastScrollY.current
       if (y <= TOP_THRESHOLD) {
         setAtTop(true)
@@ -28,12 +40,14 @@ function Header({ onOpenMenu }) {
       }
       lastScrollY.current = y
     }
-    const initialY = window.scrollY ?? window.pageYOffset
+
+    const initialY = getScrollY()
     lastScrollY.current = initialY
     setAtTop(initialY <= TOP_THRESHOLD)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+
+    scrollTarget.addEventListener('scroll', handleScroll, { passive: true })
+    return () => scrollTarget.removeEventListener('scroll', handleScroll)
+  }, [location.pathname, homepageRevealed])
 
   const handleBrandClick = (e) => {
     e.preventDefault()
@@ -47,7 +61,8 @@ function Header({ onOpenMenu }) {
 
   const isHomepage = location.pathname === '/'
   const useLightText = false
-  const showHeader = isHomepage ? true : headerVisible
+  // Show header based on scroll behavior, even on homepage when revealed
+  const showHeader = isHomepage && !homepageRevealed ? true : headerVisible
   const headerClass = [
     'header',
     !showHeader && 'header--hidden',
