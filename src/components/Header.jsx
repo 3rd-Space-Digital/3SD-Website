@@ -46,7 +46,7 @@ function Header({ onOpenMenu }) {
   }
 
   const isHomepage = location.pathname === '/'
-  const useLightText = isHomepage && homepageRevealed
+  const useLightText = false
   const showHeader = isHomepage ? true : headerVisible
   const headerClass = [
     'header',

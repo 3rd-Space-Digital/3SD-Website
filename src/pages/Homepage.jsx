@@ -259,7 +259,7 @@ function Homepage() {
       <section className="homepage-canvas-container" ref={containerRef}>
         <div className={`homepage-reveal ${revealed ? 'homepage-reveal--visible' : ''}`}>
           <div className="homepage-reveal-content">
-            <h2 className="homepage-reveal-title">You asked. We answered.</h2>
+            <h2 className="homepage-reveal-title">You asked.<br />We answered.</h2>
             <p className="homepage-reveal-text">
               3rd Space Digital is a social events organization and visual arts editorial made for creatives, by creatives. 
               We exist to build what so many people were looking for – a third space. Not home, not work, but somewhere in between.
@@ -282,7 +282,7 @@ function Homepage() {
         <button
           ref={logoRef}
           type="button"
-          className="homepage-logo"
+          className={`homepage-logo ${expanding || revealed ? 'homepage-logo--dropping' : ''}`}
           onClick={handleLogoClick}
           aria-label="Explore"
         >
