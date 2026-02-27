@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { getAllArticles } from '../../utils/issuesUtils'
+import LoadingScreen from '../../components/LoadingScreen'
 import './IssuesPage.css'
 
 function IssuesPage() {
@@ -42,11 +43,7 @@ function IssuesPage() {
     const archive = filteredWithoutTemplate.filter(article => !latestIds.has(article.id))
 
   if (loading) {
-    return (
-      <div className="issues-page">
-        <div className="issues-loading">Loading issues...</div>
-      </div>
-    )
+    return <LoadingScreen label="Issues" />
   }
 
   return (
@@ -102,10 +99,10 @@ function IssuesPage() {
                 <div className="issue-image">
                   <img src={article.thumbnailUrl} alt={article.title} />
                 </div>
-                <h2 className="issue-title">{article.title}</h2>
-                {article.description && (
-                  <p className="issue-description">{truncateDescription(article.description)}</p>
-                )}
+                <div className="issue-card-content">
+                  <h2 className="issue-title">{article.title}</h2>
+                  <p className="issue-description">{truncateDescription(article.description) || '\u00A0'}</p>
+                </div>
               </Link>
             ))
           ) : (
@@ -129,10 +126,10 @@ function IssuesPage() {
                 <div className="issue-image">
                   <img src={article.thumbnailUrl} alt={article.title} />
                 </div>
-                <h2 className="issue-title">{article.title}</h2>
-                {article.description && (
-                  <p className="issue-description">{truncateDescription(article.description)}</p>
-                )}
+                <div className="issue-card-content">
+                  <h2 className="issue-title">{article.title}</h2>
+                  <p className="issue-description">{truncateDescription(article.description) || '\u00A0'}</p>
+                </div>
               </Link>
             ))
           ) : (

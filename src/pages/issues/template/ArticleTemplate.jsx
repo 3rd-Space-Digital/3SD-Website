@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { getArticleById } from '../../../utils/issuesUtils'
 import { getImageUrl } from '../../../utils/supabaseImageRetrieval'
+import LoadingScreen from '../../../components/LoadingScreen'
 import './ArticleTemplate.css'
 
 const ARTICLE_ID = '0'
@@ -53,11 +54,7 @@ function ArticleTemplate() {
   }
 
   if (loading) {
-    return (
-      <div className="article-template article-template-loading">
-        <div className="article-template-loading-text">Loading article...</div>
-      </div>
-    )
+    return <LoadingScreen label="Article" />
   }
 
   if (error || !article) {
@@ -101,7 +98,7 @@ function ArticleTemplate() {
       </header>
 
       <div className="article-template-content">
-        <figure className="article-template-hero">
+        <figure className="article-template-hero article-template-fullbleed">
           <img
             src={getImageUrl(`${IMAGE_PATH_PREFIX}/hira_bathroom.png`)}
             alt="Hira Shrestha Looking Over a Men's Bathroom Stall"
@@ -111,16 +108,18 @@ function ArticleTemplate() {
           </figcaption>
         </figure>
 
-        <div className="article-template-body">
-          <p className="article-template-paragraph">
-            Ecco2k's solo EP PXE, released on YEAR0001 at the end of March, sounds like "throwing a car battery into a washing machine," per his own admission. Accompanied by a full suite of visuals created by Tokyo-based artist Freddy Carrasco, PXE follows Arogundade's remarkable 2019 debut album E. His music was always fascinating, but the momentum of his creative stride has greatly intensified in recent years.
-          </p>
-          <p className="article-template-paragraph">
-            "I discovered what I wanted to say and how I wanted to say it," said Arogundade, describing an extended period of self-discovery that informed both releases and continues to this day. "It made me re-evaluate a lot of my personality and why I am the way I am. This change happened to come about because of a thousand different factors. It was just time for it to happen."
-          </p>
+        <div className="article-template-reading">
+          <div className="article-template-body">
+            <p className="article-template-paragraph">
+              Ecco2k's solo EP PXE, released on YEAR0001 at the end of March, sounds like "throwing a car battery into a washing machine," per his own admission. Accompanied by a full suite of visuals created by Tokyo-based artist Freddy Carrasco, PXE follows Arogundade's remarkable 2019 debut album E. His music was always fascinating, but the momentum of his creative stride has greatly intensified in recent years.
+            </p>
+            <p className="article-template-paragraph">
+              "I discovered what I wanted to say and how I wanted to say it," said Arogundade, describing an extended period of self-discovery that informed both releases and continues to this day. "It made me re-evaluate a lot of my personality and why I am the way I am. This change happened to come about because of a thousand different factors. It was just time for it to happen."
+            </p>
+          </div>
         </div>
 
-        <figure className="article-template-two-images">
+        <figure className="article-template-two-images article-template-fullbleed">
           <div className="article-template-two-images-grid">
             <div className="article-template-image-wrap">
               <img
@@ -142,10 +141,12 @@ function ArticleTemplate() {
           </figcaption>
         </figure>
 
-        <div className="article-template-body">
-          <p className="article-template-paragraph">
-            You're not supposed to say that. When you're a kid, adults ask that all the time, and you have to have a good answer. This is actually a conversation I had with Tobias a few years ago. Our parents' generation, when they were growing up, they weren't necessarily allowed to be whatever they wanted or do what they liked. They had to deal with really strict expectations that they couldn't get out of easily. Then when people like us were growing up, a lot of our parents ended up having the attitude of being different from their parents and raising freer kids. Their attitude was: "You can be whatever you want, you can do whatever you want, but you have to decide what that is. We'll support you or encourage you, but you have to make up your mind." That is really relevant here, because you're not supposed to say that you don't want anything. That's a slap in the face for everything that our parents had to overcome in their lifetime. But at the same time, it doesn't mean that you're not motivated or that you're not passionate. My approach is not a goal-oriented way of doing something; it's more about the love of doing the thing in the first place.
-          </p>
+        <div className="article-template-reading">
+          <div className="article-template-body">
+            <p className="article-template-paragraph">
+              You're not supposed to say that. When you're a kid, adults ask that all the time, and you have to have a good answer. This is actually a conversation I had with Tobias a few years ago. Our parents' generation, when they were growing up, they weren't necessarily allowed to be whatever they wanted or do what they liked. They had to deal with really strict expectations that they couldn't get out of easily. Then when people like us were growing up, a lot of our parents ended up having the attitude of being different from their parents and raising freer kids. Their attitude was: "You can be whatever you want, you can do whatever you want, but you have to decide what that is. We'll support you or encourage you, but you have to make up your mind." That is really relevant here, because you're not supposed to say that you don't want anything. That's a slap in the face for everything that our parents had to overcome in their lifetime. But at the same time, it doesn't mean that you're not motivated or that you're not passionate. My approach is not a goal-oriented way of doing something; it's more about the love of doing the thing in the first place.
+            </p>
+          </div>
         </div>
       </div>
 

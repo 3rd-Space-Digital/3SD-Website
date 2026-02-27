@@ -7,13 +7,40 @@
   box-sizing: border-box;
   position: relative;
   z-index: 1;
-  overflow-x: hidden;
+  overflow-x: visible;
 }
 
 html:has(.article1),
 body:has(.article1),
 #root:has(.article1) {
   background-color: white;
+  overflow-x: clip;
+}
+
+.article1-fullbleed {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: none;
+  box-sizing: border-box;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@supports (width: 100dvw) {
+  .article1-fullbleed {
+    width: 100dvw;
+  }
+}
+
+.article1-reading {
+  max-width: 65ch;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .article1-nav {
@@ -117,6 +144,11 @@ body:has(.article1),
   padding: 0;
   background-color: white;
   display: block;
+}
+
+.article1-hero.article1-fullbleed {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .article1-hero img {

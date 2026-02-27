@@ -1,6 +1,14 @@
 import { supabase } from '../config/supabase'
 import { getImageUrl } from './supabaseImageRetrieval'
 
+const normalizeCoverPhotoUrl = (coverPhotoUrlOrPath) => {
+  if (!coverPhotoUrlOrPath) return ''
+  const raw = String(coverPhotoUrlOrPath).trim()
+  if (!raw) return ''
+  if (/^https?:\/\//i.test(raw)) return raw
+  return getImageUrl(raw.replace(/^\/+/, ''))
+}
+
 export const getArchiveThumbnailUrl = async (folderName) => {
   try {
     const { data: folderFiles, error: folderError } = await supabase.storage
@@ -98,6 +106,7 @@ export const getArchiveFolders = async () => {
       if (imageFiles.length > 0) {
         const firstImage = imageFiles[0].name
         const thumbnailUrl = getImageUrl(`archive/${folderName}/${firstImage}`)
+        const coverPhotoUrl = normalizeCoverPhotoUrl(record?.cover_photo_url) || thumbnailUrl
         
         // Parse photographer data - support both single and multiple photographers
         let photographers = []
@@ -135,6 +144,7 @@ export const getArchiveFolders = async () => {
           id: record?.id || null,
           folderName: folderName,
           thumbnailUrl: thumbnailUrl,
+          coverPhotoUrl: coverPhotoUrl,
           imageCount: imageFiles.length,
           photographers: photographers,
           date: record?.date || null,
@@ -251,7 +261,8 @@ export const getArchiveByFolderName = async (folderName) => {
         folderName: data.name,
         photographers: photographers,
         date: data.date,
-        category: data.category || 'photoshoot'
+        category: data.category || 'photoshoot',
+        coverPhotoUrl: normalizeCoverPhotoUrl(data.cover_photo_url)
       }
     }
 
@@ -264,7 +275,8 @@ export const getArchiveByFolderName = async (folderName) => {
         instagram: 'https://www.instagram.com/_iso.media_/'
       }],
       date: null,
-      category: folderName.toLowerCase().includes('event') ? 'event' : 'photoshoot'
+      category: folderName.toLowerCase().includes('event') ? 'event' : 'photoshoot',
+      coverPhotoUrl: ''
     }
   } catch (error) {
     console.error('Error fetching archive by folder name:', error)
@@ -277,7 +289,8 @@ export const getArchiveByFolderName = async (folderName) => {
         instagram: 'https://www.instagram.com/_iso.media_/'
       }],
       date: null,
-      category: folderName.toLowerCase().includes('event') ? 'event' : 'photoshoot'
+      category: folderName.toLowerCase().includes('event') ? 'event' : 'photoshoot',
+      coverPhotoUrl: ''
     }
   }
 }

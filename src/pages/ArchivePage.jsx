@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { getArchiveFolders, getArchiveFolderImages, getArchiveByFolderName } from '../utils/archiveUtils'
+import LoadingScreen from '../components/LoadingScreen'
 import './ArchivePage.css'
 
 function ArchivePage() {
@@ -144,13 +145,7 @@ function ArchivePage() {
   }, [modalImageIndex, folderImages.length])
 
   if (loading) {
-    return (
-      <main className="archive-page">
-        <div className="archive-header">
-          <div className="archive-loading">Loading archives...</div>
-        </div>
-      </main>
-    )
+    return <LoadingScreen label="Archives" />
   }
 
   if (selectedFolder) {
@@ -302,10 +297,12 @@ function ArchivePage() {
                 onClick={() => handleFolderClick(folder.folderName)}
               >
                 <div className="archive-folder-thumbnail">
-                  <img src={folder.thumbnailUrl} alt={folder.folderName} />
+                  <img src={folder.coverPhotoUrl || folder.thumbnailUrl} alt={folder.folderName} />
                 </div>
-                <div className="archive-folder-name">{folder.folderName}</div>
-                <div className="archive-folder-count">{folder.imageCount} images</div>
+                <div className="archive-folder-card-content">
+                  <div className="archive-folder-name">{folder.folderName}</div>
+                  <div className="archive-folder-count">{folder.imageCount} images</div>
+                </div>
               </div>
             ))
           ) : (
@@ -327,10 +324,12 @@ function ArchivePage() {
                 onClick={() => handleFolderClick(folder.folderName)}
               >
                 <div className="archive-folder-thumbnail">
-                  <img src={folder.thumbnailUrl} alt={folder.folderName} />
+                  <img src={folder.coverPhotoUrl || folder.thumbnailUrl} alt={folder.folderName} />
                 </div>
-                <div className="archive-folder-name">{folder.folderName}</div>
-                <div className="archive-folder-count">{folder.imageCount} images</div>
+                <div className="archive-folder-card-content">
+                  <div className="archive-folder-name">{folder.folderName}</div>
+                  <div className="archive-folder-count">{folder.imageCount} images</div>
+                </div>
               </div>
             ))
           ) : (

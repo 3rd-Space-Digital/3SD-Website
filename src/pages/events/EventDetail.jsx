@@ -2,6 +2,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getEventById } from '../../utils/eventUtils'
 import { getArchiveFolders } from '../../utils/archiveUtils'
+import LoadingScreen from '../../components/LoadingScreen'
 import './EventDetail.css'
 
 function formatEventDate(d) {
@@ -37,7 +38,7 @@ function EventDetail() {
     load()
   }, [id])
 
-  if (loading) return <div className="event-detail event-detail-loading">Loading...</div>
+  if (loading) return <LoadingScreen label="Event" />
   if (!event) return <div className="event-detail event-detail-error">Event not found</div>
 
   return (
