@@ -102,12 +102,42 @@
 }
 
 .issues-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 20px;
+  column-count: 3;
+  column-gap: 10px;
   padding: 0 4%;
   max-width: 1600px;
   margin: 0 auto;
+}
+
+.issues-grid-latest {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  align-items: start;
+}
+
+.issues-grid-latest > .issue-card {
+  grid-column: 1;
+  margin-bottom: 0;
+  break-inside: auto;
+  -webkit-column-break-inside: auto;
+}
+
+.issues-grid-latest-stack {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.issues-grid-latest-stack > .issue-card {
+  margin-bottom: 0;
+}
+
+/* If a section has exactly two cards, stack and center them. */
+.issues-grid:has(> .issue-card:nth-child(2):last-child) {
+  column-count: 1;
+  max-width: 380px;
 }
 
 .issue-card {
@@ -121,7 +151,13 @@
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #eee;
-  height: 100%;
+  height: auto;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 0;
+  box-sizing: border-box;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
 }
 
 .issue-card-content {
@@ -202,7 +238,10 @@
 }
 
 @media (max-width: 1200px) {
-  .issues-grid { gap: 20px; }
+  .issues-grid-archive {
+    column-count: 2;
+    column-gap: 10px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -247,9 +286,13 @@
   }
 
   .issues-grid {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 40px;
+    column-count: 1;
+    column-gap: 0;
     padding: 20px 4%;
+  }
+
+  .issues-grid-latest {
+    display: block;
   }
 
   .issue-title {
@@ -299,7 +342,12 @@
   }
 
   .issues-grid {
-    gap: 40px;
+    column-count: 1;
+    column-gap: 0;
+  }
+
+  .issues-grid:has(> .issue-card:nth-child(2):last-child) {
+    max-width: 100%;
   }
 
   .issue-title {

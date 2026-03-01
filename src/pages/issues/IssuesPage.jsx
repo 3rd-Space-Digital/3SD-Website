@@ -35,6 +35,22 @@ function IssuesPage() {
     if (text.length <= maxLength) return text
     return text.substring(0, maxLength).trim() + '...'
   }
+
+  const renderIssueCard = (article) => (
+    <Link
+      key={article.id}
+      to={`/issues/${article.id}`}
+      className="issue-card"
+    >
+      <div className="issue-image">
+        <img src={article.thumbnailUrl} alt={article.title} />
+      </div>
+      <div className="issue-card-content">
+        <h2 className="issue-title">{article.title}</h2>
+        <p className="issue-description">{truncateDescription(article.description) || '\u00A0'}</p>
+      </div>
+    </Link>
+  )
   
     const latest = [...filteredWithoutTemplate]
     .sort((a, b) => new Date(b.article_date) - new Date(a.article_date))
@@ -88,23 +104,19 @@ function IssuesPage() {
         <div className="issues-section-divider">
           <span className="issues-section-title">Latest</span>
         </div>
-        <div className="issues-grid">
+        <div className="issues-grid issues-grid-latest">
           {latest.length > 0 ? (
-            latest.map(article => (
-              <Link 
-                key={article.id} 
-                to={`/issues/${article.id}`}
-                className="issue-card"
-              >
-                <div className="issue-image">
-                  <img src={article.thumbnailUrl} alt={article.title} />
+            latest.length === 3 ? (
+              <>
+                {renderIssueCard(latest[0])}
+                <div className="issues-grid-latest-stack">
+                  {renderIssueCard(latest[1])}
+                  {renderIssueCard(latest[2])}
                 </div>
-                <div className="issue-card-content">
-                  <h2 className="issue-title">{article.title}</h2>
-                  <p className="issue-description">{truncateDescription(article.description) || '\u00A0'}</p>
-                </div>
-              </Link>
-            ))
+              </>
+            ) : (
+              latest.map(renderIssueCard)
+            )
           ) : (
             <p className="issues-empty">No latest issues</p>
           )}
@@ -115,23 +127,9 @@ function IssuesPage() {
         <div className="issues-section-divider">
           <span className="issues-section-title">Archive</span>
         </div>
-        <div className="issues-grid">
+        <div className="issues-grid issues-grid-archive">
           {archive.length > 0 ? (
-            archive.map(article => (
-              <Link 
-                key={article.id} 
-                to={`/issues/${article.id}`}
-                className="issue-card"
-              >
-                <div className="issue-image">
-                  <img src={article.thumbnailUrl} alt={article.title} />
-                </div>
-                <div className="issue-card-content">
-                  <h2 className="issue-title">{article.title}</h2>
-                  <p className="issue-description">{truncateDescription(article.description) || '\u00A0'}</p>
-                </div>
-              </Link>
-            ))
+            archive.map(renderIssueCard)
           ) : (
             <p className="issues-empty">No archived issues</p>
           )}

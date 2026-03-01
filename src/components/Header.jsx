@@ -70,7 +70,7 @@ function Header({ onOpenMenu }) {
 
   const isHomepage = location.pathname === '/'
   const isHomepageIntro = isHomepage && !homepageRevealed
-  const useLightText = false
+  const useLightText = location.pathname === '/issues/3'
   // Show header based on scroll behavior, even on homepage when revealed
   const showHeader = isHomepage && !homepageRevealed ? true : headerVisible
   const headerClass = [
