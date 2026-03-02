@@ -12,10 +12,41 @@ function EventsPage() {
   const searchInputRef = useRef(null)
 
   useEffect(() => {
-    getAllEvents().then((data) => {
-      setEvents(data)
-      setLoading(false)
-    })
+    let isMounted = true
+
+    const preloadImage = (src) =>
+      new Promise((resolve) => {
+        if (!src) {
+          resolve()
+          return
+        }
+
+        const img = new Image()
+        img.onload = () => resolve()
+        img.onerror = () => resolve()
+        img.src = src
+      })
+
+    const load = async () => {
+      try {
+        const data = await getAllEvents()
+        await Promise.all((data || []).map((event) => preloadImage(event.thumbnailUrl)))
+        if (!isMounted) return
+        setEvents(data || [])
+      } catch (error) {
+        console.error('Error loading events:', error)
+        if (!isMounted) return
+        setEvents([])
+      } finally {
+        if (isMounted) setLoading(false)
+      }
+    }
+
+    load()
+
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   useEffect(() => {

@@ -12,10 +12,41 @@ function IssuesPage() {
   const searchInputRef = useRef(null)
 
   useEffect(() => {
-    getAllArticles().then((data) => {
-      setArticles(data)
-      setLoading(false)
-    })
+    let isMounted = true
+
+    const preloadImage = (src) =>
+      new Promise((resolve) => {
+        if (!src) {
+          resolve()
+          return
+        }
+
+        const img = new Image()
+        img.onload = () => resolve()
+        img.onerror = () => resolve()
+        img.src = src
+      })
+
+    const load = async () => {
+      try {
+        const data = await getAllArticles()
+        await Promise.all((data || []).map((article) => preloadImage(article.thumbnailUrl)))
+        if (!isMounted) return
+        setArticles(data || [])
+      } catch (error) {
+        console.error('Error loading issues:', error)
+        if (!isMounted) return
+        setArticles([])
+      } finally {
+        if (isMounted) setLoading(false)
+      }
+    }
+
+    load()
+
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   useEffect(() => {

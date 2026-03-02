@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { supabase } from '../../config/supabase'
 import { getArticleById } from '../../utils/issuesUtils'
 import { getImageUrl } from '../../utils/supabaseImageRetrieval'
+import LoadingScreen from '../../components/LoadingScreen'
 import './Article2.css'
 
 const ARTICLE_ID = '2'
@@ -275,11 +276,7 @@ function Article2() {
   }
 
   if (loading) {
-    return (
-      <div className="article2 article2-loading">
-        <div className="article2-loading-text">Loading article...</div>
-      </div>
-    )
+    return <LoadingScreen text="Loading Issue" />
   }
 
   if (error || !article) {

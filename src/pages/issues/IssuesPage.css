@@ -292,7 +292,24 @@
   }
 
   .issues-grid-latest {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .issues-grid-latest > .issue-card,
+  .issues-grid-latest-stack > .issue-card {
+    margin-bottom: 0;
+  }
+
+  .issues-grid-latest-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .issue-card:hover {
+    transform: none;
   }
 
   .issue-title {

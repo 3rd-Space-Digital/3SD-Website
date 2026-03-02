@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { getArticleById } from '../../utils/issuesUtils'
 import { getImageUrl } from '../../utils/supabaseImageRetrieval'
+import LoadingScreen from '../../components/LoadingScreen'
 import './Article3.css'
 
 const ARTICLE_ID = '3'
@@ -88,11 +89,7 @@ function Article3() {
   const formattedDate = formatDate(article.article_date)
 
   if (loading) {
-    return (
-      <div className="article3 article3-loading">
-        <div className="article3-loading-text">Loading article...</div>
-      </div>
-    )
+    return <LoadingScreen text="Loading Issue" />
   }
 
   if (error) {
