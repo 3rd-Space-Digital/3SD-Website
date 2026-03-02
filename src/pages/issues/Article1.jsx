@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { getArticleById } from '../../utils/issuesUtils'
 import { getImageUrl } from '../../utils/supabaseImageRetrieval'
+import LoadingScreen from '../../components/LoadingScreen'
 import './Article1.css'
 
 const ARTICLE_ID = '1'
@@ -53,11 +54,7 @@ function Article1() {
   }
 
   if (loading) {
-    return (
-      <div className="article1 article1-loading">
-        <div className="article1-loading-text">Loading article...</div>
-      </div>
-    )
+    return <LoadingScreen text="Loading Issue" />
   }
 
   if (error || !article) {

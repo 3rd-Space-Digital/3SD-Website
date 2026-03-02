@@ -231,9 +231,13 @@
 }
 
 @media (max-width: 768px) {
+  .homepage-reveal {
+    justify-content: flex-start;
+  }
+
   .homepage-reveal-content {
     width: calc(100% - 60px);
-    padding: 150px 30px 20px;
+    padding: 90px 30px 20px;
   }
 }
 
@@ -252,14 +256,14 @@
   
   .homepage-reveal-content {
     width: calc(100% - 40px);
-    padding: 130px 20px 15px;
+    padding: 70px 20px 15px;
   }
 }
 
 @media (max-width: 320px) {
   .homepage-reveal-content {
     width: calc(100% - 30px);
-    padding: 120px 15px 10px;
+    padding: 60px 15px 10px;
   }
   
   .homepage-reveal-title {

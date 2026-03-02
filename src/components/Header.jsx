@@ -58,8 +58,12 @@ function Header({ onOpenMenu }) {
     return () => scrollTarget.removeEventListener('scroll', handleScroll)
   }, [location.pathname, homepageRevealed])
 
-  const handleBrandClick = (e) => {
+  const handleHomeClick = (e) => {
     e.preventDefault()
+    if (location.pathname === '/') {
+      window.location.reload()
+      return
+    }
     navigate('/')
   }
 
@@ -84,13 +88,13 @@ function Header({ onOpenMenu }) {
   return (
     <div className={headerClass}>
       <div className="header-left">
-        <Link to="/" className="header-logo-link" aria-label="Home">
+        <Link to="/" className="header-logo-link" aria-label="Home" onClick={handleHomeClick}>
           <img src={logoIcon} alt="" className="header-logo" />
         </Link>
       </div>
 
       <div className="header-center">
-        <div className="brand-name-link" onClick={handleBrandClick}>
+        <div className="brand-name-link" onClick={handleHomeClick}>
           <div className="brand-name">
             ThirdSpaceDigital
           </div>
