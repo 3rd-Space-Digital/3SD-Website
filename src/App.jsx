@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import { HomepageRevealProvider } from './context/HomepageRevealContext'
 import Header from './components/Header'
 import AuthCallback from './pages/AuthCallback'
@@ -88,6 +89,7 @@ function App() {
           <Route path="/read" element={<ComingSoonPage />} />
           </Routes>
         </div>
+        <Analytics />
       </div>
     </HomepageRevealProvider>
   )
