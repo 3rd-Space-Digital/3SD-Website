@@ -98,7 +98,7 @@ function Article1() {
         <figure className="article1-hero">
           <img
             src={getImageUrl(`${IMAGE_PATH_PREFIX}/tu1.jpg`)}
-            alt="Tuesdaz Urban Photo Meet-Up"
+            alt="Tuesdaze Urban Photo Meet-Up"
           />
         </figure>
         {article.description && (
@@ -107,7 +107,7 @@ function Article1() {
 
         <div className="article1-body">
           <p className="article1-paragraph">
-            Imagine with me now, it's about 20 degrees outside on the dimly lit streets of Deep Ellum. You just left your car in a super sketchy back alley and you're wondering if you had the right address, when suddenly the warm glow of an unassuming record store catches your eye. With the only other option being your untimely demise in this Texas winter, you muster up the courage to finally walk inside. And suddenly,without warning, you've been sucked into another dimension, buzzing with music, color, and a personality big enough to swallow you whole. This past month, Tuesdaz Urban — a creative space in Dallas built for Black, brown, and LGBTQ photographers — teamed up with Get Records With Me to host their New Talent Photo Meet‑Up, a space for aspiring models and photographers alike to hone their skills, network, and have a good time.
+            Imagine with me now, it's about 20 degrees outside on the dimly lit streets of Deep Ellum. You just left your car in a super sketchy back alley and you're wondering if you had the right address, when suddenly the warm glow of an unassuming record store catches your eye. With the only other option being your untimely demise in this Texas winter, you muster up the courage to finally walk inside. And suddenly,without warning, you've been sucked into another dimension, buzzing with music, color, and a personality big enough to swallow you whole. This past month, Tuesdaze Urban — a creative space in Dallas built for Black, brown, and LGBTQ photographers — teamed up with Get Records With Me to host their New Talent Photo Meet‑Up, a space for aspiring models and photographers alike to hone their skills, network, and have a good time.
           </p>
           <p className="article1-paragraph">
             Ok, I'll admit being the most underdressed person in that room definitely did not do my nerves any favors, but after a 30 minute car ride worth of motivational podcasts there's no way I was turning back. So begrudgingly, I entered. The only thing I can really compare walking into this record store to is that scene from Dr.Who when they enter that telephone box. At a first glance the front door is unassuming, but as soon as you walk in your first realization is just how much of an optical illusion this place is. With high lofted ceilings, multiple floors, and walls littered with posters, I couldn't help but get distracted by how cool of a space Get Records With Me was able to put together.
@@ -119,14 +119,14 @@ function Article1() {
             <div className="article1-image-wrap">
               <img
                 src={getImageUrl(`${IMAGE_PATH_PREFIX}/tu2.jpg`)}
-                alt="Tuesdaz Urban Photo Meet-Up"
+                alt="Tuesdaze Urban Photo Meet-Up"
                 className="article1-image-left"
               />
             </div>
             <div className="article1-image-wrap">
               <img
                 src={getImageUrl(`${IMAGE_PATH_PREFIX}/tu3.jpg`)}
-                alt="Tuesdaz Urban Photo Meet-Up"
+                alt="Tuesdaze Urban Photo Meet-Up"
                 className="article1-image-right"
               />
             </div>
@@ -141,7 +141,7 @@ function Article1() {
             But even with all that visual character, the space quickly became secondary to the people in it. The room was full of creatives with wildly different styles and personalities, and that diversity set the tone for the entire night. One minute you'd find yourself talking to somebody covered head to toe in early‑2000s cyber‑grunge, and the next you'd be face‑to‑face with someone who looked like they'd stepped straight off a Vogue cover, fur coat and all. In such an interconnected space bustling with conversation I knew I had to meet the mastermind behind it all.
           </p>
           <p className="article1-paragraph">
-            Navigating through a sea of fishnets, septum piercings, and leather jackets I was excited to finally meet Destiny, the ring leader behind this whole operation. In our conversation, they explained that the idea for Tuesdaz Urban came from noticing just how few photographers were represented in traditional gallery spaces. "Tuesdaz Urban is an artist hub for Black, brown, and LGBTQ individuals in Dallas," they told me, adding that the project began after attending a gallery show where only one or two photographers were featured. That moment pushed them to imagine something different, a space where underrepresented creatives could not only gather, but present their work in a gallery‑like setting and reach wider audiences. For Destiny, building community wasn't an afterthought; it was the entire point.
+            Navigating through a sea of fishnets, septum piercings, and leather jackets I was excited to finally meet Destiny, the ring leader behind this whole operation. In our conversation, they explained that the idea for Tuesdaze Urban came from noticing just how few photographers were represented in traditional gallery spaces. "Tuesdaze Urban is an artist hub for Black, brown, and LGBTQ individuals in Dallas," they told me, adding that the project began after attending a gallery show where only one or two photographers were featured. That moment pushed them to imagine something different, a space where underrepresented creatives could not only gather, but present their work in a gallery‑like setting and reach wider audiences. For Destiny, building community wasn't an afterthought; it was the entire point.
           </p>
           <p className="article1-paragraph">
             As we talked, I had an opportunity to see just what went on behind the scenes to put together an event of this scope.They spoke highly of Get Records With Me, the LGBTQ‑run record store hosting the event, and how meaningful that collaboration was. "They're really, really cool," Destiny told me. "Just them holding the space for individuals like us to come in and create this networking or events in general means a lot, because not many LGBTQ individuals are holding spaces for creatives." As the night went on it became pretty clear to me that opportunities like this, although rare, were greatly appreciated by the community.
@@ -159,14 +159,14 @@ function Article1() {
             <div className="article1-image-wrap">
               <img
                 src={getImageUrl(`${IMAGE_PATH_PREFIX}/tu4.jpg`)}
-                alt="Tuesdaz Urban Photo Meet-Up"
+                alt="Tuesdaze Urban Photo Meet-Up"
                 className="article1-image-left"
               />
             </div>
             <div className="article1-image-wrap">
               <img
                 src={getImageUrl(`${IMAGE_PATH_PREFIX}/tu5.jpg`)}
-                alt="Tuesdaz Urban Photo Meet-Up"
+                alt="Tuesdaze Urban Photo Meet-Up"
                 className="article1-image-right"
               />
             </div>
