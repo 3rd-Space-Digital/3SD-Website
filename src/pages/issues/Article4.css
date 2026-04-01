@@ -161,34 +161,10 @@ body:has(.article4),
   margin-bottom: 0;
 }
 
-/* figure resets — UA styles often add large side margins */
+/* Match Article 1 (Tuesdaze): vertical rhythm around image rows and body */
 .article4-two-images {
-  margin: 0;
-  padding: 0;
-  border: 0;
+  margin: 48px 0;
   display: block;
-  text-align: center;
-}
-
-.article4-content > .article4-two-images:first-of-type {
-  margin-top: 0;
-}
-
-.article4-content > .article4-two-images:last-of-type {
-  margin-bottom: 8px;
-}
-
-/* Pull text blocks tight against image rows */
-.article4-body:has(+ .article4-two-images) .article4-paragraph:last-child {
-  margin-bottom: 4px;
-}
-
-.article4-two-images + .article4-body .article4-paragraph:first-child {
-  margin-top: 0;
-}
-
-.article4-two-images + .article4-body .article4-paragraph:last-child {
-  margin-bottom: 4px;
 }
 
 /*
@@ -226,15 +202,9 @@ body:has(.article4),
 }
 
 .article4-two-images .article4-caption {
-  margin-top: 2px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 16px;
   display: block;
   position: relative;
-  max-width: min(880px, 100%);
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
 }
 
 .article4-loading,
@@ -363,7 +333,7 @@ body:has(.article4),
   .article4-two-images-grid {
     grid-template-columns: 1fr;
     justify-items: center;
-    gap: 8px;
+    gap: 16px;
     height: auto;
   }
 

@@ -4,11 +4,16 @@ import { getAllArticles } from '../../utils/issuesUtils'
 import LoadingScreen from '../../components/LoadingScreen'
 import './IssuesPage.css'
 
+const LATEST_ISSUE_COUNT = 5
+
 function IssuesPage() {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchOpen, setSearchOpen] = useState(false)
+  const [narrowLatestLayout, setNarrowLatestLayout] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia('(max-width: 768px)').matches : false
+  )
   const searchInputRef = useRef(null)
 
   useEffect(() => {
@@ -53,6 +58,14 @@ function IssuesPage() {
     if (searchOpen && searchInputRef.current) searchInputRef.current.focus()
   }, [searchOpen])
 
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)')
+    const sync = () => setNarrowLatestLayout(mq.matches)
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
+  }, [])
+
   const q = searchQuery.trim().toLowerCase()
   const filtered = q
     ? articles.filter((article) => article.title.toLowerCase().includes(q))
@@ -84,8 +97,8 @@ function IssuesPage() {
   )
   
     const latest = [...filteredWithoutTemplate]
-    .sort((a, b) => new Date(b.article_date) - new Date(a.article_date))
-    .slice(0, 3)
+      .sort((a, b) => new Date(b.article_date) - new Date(a.article_date))
+      .slice(0, LATEST_ISSUE_COUNT)
     const latestIds = new Set(latest.map(article => article.id))
     const archive = filteredWithoutTemplate.filter(article => !latestIds.has(article.id))
 
@@ -135,7 +148,13 @@ function IssuesPage() {
         <div className="issues-section-divider">
           <span className="issues-section-title">Latest</span>
         </div>
-        <div className="issues-grid issues-grid-latest">
+        <div
+          className={
+            latest.length === 3
+              ? 'issues-grid issues-grid-latest issues-grid-latest--featured'
+              : 'issues-grid issues-grid-latest'
+          }
+        >
           {latest.length > 0 ? (
             latest.length === 3 ? (
               <>
@@ -145,8 +164,20 @@ function IssuesPage() {
                   {renderIssueCard(latest[2])}
                 </div>
               </>
-            ) : (
+            ) : narrowLatestLayout ? (
               latest.map(renderIssueCard)
+            ) : (
+              <div className="issues-grid-latest-split issues-grid-latest-split--3">
+                <div className="issues-grid-latest-col">
+                  {latest.filter((_, i) => i % 3 === 0).map(renderIssueCard)}
+                </div>
+                <div className="issues-grid-latest-col">
+                  {latest.filter((_, i) => i % 3 === 1).map(renderIssueCard)}
+                </div>
+                <div className="issues-grid-latest-col">
+                  {latest.filter((_, i) => i % 3 === 2).map(renderIssueCard)}
+                </div>
+              </div>
             )
           ) : (
             <p className="issues-empty">No latest issues</p>
