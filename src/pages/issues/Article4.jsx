@@ -1,14 +1,30 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { getArticleById } from '../../utils/issuesUtils'
 import { getImageUrl } from '../../utils/supabaseImageRetrieval'
 import LoadingScreen from '../../components/LoadingScreen'
+import { IssueImageCarousel } from '../../components/issues/IssueImageCarousel'
 import './Article4.css'
 
 const ARTICLE_ID = '4'
 const IMAGE_PATH_PREFIX = 'issue/article4'
 const ANDREW_INSTAGRAM = 'https://www.instagram.com/_iso.media_/'
 const ETHAN_INSTAGRAM = 'https://www.instagram.com/not.__ethan/'
+const CAROUSEL_IMAGES_PER_VIEW = 4
+
+/** Hero alternates between these (pic 12 is not in row-2 carousel) */
+const HERO_CYCLE_FILES = ['pic 1.webp', 'pic 12.webp']
+const HERO_CYCLE_ALTS = [
+  'Urban street and transit at night',
+  'Urban Interlude'
+]
+const HERO_CYCLE_INTERVAL_MS = 5000
+
+/** Row 1 carousel: former two-up rows (pics 2, 4, 5, 7) */
+const CAROUSEL_ROW1_FILES = ['pic 2.webp', 'pic 4.webp', 'pic 5.webp', 'pic 7.webp']
+
+/** Row 2 carousel */
+const CAROUSEL_ROW2_FILES = ['pic 8.webp', 'pic 9.webp', 'pic 10.webp', 'pic 11.webp']
 
 const article4ImageUrl = (fileName) =>
   getImageUrl(`${IMAGE_PATH_PREFIX}/${fileName}`)
@@ -18,6 +34,83 @@ function Article4() {
   const [article, setArticle] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [modalImageIndex, setModalImageIndex] = useState(null)
+  const [modalImages, setModalImages] = useState([])
+
+  const carouselRow1Urls = useMemo(
+    () => CAROUSEL_ROW1_FILES.map((f) => article4ImageUrl(f)),
+    []
+  )
+  const carouselRow2Urls = useMemo(
+    () => CAROUSEL_ROW2_FILES.map((f) => article4ImageUrl(f)),
+    []
+  )
+
+  const heroCycleUrls = useMemo(
+    () => HERO_CYCLE_FILES.map((f) => article4ImageUrl(f)),
+    []
+  )
+
+  const [heroImageIndex, setHeroImageIndex] = useState(0)
+
+  useEffect(() => {
+    if (heroCycleUrls.length < 2) return
+    const id = window.setInterval(() => {
+      setHeroImageIndex((i) => (i + 1) % heroCycleUrls.length)
+    }, HERO_CYCLE_INTERVAL_MS)
+    return () => window.clearInterval(id)
+  }, [heroCycleUrls.length])
+
+  const handleImageClick = (images, index) => {
+    setModalImages(images)
+    setModalImageIndex(index)
+  }
+
+  const handleCloseModal = () => {
+    setModalImageIndex(null)
+    setModalImages([])
+  }
+
+  const handleNextImage = () => {
+    if (modalImageIndex !== null && modalImageIndex < modalImages.length - 1) {
+      setModalImageIndex(modalImageIndex + 1)
+    } else if (modalImageIndex === modalImages.length - 1) {
+      setModalImageIndex(0)
+    }
+  }
+
+  const handlePrevImage = () => {
+    if (modalImageIndex !== null && modalImageIndex > 0) {
+      setModalImageIndex(modalImageIndex - 1)
+    } else if (modalImageIndex === 0) {
+      setModalImageIndex(modalImages.length - 1)
+    }
+  }
+
+  useEffect(() => {
+    if (modalImageIndex === null) return
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setModalImageIndex(null)
+      } else if (e.key === 'ArrowRight') {
+        if (modalImageIndex < modalImages.length - 1) {
+          setModalImageIndex(modalImageIndex + 1)
+        } else {
+          setModalImageIndex(0)
+        }
+      } else if (e.key === 'ArrowLeft') {
+        if (modalImageIndex > 0) {
+          setModalImageIndex(modalImageIndex - 1)
+        } else {
+          setModalImageIndex(modalImages.length - 1)
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [modalImageIndex, modalImages.length])
 
   useEffect(() => {
     const load = async () => {
@@ -100,10 +193,10 @@ function Article4() {
       </header>
 
       <div className="article4-content">
-        <figure className="article4-hero">
+        <figure className="article4-hero" aria-live="polite">
           <img
-            src={article4ImageUrl('pic 1.webp')}
-            alt="Urban street and transit at night"
+            src={heroCycleUrls[heroImageIndex]}
+            alt={HERO_CYCLE_ALTS[heroImageIndex] ?? 'Urban Interlude'}
           />
         </figure>
         {article.description && (
@@ -126,23 +219,15 @@ function Article4() {
           </p>
         </div>
 
-        <figure className="article4-two-images">
-          <div className="article4-two-images-grid">
-            <div className="article4-image-wrap">
-              <img
-                src={article4ImageUrl('pic 2.webp')}
-                alt="City architecture and movement"
-                className="article4-image-left"
-              />
-            </div>
-            <div className="article4-image-wrap">
-              <img
-                src={article4ImageUrl('pic 4.webp')}
-                alt="Urban infrastructure and transit"
-                className="article4-image-right"
-              />
-            </div>
-          </div>
+        <figure className="article4-carousel-figure">
+          <IssueImageCarousel
+            ns="article4"
+            altLabel="Urban Interlude"
+            images={carouselRow1Urls}
+            carouselId="article4-carousel-row1"
+            imagesPerView={CAROUSEL_IMAGES_PER_VIEW}
+            onImageClick={(index) => handleImageClick(carouselRow1Urls, index)}
+          />
           <figcaption className="article4-caption">
             Built to Move People Through
           </figcaption>
@@ -162,27 +247,21 @@ function Article4() {
           </p>
         </div>
 
-        <figure className="article4-two-images">
-          <div className="article4-two-images-grid">
-            <div className="article4-image-wrap">
-              <img
-                src={article4ImageUrl('pic 5.webp')}
-                alt="Quiet moment in the city"
-                className="article4-image-left"
-              />
-            </div>
-            <div className="article4-image-wrap">
-              <img
-                src={article4ImageUrl('pic 7.webp')}
-                alt="Urban stillness amid motion"
-                className="article4-image-right"
-              />
-            </div>
-          </div>
-          <figcaption className="article4-caption">
-            Room to Slow Down and Observe
-          </figcaption>
-        </figure>
+        {carouselRow2Urls.length > 0 && (
+          <figure className="article4-carousel-figure">
+            <IssueImageCarousel
+              ns="article4"
+              altLabel="Urban Interlude"
+              images={carouselRow2Urls}
+              carouselId="article4-carousel-row2"
+              imagesPerView={CAROUSEL_IMAGES_PER_VIEW}
+              onImageClick={(index) => handleImageClick(carouselRow2Urls, index)}
+            />
+            <figcaption className="article4-caption">
+              Room to Slow Down and Observe
+            </figcaption>
+          </figure>
+        )}
       </div>
 
       <div className="article4-credits">
@@ -210,6 +289,48 @@ function Article4() {
           </div>
         </div>
       </div>
+
+      {modalImageIndex !== null && (
+        <div className="article4-modal" onClick={handleCloseModal} role="presentation">
+          <button
+            type="button"
+            className="article4-modal-close"
+            onClick={handleCloseModal}
+            aria-label="Close modal"
+          >
+            ×
+          </button>
+          <button
+            type="button"
+            className="article4-modal-prev"
+            onClick={(e) => {
+              e.stopPropagation()
+              handlePrevImage()
+            }}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+          <div className="article4-modal-content" onClick={(e) => e.stopPropagation()} role="presentation">
+            <img
+              src={modalImages[modalImageIndex]}
+              alt={`Urban Interlude ${modalImageIndex + 1}`}
+              className="article4-modal-image"
+            />
+          </div>
+          <button
+            type="button"
+            className="article4-modal-next"
+            onClick={(e) => {
+              e.stopPropagation()
+              handleNextImage()
+            }}
+            aria-label="Next image"
+          >
+            ›
+          </button>
+        </div>
+      )}
     </div>
   )
 }

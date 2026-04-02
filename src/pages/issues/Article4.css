@@ -161,50 +161,174 @@ body:has(.article4),
   margin-bottom: 0;
 }
 
-/* Match Article 1 (Tuesdaze): vertical rhythm around image rows and body */
-.article4-two-images {
+/* Carousel blocks (same structure as We The People / Article 2) */
+.article4-carousel-figure {
   margin: 48px 0;
   display: block;
 }
 
-/*
- * Side-by-side photos: use max-content columns so each cell is only as wide as the
- * image (not 50% of the row). A 1fr 1fr grid + object-fit: contain centers narrow
- * images in huge half-width boxes — reads as a massive “gutter” between them.
- */
-.article4-two-images-grid {
-  display: grid;
-  grid-template-columns: max-content max-content;
-  gap: 10px;
-  justify-content: center;
-  align-items: end;
-  width: 100%;
-  max-width: min(880px, 100%);
-  margin-inline: auto;
-  height: auto;
-  box-sizing: border-box;
-}
-
-.article4-image-wrap {
-  min-width: 0;
-  line-height: 0;
-}
-
-.article4-image-wrap img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: min(420px, calc(50vw - 48px));
-  max-height: min(560px, 70vh);
-  object-fit: contain;
-  vertical-align: bottom;
-  background-color: white;
-}
-
-.article4-two-images .article4-caption {
+.article4-carousel-figure .article4-caption {
   margin-top: 16px;
   display: block;
   position: relative;
+}
+
+.article4-carousel {
+  --carousel-columns: 4;
+  position: relative;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.article4-carousel-images {
+  flex: 1;
+  overflow: hidden;
+}
+
+.article4-carousel-track {
+  --carousel-gap: 16px;
+  --carousel-columns: 4;
+  display: flex;
+  gap: var(--carousel-gap);
+  will-change: transform;
+}
+
+.article4-carousel-track-item {
+  flex: 0 0 calc((100% - (var(--carousel-gap) * (var(--carousel-columns) - 1))) / var(--carousel-columns));
+}
+
+.article4-carousel-image-wrap {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.article4-carousel-image-wrap:hover {
+  opacity: 0.9;
+}
+
+.article4-carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+
+.article4-carousel-arrow {
+  background: transparent;
+  border: none;
+  color: #000;
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.article4-carousel-arrow:hover {
+  background: #e8e8e8;
+}
+
+.article4-carousel-arrow:active {
+  background: #ddd;
+}
+
+.article4-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.article4-modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.article4-modal-content img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+.article4-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 48px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.2s;
+  z-index: 1001;
+}
+
+.article4-modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.article4-modal-prev,
+.article4-modal-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 48px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.2s;
+  z-index: 1001;
+}
+
+.article4-modal-prev {
+  left: 20px;
+}
+
+.article4-modal-next {
+  right: 20px;
+}
+
+.article4-modal-prev:hover,
+.article4-modal-next:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .article4-loading,
@@ -330,24 +454,42 @@ body:has(.article4),
     padding: 100px 30px 100px;
   }
 
-  .article4-two-images-grid {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 16px;
-    height: auto;
+  .article4-carousel {
+    --carousel-columns: 2;
   }
 
-  .article4-image-wrap {
-    height: auto;
-    min-height: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  .article4-carousel-track {
+    --carousel-gap: 12px;
+    --carousel-columns: 2;
   }
 
-  .article4-image-wrap img {
-    max-width: 100%;
-    max-height: min(520px, 65vh);
+  .article4-carousel-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .article4-modal-close {
+    top: 10px;
+    right: 10px;
+    font-size: 36px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .article4-modal-prev,
+  .article4-modal-next {
+    font-size: 36px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .article4-modal-prev {
+    left: 10px;
+  }
+
+  .article4-modal-next {
+    right: 10px;
   }
 
   .article4-header {
@@ -452,5 +594,20 @@ body:has(.article4),
     font-size: 24px;
     font-weight: 500;
     letter-spacing: 0;
+  }
+
+  .article4-carousel {
+    --carousel-columns: 2;
+  }
+
+  .article4-carousel-track {
+    --carousel-gap: 8px;
+    --carousel-columns: 2;
+  }
+
+  .article4-carousel-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
   }
 }
