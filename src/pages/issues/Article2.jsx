@@ -1,9 +1,10 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { supabase } from '../../config/supabase'
 import { getArticleById } from '../../utils/issuesUtils'
 import { getImageUrl } from '../../utils/supabaseImageRetrieval'
 import LoadingScreen from '../../components/LoadingScreen'
+import { IssueImageCarousel } from '../../components/issues/IssueImageCarousel'
 import './Article2.css'
 
 const ARTICLE_ID = '2'
@@ -13,102 +14,6 @@ const ARCHIVE_FOLDER_NAME = 'We The People'
 
 const IMAGE_EXTENSIONS_REGEX = /\.(jpg|jpeg|png|gif|webp|avif)$/i
 const CAROUSEL_IMAGES_PER_VIEW = 4
-
-function ImageCarousel({ images, carouselId, onImageClick }) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const totalImages = images.length
-  const viewportRef = useRef(null)
-  const trackRef = useRef(null)
-  const [slideStep, setSlideStep] = useState(0)
-
-  if (totalImages === 0) {
-    return null
-  }
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => {
-      const nextIndex = prevIndex + 1
-      if (nextIndex >= totalImages) {
-        return 0
-      }
-      return nextIndex
-    })
-  }
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => {
-      const prevIndexNew = prevIndex - 1
-      if (prevIndexNew < 0) {
-        return totalImages - 1
-      }
-      return prevIndexNew
-    })
-  }
-
-  const trackImages = useMemo(() => [...images, ...images], [images])
-
-  useEffect(() => {
-    const updateSlideStep = () => {
-      if (!viewportRef.current || !trackRef.current) return
-
-      const viewportWidth = viewportRef.current.clientWidth
-      const trackStyles = window.getComputedStyle(trackRef.current)
-      const gap = parseFloat(trackStyles.columnGap || trackStyles.gap || '0') || 0
-      const columns = parseInt(trackStyles.getPropertyValue('--carousel-columns'), 10) || CAROUSEL_IMAGES_PER_VIEW
-      const itemWidth = (viewportWidth - gap * (columns - 1)) / columns
-      setSlideStep(itemWidth + gap)
-    }
-
-    updateSlideStep()
-    window.addEventListener('resize', updateSlideStep)
-    return () => window.removeEventListener('resize', updateSlideStep)
-  }, [totalImages])
-
-  return (
-    <div className="article2-carousel">
-      <button
-        type="button"
-        className="article2-carousel-arrow article2-carousel-arrow-left"
-        onClick={prevSlide}
-        aria-label="Previous images"
-      >
-        <i className="fa-solid fa-chevron-left"></i>
-      </button>
-      <div className="article2-carousel-images" ref={viewportRef}>
-        <div
-          className="article2-carousel-track"
-          ref={trackRef}
-          style={{ transform: `translateX(-${currentIndex * slideStep}px)` }}
-        >
-          {trackImages.map((image, idx) => (
-          <div 
-            key={`${carouselId}-track-${idx}`}
-            className="article2-carousel-track-item article2-carousel-image-wrap"
-            onClick={() => onImageClick(idx % totalImages)}
-          >
-            <img
-              src={image}
-              alt={`We The People ${(idx % totalImages) + 1}`}
-              className="article2-carousel-image"
-              loading={idx < totalImages ? 'eager' : 'lazy'}
-              fetchPriority={idx < CAROUSEL_IMAGES_PER_VIEW ? 'high' : 'auto'}
-              decoding="async"
-            />
-          </div>
-          ))}
-        </div>
-      </div>
-      <button
-        type="button"
-        className="article2-carousel-arrow article2-carousel-arrow-right"
-        onClick={nextSlide}
-        aria-label="Next images"
-      >
-        <i className="fa-solid fa-chevron-right"></i>
-      </button>
-    </div>
-  )
-}
 
 function Article2() {
   const navigate = useNavigate()
@@ -334,9 +239,12 @@ function Article2() {
         </div>
 
         {emekaImages.length > 0 && (
-          <ImageCarousel
+          <IssueImageCarousel
+            ns="article2"
+            altLabel="We The People"
             images={emekaImages}
             carouselId="carousel-1"
+            imagesPerView={CAROUSEL_IMAGES_PER_VIEW}
             onImageClick={(index) => handleImageClick(emekaImages, index)}
           />
         )}
@@ -348,9 +256,12 @@ function Article2() {
         </div>
 
         {tamiloreImages.length > 0 && (
-          <ImageCarousel
+          <IssueImageCarousel
+            ns="article2"
+            altLabel="We The People"
             images={tamiloreImages}
             carouselId="carousel-2"
+            imagesPerView={CAROUSEL_IMAGES_PER_VIEW}
             onImageClick={(index) => handleImageClick(tamiloreImages, index)}
           />
         )}
@@ -362,9 +273,12 @@ function Article2() {
         </div>
 
         {tariqImages.length > 0 && (
-          <ImageCarousel
+          <IssueImageCarousel
+            ns="article2"
+            altLabel="We The People"
             images={tariqImages}
             carouselId="carousel-3"
+            imagesPerView={CAROUSEL_IMAGES_PER_VIEW}
             onImageClick={(index) => handleImageClick(tariqImages, index)}
           />
         )}
