@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import emailjs from '@emailjs/browser'
 import './GenMemForm.css'
 
 function GenMemForm({ searchQuery, filteredRoles, onSubmitStatus }) {
@@ -22,6 +23,11 @@ function GenMemForm({ searchQuery, filteredRoles, onSubmitStatus }) {
 
   // year options
   const years = ['Freshman', 'Sophomore', 'Junior', 'Senior', 'Graduate Student']
+
+  // initialize emailJS with your public key
+  const EMAILJS_PUBLIC_KEY = 'jWy-mESeSJ-aei3xe'
+  const EMAILJS_SERVICE_ID = 'service_ktyizqw'
+  const EMAILJS_TEMPLATE_ID = 'YOUR_GENERAL_TEMPLATE_ID' // Replace with your template ID
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -53,32 +59,48 @@ function GenMemForm({ searchQuery, filteredRoles, onSubmitStatus }) {
     setIsSubmitting(true)
 
     try {
-      // !!!! replace with actual API endpoint eventually !!!
-      const response = await fetch('/api/applications/general', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-
-      if (response.ok) {
-        onSubmitStatus('success')
-        setFormData({
-          fullName: '',
-          email: '',
-          phone: '',
-          studentId: '',
-          role: '',
-          year: '',
-          major: '',
-          whyJoin: '',
-          skills: '',
-          availability: '',
-          portfolioUrl: '',
-          linkedinUrl: ''
-        })
-      } else {
-        throw new Error('Submission failed')
+      // email template parameters
+      const templateParams = {
+        to_email: '3rddspacedigital@gmail.com',
+        from_name: formData.fullName,
+        from_email: formData.email,
+        phone: formData.phone || 'Not provided',
+        student_id: formData.studentId || 'Not provided',
+        role: formData.role,
+        year: formData.year || 'Not provided',
+        major: formData.major || 'Not provided',
+        why_join: formData.whyJoin,
+        skills: formData.skills || 'Not provided',
+        availability: formData.availability || 'Not provided',
+        portfolio: formData.portfolioUrl || 'Not provided',
+        linkedin: formData.linkedinUrl || 'Not provided',
+        submission_date: new Date().toLocaleString()
       }
+
+      // send email using EmailJS
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      )
+
+      onSubmitStatus('success')
+      // reset form
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        studentId: '',
+        role: '',
+        year: '',
+        major: '',
+        whyJoin: '',
+        skills: '',
+        availability: '',
+        portfolioUrl: '',
+        linkedinUrl: ''
+      })
     } catch (error) {
       console.error('Error submitting application:', error)
       onSubmitStatus('error')
