@@ -29,6 +29,7 @@ function ClubCollabForm({ onSubmitStatus }) {
   ]
 
   // emailJS configuration
+  const EMAILJS_PUBLIC_KEY = 'jWy-mESeSJ-aei3xe'
   const EMAILJS_SERVICE_ID = 'service_ktyizqw'
   const EMAILJS_TEMPLATE_ID = 'template_0ae8jlh'
 
@@ -62,7 +63,7 @@ function ClubCollabForm({ onSubmitStatus }) {
     setIsSubmitting(true)
 
     try {
-      // Email template parameters for club collaboration
+      // email template parameters for club collaboration
       const templateParams = {
         to_email: '3rddspacedigital@gmail.com',
         club_name: formData.clubName,
@@ -82,7 +83,8 @@ function ClubCollabForm({ onSubmitStatus }) {
       const response = await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
-        templateParams
+        templateParams,
+        EMAILJS_PUBLIC_KEY
       )
 
       console.log('EmailJS Response:', response)
