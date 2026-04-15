@@ -1,0 +1,310 @@
+.apps-page {
+  background-color: white;
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 120px;
+  padding-bottom: 120px;
+  position: relative;
+}
+
+.apps-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 4% 10px 4%;
+  margin-bottom: 0;
+}
+
+/* Reduce title → first divider gap */
+.apps-header + .apps-section .apps-section-divider {
+  margin-top: 20px;
+}
+
+.apps-title {
+  color: black;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 96px;
+  font-weight: 900;
+  margin: 0;
+}
+
+.apps-search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.apps-search-icon,
+.apps-search-close {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+
+.apps-search-icon:hover,
+.apps-search-close:hover {
+  opacity: 0.7;
+}
+
+.apps-search-input {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 18px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-width: 200px;
+  outline: none;
+}
+
+.apps-search-input:focus {
+  border-color: black;
+}
+
+/* Section Dividers */
+.apps-section {
+  margin-bottom: 60px;
+}
+
+.apps-section-divider {
+  position: relative;
+  margin: 40px 4% 30px 4%;
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.apps-section-divider::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 3px;
+  background-color: black;
+}
+
+.apps-section-title {
+  color: black;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  background-color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
+  z-index: 1;
+  margin-left: 40px;
+}
+
+/* Tabs */
+.apps-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 4%;
+  margin: 20px 0 40px 0;
+}
+
+.apps-tab {
+  background: none;
+  border: none;
+  padding: 12px 32px;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border-radius: 8px;
+}
+
+.apps-tab:hover {
+  color: black;
+  background-color: #f5f5f5;
+}
+
+.apps-tab.active {
+  color: black;
+  background-color: #f5f5f5;
+}
+
+/* Success/Error Messages */
+.apps-success-message,
+.apps-error-message {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  margin: 20px 4% 30px 4%;
+  border-radius: 8px;
+  animation: slideIn 0.3s ease;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.apps-success-message {
+  background-color: #f0fdf4;
+  border-left: 4px solid #22c55e;
+  color: #166534;
+}
+
+.apps-success-message i {
+  color: #22c55e;
+  font-size: 24px;
+}
+
+.apps-error-message {
+  background-color: #fef2f2;
+  border-left: 4px solid #ef4444;
+  color: #991b1b;
+}
+
+.apps-error-message i {
+  color: #ef4444;
+  font-size: 24px;
+}
+
+.apps-success-message p,
+.apps-error-message p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .apps-tabs {
+    gap: 16px;
+  }
+  
+  .apps-tab {
+    padding: 10px 28px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .apps-page {
+    padding-top: 60px;
+  }
+
+  .apps-header {
+    padding: 30px 4% 8px 4%;
+  }
+
+  .apps-title {
+    font-size: 48px;
+  }
+
+  .apps-search-icon,
+  .apps-search-close {
+    font-size: 20px;
+  }
+
+  .apps-search-input {
+    min-width: 140px;
+    font-size: 16px;
+  }
+
+  .apps-section {
+    margin-bottom: 40px;
+  }
+
+  .apps-section-divider {
+    margin: 30px 4% 20px 4%;
+  }
+
+  .apps-header + .apps-section .apps-section-divider {
+    margin-top: 12px;
+  }
+
+  .apps-section-title {
+    font-size: 28px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .apps-tabs {
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 4%;
+    margin: 20px 0 30px 0;
+  }
+
+  .apps-tab {
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 18px;
+  }
+
+  .apps-success-message,
+  .apps-error-message {
+    padding: 14px 20px;
+    margin: 20px 4% 25px 4%;
+  }
+
+  .apps-success-message i,
+  .apps-error-message i {
+    font-size: 20px;
+  }
+
+  .apps-success-message p,
+  .apps-error-message p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .apps-page {
+    padding-top: 50px;
+  }
+
+  .apps-header {
+    padding: 20px 4% 6px 4%;
+  }
+
+  .apps-title {
+    font-size: 36px;
+  }
+
+  .apps-section-divider {
+    margin: 25px 4% 15px 4%;
+  }
+
+  .apps-header + .apps-section .apps-section-divider {
+    margin-top: 9px;
+  }
+
+  .apps-section-title {
+    font-size: 24px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .apps-tab {
+    font-size: 16px;
+    padding: 10px 16px;
+  }
+
+  .apps-success-message,
+  .apps-error-message {
+    padding: 12px 16px;
+  }
+}

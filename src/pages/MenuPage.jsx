@@ -113,6 +113,12 @@ function MenuPage({ onClose }) {
         </section>
 
         <section className="menu-section">
+          <Link to="/apps" className="menu-section-link" onClick={handleClose}>
+            <h2 className="menu-section-title">Apps</h2>
+          </Link>
+        </section>
+
+        <section className="menu-section">
           <Link to="/archive" className="menu-section-link" onClick={handleClose}>
             <h2 className="menu-section-title menu-section-title-italic">Photo Archives</h2>
           </Link>
