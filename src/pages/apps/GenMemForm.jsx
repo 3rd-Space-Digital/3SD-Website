@@ -27,7 +27,7 @@ function GenMemForm({ searchQuery, filteredRoles, onSubmitStatus }) {
   // initialize emailJS with your public key
   const EMAILJS_PUBLIC_KEY = 'jWy-mESeSJ-aei3xe'
   const EMAILJS_SERVICE_ID = 'service_ktyizqw'
-  const EMAILJS_TEMPLATE_ID = 'YOUR_GENERAL_TEMPLATE_ID' // Replace with your template ID
+  const EMAILJS_TEMPLATE_ID = 'template_3fke0u9' // Replace with your template ID
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
