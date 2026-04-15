@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import emailjs from '@emailjs/browser'
 import './ClubCollabForm.css'
 
 function ClubCollabForm({ onSubmitStatus }) {
@@ -26,6 +27,10 @@ function ClubCollabForm({ onSubmitStatus }) {
     'Social Event',
     'Other'
   ]
+
+  // emailJS configuration
+  const EMAILJS_SERVICE_ID = 'service_ktyizqw'
+  const EMAILJS_TEMPLATE_ID = 'template_0ae8jlh'
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -57,32 +62,48 @@ function ClubCollabForm({ onSubmitStatus }) {
     setIsSubmitting(true)
 
     try {
-      // !!! replace with actual API endpoint eventually !!!!
-      const response = await fetch('/api/applications/club', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-
-      if (response.ok) {
-        onSubmitStatus('success')
-        setFormData({
-          clubName: '',
-          contactName: '',
-          contactEmail: '',
-          contactPhone: '',
-          eventIdea: '',
-          proposedDate: '',
-          expectedAttendance: '',
-          collaborationType: '',
-          resourcesNeeded: '',
-          additionalNotes: ''
-        })
-      } else {
-        throw new Error('Submission failed')
+      // Email template parameters for club collaboration
+      const templateParams = {
+        to_email: '3rddspacedigital@gmail.com',
+        club_name: formData.clubName,
+        contact_name: formData.contactName,
+        contact_email: formData.contactEmail,
+        contact_phone: formData.contactPhone || 'Not provided',
+        event_idea: formData.eventIdea,
+        proposed_date: formData.proposedDate || 'Not specified',
+        expected_attendance: formData.expectedAttendance || 'Not specified',
+        collaboration_type: formData.collaborationType || 'Not specified',
+        resources_needed: formData.resourcesNeeded || 'Not provided',
+        additional_notes: formData.additionalNotes || 'Not provided',
+        submission_date: new Date().toLocaleString()
       }
+
+      // Send email using EmailJS
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams
+      )
+
+      console.log('EmailJS Response:', response)
+
+      onSubmitStatus('success')
+      // reset form
+      setFormData({
+        clubName: '',
+        contactName: '',
+        contactEmail: '',
+        contactPhone: '',
+        eventIdea: '',
+        proposedDate: '',
+        expectedAttendance: '',
+        collaborationType: '',
+        resourcesNeeded: '',
+        additionalNotes: ''
+      })
     } catch (error) {
       console.error('Error submitting collaboration request:', error)
+      console.error('Error details:', error.text)
       onSubmitStatus('error')
     } finally {
       setIsSubmitting(false)

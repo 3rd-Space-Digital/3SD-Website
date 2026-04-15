@@ -27,7 +27,7 @@ function GenMemForm({ searchQuery, filteredRoles, onSubmitStatus }) {
   // initialize emailJS with your public key
   const EMAILJS_PUBLIC_KEY = 'jWy-mESeSJ-aei3xe'
   const EMAILJS_SERVICE_ID = 'service_ktyizqw'
-  const EMAILJS_TEMPLATE_ID = 'template_3fke0u9' // Replace with your template ID
+  const EMAILJS_TEMPLATE_ID = 'template_3fke0u9'
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -77,6 +77,8 @@ function GenMemForm({ searchQuery, filteredRoles, onSubmitStatus }) {
         submission_date: new Date().toLocaleString()
       }
 
+      console.log('Sending with params:', templateParams)
+
       // send email using EmailJS
       await emailjs.send(
         EMAILJS_SERVICE_ID,
@@ -84,6 +86,8 @@ function GenMemForm({ searchQuery, filteredRoles, onSubmitStatus }) {
         templateParams,
         EMAILJS_PUBLIC_KEY
       )
+
+      console.log('EmailJS Response:', response)
 
       onSubmitStatus('success')
       // reset form
