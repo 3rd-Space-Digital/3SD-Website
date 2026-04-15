@@ -87,8 +87,6 @@ function GenMemForm({ searchQuery, filteredRoles, onSubmitStatus }) {
         EMAILJS_PUBLIC_KEY
       )
 
-      console.log('EmailJS Response:', response)
-
       onSubmitStatus('success')
       // reset form
       setFormData({
