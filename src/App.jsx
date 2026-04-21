@@ -16,6 +16,7 @@ import Article2 from './pages/issues/Article2'
 import Article3 from './pages/issues/Article3'
 import Article4 from './pages/issues/Article4'
 import Article5 from './pages/issues/Article5'
+import Article6 from './pages/issues/Article6'
 import MenuPage from './pages/MenuPage'
 import AppsPage from './pages/apps/AppsPage'
 import PlaylistPage from './pages/PlaylistPage'
@@ -84,6 +85,7 @@ function App() {
           <Route path="/issues/3" element={<Article3 />} />
           <Route path="/issues/4" element={<Article4 />} />
           <Route path="/issues/5" element={<Article5 />} />
+          <Route path="/issues/6" element={<Article6 />} />
           {/* <Route path="/issues/:id" element={<Article />} /> */}
           <Route path="/apps" element={<AppsPage />} />
           <Route path="/playlist" element={<PlaylistPage />} />

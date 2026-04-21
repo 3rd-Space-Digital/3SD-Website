@@ -1,0 +1,464 @@
+.article6 {
+  background-color: white;
+  min-height: 100vh;
+  padding: 120px 200px 120px;
+  --article6-gutter: 200px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+html:has(.article6),
+body:has(.article6),
+#root:has(.article6) {
+  background-color: white;
+}
+
+.article6-flower-rails {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.article6-main {
+  position: relative;
+  margin-left: calc(-1 * var(--article6-gutter));
+  margin-right: calc(-1 * var(--article6-gutter));
+  padding-left: var(--article6-gutter);
+  padding-right: var(--article6-gutter);
+}
+
+.article6-content,
+.article6-credits {
+  position: relative;
+  z-index: 1;
+}
+
+.article6-flower-rail {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: min(140px, calc(var(--article6-gutter) - 20px));
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 12px 10px;
+  opacity: 0.95;
+  overflow: hidden;
+  justify-items: center;
+}
+
+.article6-flower-rail--left {
+  left: 10px;
+}
+
+.article6-flower-rail--right {
+  right: 10px;
+}
+
+.article6-flower-col {
+  overflow: hidden;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.06));
+}
+
+.article6-flower-track {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  will-change: transform;
+}
+
+.article6-flower {
+  width: 100%;
+  max-width: 96px;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  opacity: 0.85;
+}
+
+@keyframes article6-float-down {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes article6-float-up {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.article6-flower-col--down .article6-flower-track {
+  animation: article6-float-down 28s linear infinite;
+}
+
+.article6-flower-col--up .article6-flower-track {
+  animation: article6-float-up 28s linear infinite;
+}
+
+.article6-flower-col--slow .article6-flower-track {
+  animation-duration: 36s;
+}
+
+.article6-flower-col--fast .article6-flower-track {
+  animation-duration: 22s;
+}
+
+.article6-nav {
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.article6-back {
+  background: none;
+  border: none;
+  color: black;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.article6-back:hover {
+  opacity: 0.7;
+}
+
+.article6-header {
+  margin-bottom: 40px;
+  margin-left: 0;
+  margin-right: 0;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.article6-title {
+  color: #000;
+  text-align: center;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 96px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 110%;
+  letter-spacing: -2.88px;
+  margin: 0 0 35px;
+}
+
+.article6-meta {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 110%;
+  letter-spacing: -0.72px;
+  color: #000;
+  margin: 0 0 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.article6-date,
+.article6-author {
+  color: #000;
+}
+
+.article6-date {
+  position: absolute;
+  right: 50%;
+  margin-right: 8px;
+}
+
+.article6-sep {
+  margin: 0 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.article6-author {
+  position: absolute;
+  left: 50%;
+  margin-left: 8px;
+}
+
+.article6-subtitle {
+  color: #000;
+  text-align: left;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 110%;
+  letter-spacing: -1.2px;
+  margin: 12px 0 35px;
+}
+
+.article6-content {
+  margin-bottom: 60px;
+}
+
+.article6-hero {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  display: block;
+}
+
+.article6-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.article6-body {
+  color: #000;
+  text-align: left;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+.article6-paragraph {
+  margin: 0 0 24px;
+}
+
+.article6-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.article6-loading,
+.article6-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.article6-loading-text,
+.article6-error-text {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #666;
+  text-align: center;
+}
+
+.article6-error-text h2 {
+  color: #d32f2f;
+  margin-bottom: 20px;
+}
+
+.article6-back-link {
+  color: black;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.article6-back-link:hover {
+  text-decoration: underline;
+}
+
+.article6-credits {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid #ccc;
+}
+
+.article6-credits-title {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #000;
+  margin: 0 0 16px;
+}
+
+.article6-credits-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.article6-credit-item {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #333;
+}
+
+.article6-credit-label {
+  margin-right: 6px;
+}
+
+.article6-credit-value {
+  text-decoration: underline;
+}
+
+@media (max-width: 1600px) {
+  .article6 {
+    padding: 120px 120px 120px;
+    --article6-gutter: 120px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .article6 {
+    padding: 120px 60px 120px;
+    --article6-gutter: 60px;
+  }
+
+  .article6-flower-rail {
+    padding: 10px 6px;
+    gap: 8px;
+  }
+
+  .article6-flower {
+    max-width: 34px;
+    opacity: 0.78;
+  }
+
+  .article6-header {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .article6-title {
+    font-size: 80px;
+    letter-spacing: -2.4px;
+  }
+
+  .article6-subtitle {
+    font-size: 40px;
+    letter-spacing: -1.2px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .article6-body {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .article6 {
+    padding: 100px 30px 100px;
+    --article6-gutter: 30px;
+  }
+
+  .article6-flower-rails {
+    display: none;
+  }
+
+  .article6-header {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .article6-title {
+    font-size: 48px;
+    letter-spacing: -1.44px;
+  }
+
+  .article6-subtitle {
+    font-size: 36px;
+    letter-spacing: -1.08px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 12px;
+  }
+
+  .article6-meta {
+    font-size: clamp(13px, 3.8vw, 18px);
+    letter-spacing: -0.54px;
+    white-space: nowrap;
+    position: static;
+    justify-content: center;
+    max-width: 100%;
+    padding: 0 8px;
+    text-align: center;
+    gap: 0;
+  }
+
+  .article6-date,
+  .article6-author {
+    position: static;
+    margin: 0;
+  }
+
+  .article6-sep {
+    position: static;
+    margin: 0 6px;
+  }
+
+  .article6-body {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .article6 {
+    padding: 80px 20px 80px;
+    --article6-gutter: 20px;
+  }
+
+  .article6-header {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .article6-title {
+    font-size: 36px;
+    letter-spacing: -1.08px;
+  }
+
+  .article6-subtitle {
+    font-size: 28px;
+    letter-spacing: -0.84px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 12px;
+  }
+
+  .article6-meta {
+    white-space: nowrap;
+    font-size: clamp(12px, 4.2vw, 16px);
+    line-height: 1.3;
+    padding: 0 6px;
+  }
+
+  .article6-body {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+}
+
