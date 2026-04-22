@@ -6,6 +6,12 @@ import './IssuesPage.css'
 
 const LATEST_ISSUE_COUNT = 5
 
+function getDisplayTitle(title) {
+  if (typeof title !== 'string') return title
+  if (/sprint therapy/i.test(title)) return 'Spring Therapy'
+  return title
+}
+
 function IssuesPage() {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
@@ -68,7 +74,7 @@ function IssuesPage() {
 
   const q = searchQuery.trim().toLowerCase()
   const filtered = q
-    ? articles.filter((article) => article.title.toLowerCase().includes(q))
+    ? articles.filter((article) => getDisplayTitle(article.title).toLowerCase().includes(q))
     : articles
   
   // Filter out template article (id 0) and WIP article 6
@@ -87,10 +93,10 @@ function IssuesPage() {
       className="issue-card"
     >
       <div className="issue-image">
-        <img src={article.thumbnailUrl} alt={article.title} />
+        <img src={article.thumbnailUrl} alt={getDisplayTitle(article.title)} />
       </div>
       <div className="issue-card-content">
-        <h2 className="issue-title">{article.title}</h2>
+        <h2 className="issue-title">{getDisplayTitle(article.title)}</h2>
         <p className="issue-description">{truncateDescription(article.description) || '\u00A0'}</p>
       </div>
     </Link>

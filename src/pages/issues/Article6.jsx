@@ -8,9 +8,9 @@ import {
 } from '@chenglou/pretext'
 import { useNavigate, Link } from 'react-router-dom'
 import { getArticleById } from '../../utils/issuesUtils'
+import { getImageUrl } from '../../utils/supabaseImageRetrieval'
 import LoadingScreen from '../../components/LoadingScreen'
 import './Article6.css'
-import heroImage from './Article6Images/hero.jpg'
 import flowerRed from './Article6Images/red.png'
 import flowerWhite from './Article6Images/white.png'
 import flowerPurple from './Article6Images/purple.png'
@@ -29,6 +29,7 @@ import kf11Image from './Article6Images/KF 11.png'
 import kf12Image from './Article6Images/KF 12.png'
 
 const ARTICLE_ID = '6'
+const IMAGE_PATH_PREFIX = 'issue/article6'
 
 const FLOWER_IMAGES = [flowerRed, flowerWhite, flowerPurple, flowerYellow]
 const FLOWER_COLUMNS_PER_SIDE = 1
@@ -608,6 +609,7 @@ function Article6FlowerParagraph({ text }) {
       rows,
       boxW,
       boxH,
+      boxTop,
       cy
     })
   }, [prepared, text, activePolygon])
@@ -670,7 +672,7 @@ function Article6FlowerParagraph({ text }) {
             ? {
                 width: layout.boxW,
                 height: layout.boxH,
-                top: layout.cy
+                top: layout.boxTop
               }
             : {
                 width: layout.boxW,
@@ -841,6 +843,9 @@ function Article6() {
     )
   }
 
+  const displayTitle =
+    typeof article.title === 'string' && /sprint therapy/i.test(article.title) ? 'Spring Therapy' : article.title
+
   return (
     <div className="article6">
       <div className="article6-nav">
@@ -855,7 +860,7 @@ function Article6() {
       </div>
 
       <header className="article6-header">
-        <h1 className="article6-title">{article.title}</h1>
+        <h1 className="article6-title">{displayTitle}</h1>
         <div className="article6-meta">
           <span className="article6-date">{formatDate(article.article_date)}</span>
           {article.author && (
@@ -876,8 +881,8 @@ function Article6() {
         <div className="article6-content">
           <figure className="article6-hero">
             <img
-              src={heroImage}
-              alt={article.title || 'Issue hero'}
+              src={getImageUrl(`${IMAGE_PATH_PREFIX}/hero.webp`)}
+              alt={displayTitle || 'Issue hero'}
             />
           </figure>
           {article.description && (
@@ -898,6 +903,41 @@ function Article6() {
                 <span className="article6-credit-value">{article.author}</span>
               </div>
             )}
+            <div className="article6-credit-item">
+              <span className="article6-credit-label">Models:</span>
+              <span className="article6-credit-value">
+                <a
+                  href="https://www.instagram.com/_sofiachang/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="article6-credit-link"
+                >
+                  Sofia Chang
+                </a>{' '}
+                &amp;{' '}
+                <a
+                  href="https://www.instagram.com/xx.m4ryam.xx/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="article6-credit-link"
+                >
+                  Maryam Motiwala
+                </a>
+              </span>
+            </div>
+            <div className="article6-credit-item">
+              <span className="article6-credit-label">Styling:</span>
+              <span className="article6-credit-value">
+                <a
+                  href="https://www.instagram.com/yasminaamelia/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="article6-credit-link"
+                >
+                  Yasmina Amelia
+                </a>
+              </span>
+            </div>
             <div className="article6-credit-item">
               <span className="article6-credit-label">Interactive Web Design:</span>
               <span className="article6-credit-value">
