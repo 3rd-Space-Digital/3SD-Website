@@ -71,8 +71,8 @@ function IssuesPage() {
     ? articles.filter((article) => article.title.toLowerCase().includes(q))
     : articles
   
-  // Filter out template article (id 0)
-  const filteredWithoutTemplate = filtered.filter(article => article.id !== 0)
+  // Filter out template article (id 0) and WIP article 6
+  const filteredWithoutTemplate = filtered.filter((article) => article.id !== 0 && article.id !== 6)
 
   const truncateDescription = (text, maxLength = 100) => {
     if (!text) return ''

@@ -42,7 +42,7 @@ body:has(.article6),
   position: fixed;
   top: 0;
   bottom: 0;
-  width: min(140px, calc(var(--article6-gutter) - 20px));
+  width: max(24px, min(140px, calc(var(--article6-gutter) - 20px)));
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
@@ -70,7 +70,6 @@ body:has(.article6),
   flex-direction: column;
   gap: 14px;
   align-items: center;
-  will-change: transform;
 }
 
 .article6-flower {
@@ -81,40 +80,6 @@ body:has(.article6),
   user-select: none;
   -webkit-user-drag: none;
   opacity: 0.85;
-}
-
-@keyframes article6-float-down {
-  from {
-    transform: translateY(-50%);
-  }
-  to {
-    transform: translateY(0%);
-  }
-}
-
-@keyframes article6-float-up {
-  from {
-    transform: translateY(0%);
-  }
-  to {
-    transform: translateY(-50%);
-  }
-}
-
-.article6-flower-col--down .article6-flower-track {
-  animation: article6-float-down 28s linear infinite;
-}
-
-.article6-flower-col--up .article6-flower-track {
-  animation: article6-float-up 28s linear infinite;
-}
-
-.article6-flower-col--slow .article6-flower-track {
-  animation-duration: 36s;
-}
-
-.article6-flower-col--fast .article6-flower-track {
-  animation-duration: 22s;
 }
 
 .article6-nav {
@@ -244,12 +209,122 @@ body:has(.article6),
   letter-spacing: 0;
 }
 
+.article6-body--flower-wrap {
+  position: relative;
+}
+
+.article6-flower-deck {
+  position: relative;
+  width: 100%;
+}
+
+.article6-flower-deck:not(.article6-flower-deck--ready) {
+  opacity: 0;
+}
+
+.article6-flower-deck--ready {
+  opacity: 1;
+  transition: opacity 0.12s ease-out;
+}
+
+.article6-flower-body {
+  position: relative;
+  z-index: 1;
+}
+
+.article6-flower-line {
+  display: block;
+  width: 100%;
+}
+
+.article6-flower-line--split {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.article6-flower-line__left {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  text-align: right;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.article6-flower-line__gap {
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.article6-flower-line__right {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  text-align: left;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.article6-flower-stack {
+  position: relative;
+  z-index: 1;
+}
+
+.article6-flower-stack .article6-flower-stack-text {
+  margin-bottom: 0;
+}
+
 .article6-paragraph {
   margin: 0 0 24px;
 }
 
 .article6-paragraph:last-child {
   margin-bottom: 0;
+}
+
+.article6-paragraph--single {
+  margin-bottom: 0;
+}
+
+.article6-flower-slot {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  color: #000;
+  font: inherit;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.article6-flower-slot--hole {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.article6-flower-slot--stack {
+  display: block;
+  margin: 20px auto 24px;
+}
+
+.article6-flower-slot:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 3px;
+}
+
+.article6-flower-slot-visual {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, #f6f6f6 0%, #eaeaea 55%, #e0e0e0 100%);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
 }
 
 .article6-loading,
@@ -372,8 +447,24 @@ body:has(.article6),
     --article6-gutter: 30px;
   }
 
-  .article6-flower-rails {
-    display: none;
+  .article6-flower-rail--left {
+    left: 4px;
+  }
+
+  .article6-flower-rail--right {
+    right: 4px;
+  }
+
+  .article6-flower-rail {
+    width: 24px;
+    padding: 8px 4px;
+    gap: 8px;
+    opacity: 0.7;
+  }
+
+  .article6-flower {
+    max-width: 22px;
+    opacity: 0.75;
   }
 
   .article6-header {
@@ -422,12 +513,30 @@ body:has(.article6),
     font-weight: 500;
     letter-spacing: 0;
   }
+
+  .article6-flower-line__left,
+  .article6-flower-line__right {
+    word-break: break-word;
+  }
+
+  .article6-flower-slot--stack {
+    margin-top: 16px;
+    margin-bottom: 18px;
+  }
 }
 
 @media (max-width: 480px) {
   .article6 {
     padding: 80px 20px 80px;
     --article6-gutter: 20px;
+  }
+
+  .article6-flower-rail {
+    width: 20px;
+  }
+
+  .article6-flower {
+    max-width: 18px;
   }
 
   .article6-header {
