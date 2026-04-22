@@ -76,12 +76,12 @@ const FLOWER_POLYGON_PLAY_FORWARD = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 const FLOWER_POLYGON_PLAY_REVERSE = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 
 const ARTICLE_BODY_SINGLE_PARAGRAPH = [
-  `Ask the question, “Would you from one year ago like who you are now?” `,
-  `How about two years? Then go back as far as five years ago and ask the same question. A few would say yes, some would say no, and a lot would say maybe and talk about tiny comparisons, old expectations, or about their younger selves’s dreams and goals. `,
-  `Now ask the question, “Do you like the you now more than the you from a year ago?” `,
-  `How about two years? Five years ago? A lot would say yes, some would say no, and a few would point out the nuances about how life was back then, how simple it was, the people they were surrounded by, going on tangent about the things that happened in high school, hinting at the fact they peaked. But the question was about yourself, not anything or anyone else. `,
-  `Despite these different answers, you look back on the past and reflect and wonder “when did it all change?”. Then you start replaying all your phases, past relationships, crazy and not so crazy exes, stupid decisions and then great ones, goals and career expectations, so on and so forth. It's a lot. A lot of change stacked on top of itself. `,
-  `But despite all of it, some people still feel stuck. `,
+  `Ask the question, “Would you from one year ago like who you are now?”`,
+  `How about two years? Then go back as far as five years ago and ask the same question. A few would say yes, some would say no, and a lot would say maybe and talk about tiny comparisons, old expectations, or about their younger selves’s dreams and goals.`,
+  `Now ask the question, “Do you like the you now more than the you from a year ago?”`,
+  `How about two years? Five years ago? A lot would say yes, some would say no, and a few would point out the nuances about how life was back then, how simple it was, the people they were surrounded by, going on tangent about the things that happened in high school, hinting at the fact they peaked. But the question was about yourself, not anything or anyone else.`,
+  `Despite these different answers, you look back on the past and reflect and wonder “when did it all change?”. Then you start replaying all your phases, past relationships, crazy and not so crazy exes, stupid decisions and then great ones, goals and career expectations, so on and so forth. It's a lot. A lot of change stacked on top of itself.`,
+  `But despite all of it, some people still feel stuck.`,
   `And that's the confusing part. On paper, everything changed. You changed environments, people, habits, maybe even your goals you were dead set on. You can clearly spot differences between who you were and who you are now. But internally, there's this quiet feeling that nothing has really moved. Like you're carrying the same weight, maybe even more, but just in a different setting. `,
   `That's where growing pains live. We know growth isn't always loud or obvious. It's not always about leveling up or becoming this completely new person overnight. Sometimes it looks like sitting with things you used to avoid. Sometimes it's realizing patterns in yourself that you can't unsee anymore. Sometimes it's understanding why you are the way you are and not being able to blame it on ignorance, life situation, or your parents or anyone for that matter. `,
   `And that's the part that hurts more than the obvious and life changing events that've already happened in life. Because maturing isn't just adding these new objects, friends, hobbies, lifestyles, these things, these layers. It's also peeling them back. `,
@@ -97,7 +97,7 @@ const ARTICLE_BODY_SINGLE_PARAGRAPH = [
   `You’re still you. `,
   `Not the exact same, but not completely different either. `,
   `More aware. More layered. More real.`
-].join('')
+].join('\n\n')
 
 const FlowerRail = ({ side }) => {
   const columns = Array.from({ length: FLOWER_COLUMNS_PER_SIDE }, (_, columnIndex) => {
@@ -142,14 +142,14 @@ const ARTICLE6_PRETEXT_FONT = '500 18px Inter, sans-serif'
 const ARTICLE6_PRETEXT_LINE_HEIGHT = 18 * 1.6
 
 /** clip-path %: x vs element width, y vs element height — tight box around polygon bbox. */
-const FLOWER_TIGHT_MAX_WIDTH_FRAC = 0.46
-const FLOWER_TIGHT_MAX_HEIGHT_FRAC = 0.38
+const FLOWER_TIGHT_MAX_WIDTH_FRAC = 0.6
+const FLOWER_TIGHT_MAX_HEIGHT_FRAC = 0.48
 /** Applied to uniform viewBox scale `k` (1 = fill caps). Use 1/5 to undo a prior 5× size boost. */
 const FLOWER_POLYGON_SCREEN_SCALE = 2
 /** Keep body text this many px away from the polygon silhouette (not 0-tight). */
-const FLOWER_SHAPE_TEXT_MARGIN_PX = 5
+const FLOWER_SHAPE_TEXT_MARGIN_PX = 2
 /** Extra inset for glyph ink past advances (Pretext widths are still advance-based). */
-const FLOWER_GLYPH_INK_PAD_PX = 5
+const FLOWER_GLYPH_INK_PAD_PX = 2
 /**
  * Only extend the split band *below* the polygon bbox by a few px so an occasional line
  * is not left full-width under the slot. Do not use the full slot height — that splits
@@ -266,12 +266,15 @@ function mergedPolygonSpanForLine(polyPts, bbox, boxTop, boxHeight, lineTop, lin
 function computeTightFlowerBox(deckW, totalH, bbox) {
   const rX = Math.max(0.001, (bbox.maxX - bbox.minX) / 100)
   const rY = Math.max(0.001, (bbox.maxY - bbox.minY) / 100)
-  const maxW = deckW * FLOWER_TIGHT_MAX_WIDTH_FRAC
-  const maxH = Math.max(72, totalH * FLOWER_TIGHT_MAX_HEIGHT_FRAC)
   const { width: vbW, height: vbH } = FLOWER_POLYGON_VIEWBOX
-  const bboxW = rX * vbW
-  const bboxH = rY * vbH
-  const k = Math.min(maxW / bboxW, maxH / bboxH) * FLOWER_POLYGON_SCREEN_SCALE
+
+  // Cap the *slot* size (not the polygon bbox). If we cap by bbox size, the slot can
+  // become wider than the deck when rX is small, which pushes it off-screen on mobile.
+  const mobile = deckW <= 520
+  const maxSlotW = deckW * (mobile ? 0.62 : FLOWER_TIGHT_MAX_WIDTH_FRAC)
+  const maxSlotH = Math.max(96, totalH * (mobile ? 0.42 : FLOWER_TIGHT_MAX_HEIGHT_FRAC))
+  const mobileBoost = mobile ? 1.25 : 1
+  const k = Math.min(maxSlotW / vbW, maxSlotH / vbH) * FLOWER_POLYGON_SCREEN_SCALE * mobileBoost
   const boxW = vbW * k
   const boxH = vbH * k
   const cx = deckW / 2
@@ -749,6 +752,19 @@ function Article6() {
                 <span className="article6-credit-value">{article.author}</span>
               </div>
             )}
+            <div className="article6-credit-item">
+              <span className="article6-credit-label">Interactive Web Design:</span>
+              <span className="article6-credit-value">
+                <a
+                  href="https://www.instagram.com/not.__ethan/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="article6-credit-link"
+                >
+                  Ethan Scherwitz
+                </a>
+              </span>
+            </div>
           </div>
         </div>
       </div>
