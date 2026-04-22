@@ -333,6 +333,10 @@ body:has(.article6),
   background-position: center;
   background-size: contain;
   pointer-events: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: clip-path, -webkit-clip-path, background-image, transform, opacity;
 }
 
 .article6-loading,

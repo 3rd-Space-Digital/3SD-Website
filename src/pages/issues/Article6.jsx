@@ -49,6 +49,29 @@ const FLOWER_KF_IMAGES = {
   12: kf12Image
 }
 
+const LOADED_IMAGE_URLS = new Set()
+
+function warmImage(url) {
+  if (!url || LOADED_IMAGE_URLS.has(url) || typeof window === 'undefined') return
+  const img = new Image()
+  img.decoding = 'async'
+  img.onload = () => {
+    LOADED_IMAGE_URLS.add(url)
+  }
+  img.onerror = () => {
+    // If a frame fails, don't block animation forever.
+    LOADED_IMAGE_URLS.add(url)
+  }
+  img.src = url
+
+  // Hint decode where supported; ignore failures (CORS/unsupported).
+  img.decode?.()
+    .then(() => {
+      LOADED_IMAGE_URLS.add(url)
+    })
+    .catch(() => {})
+}
+
 function preloadImages(urls) {
   if (typeof window === 'undefined') return () => {}
   const unique = Array.from(new Set(urls.filter(Boolean)))
@@ -56,6 +79,7 @@ function preloadImages(urls) {
   let cancelled = false
 
   for (const url of unique) {
+    warmImage(url)
     const img = new Image()
     img.decoding = 'async'
     img.src = url
@@ -349,6 +373,7 @@ function Article6FlowerParagraph({ text }) {
   const rafRef = useRef(null)
   const startRef = useRef(0)
   const animatingRef = useRef(false)
+  const lastKfRef = useRef(1)
 
   const cancelAnim = useCallback(() => {
     if (rafRef.current != null) {
@@ -364,6 +389,7 @@ function Article6FlowerParagraph({ text }) {
 
       if (elapsed >= FLOWER_SLOT_TOTAL_MS) {
         cancelAnim()
+        lastKfRef.current = 1
         setActivePolygon(FLOWER_POLYGONS[1])
         setActiveKf(1)
         return
@@ -385,8 +411,18 @@ function Article6FlowerParagraph({ text }) {
         kf = order[stepIndex]
       }
 
-      setActivePolygon(FLOWER_POLYGONS[kf] || FLOWER_POLYGONS[1])
-      setActiveKf(kf)
+      const nextImage = FLOWER_KF_IMAGES[kf]
+      // On slower deployments a KF frame may not be loaded/decoded yet; don't "blink" to it.
+      if (nextImage && !LOADED_IMAGE_URLS.has(nextImage)) {
+        rafRef.current = requestAnimationFrame(tick)
+        return
+      }
+
+      if (kf !== lastKfRef.current) {
+        lastKfRef.current = kf
+        setActivePolygon(FLOWER_POLYGONS[kf] || FLOWER_POLYGONS[1])
+        setActiveKf(kf)
+      }
       rafRef.current = requestAnimationFrame(tick)
     },
     [cancelAnim]
@@ -396,8 +432,12 @@ function Article6FlowerParagraph({ text }) {
     cancelAnim()
     animatingRef.current = true
     startRef.current = performance.now()
-    setActivePolygon(FLOWER_POLYGONS[FLOWER_POLYGON_PLAY_FORWARD[0]])
-    setActiveKf(FLOWER_POLYGON_PLAY_FORWARD[0])
+    const first = FLOWER_POLYGON_PLAY_FORWARD[0]
+    lastKfRef.current = first
+    // Ensure first frame is warmed so we don't flash immediately on slower networks.
+    warmImage(FLOWER_KF_IMAGES[first])
+    setActivePolygon(FLOWER_POLYGONS[first])
+    setActiveKf(first)
     rafRef.current = requestAnimationFrame(tick)
   }, [cancelAnim, tick])
 
@@ -588,8 +628,12 @@ function Article6FlowerParagraph({ text }) {
         className="article6-flower-slot-visual"
         style={
           activeImage
-            ? { clipPath: activePolygon, backgroundImage: `url(${activeImage})` }
-            : { clipPath: activePolygon }
+            ? {
+                clipPath: activePolygon,
+                WebkitClipPath: activePolygon,
+                backgroundImage: `url(${activeImage})`
+              }
+            : { clipPath: activePolygon, WebkitClipPath: activePolygon }
         }
         aria-hidden="true"
       />
