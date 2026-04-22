@@ -314,6 +314,10 @@ function computeTightFlowerBox(deckW, totalH, bbox) {
   const rY = Math.max(0.001, (bbox.maxY - bbox.minY) / 100)
   const { width: vbW, height: vbH } = FLOWER_POLYGON_VIEWBOX
 
+  const dpr =
+    typeof window !== 'undefined' && Number.isFinite(window.devicePixelRatio) ? window.devicePixelRatio : 1
+  const snap = (v) => Math.round(v * dpr) / dpr
+
   // Cap the *slot* size (not the polygon bbox). If we cap by bbox size, the slot can
   // become wider than the deck when rX is small, which pushes it off-screen on mobile.
   const mobile = deckW <= 520
@@ -321,13 +325,13 @@ function computeTightFlowerBox(deckW, totalH, bbox) {
   const maxSlotH = Math.max(96, totalH * (mobile ? 0.42 : FLOWER_TIGHT_MAX_HEIGHT_FRAC))
   const mobileBoost = mobile ? 1.25 : 1
   const k = Math.min(maxSlotW / vbW, maxSlotH / vbH) * FLOWER_POLYGON_SCREEN_SCALE * mobileBoost
-  const boxW = vbW * k
-  const boxH = vbH * k
+  const boxW = snap(vbW * k)
+  const boxH = snap(vbH * k)
   const cx = deckW / 2
   const cy = totalH / 2
-  const boxLeft = cx - boxW / 2
-  const boxTop = cy - boxH / 2
-  const boxBottom = boxTop + boxH
+  const boxLeft = snap(cx - boxW / 2)
+  const boxTop = snap(cy - boxH / 2)
+  const boxBottom = snap(boxTop + boxH)
   return { boxW, boxH, boxLeft, boxTop, boxBottom, cx, cy, rX, rY }
 }
 
