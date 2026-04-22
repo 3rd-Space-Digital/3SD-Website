@@ -235,6 +235,9 @@ body:has(.article6),
 .article6-flower-line {
   display: block;
   width: 100%;
+  white-space: pre;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .article6-flower-line--split {
@@ -248,8 +251,7 @@ body:has(.article6),
   box-sizing: border-box;
   flex-shrink: 0;
   text-align: right;
-  word-break: break-word;
-  overflow-wrap: anywhere;
+  white-space: pre;
 }
 
 .article6-flower-line__gap {
@@ -261,8 +263,7 @@ body:has(.article6),
   box-sizing: border-box;
   flex-shrink: 0;
   text-align: left;
-  word-break: break-word;
-  overflow-wrap: anywhere;
+  white-space: pre;
 }
 
 .article6-flower-stack {
@@ -534,7 +535,7 @@ body:has(.article6),
 
   .article6-flower-line__left,
   .article6-flower-line__right {
-    word-break: break-word;
+    word-break: normal;
   }
 
   .article6-flower-slot--stack {
