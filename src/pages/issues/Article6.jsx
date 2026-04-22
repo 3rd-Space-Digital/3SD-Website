@@ -142,14 +142,14 @@ const ARTICLE6_PRETEXT_FONT = '500 18px Inter, sans-serif'
 const ARTICLE6_PRETEXT_LINE_HEIGHT = 18 * 1.6
 
 /** clip-path %: x vs element width, y vs element height — tight box around polygon bbox. */
-const FLOWER_TIGHT_MAX_WIDTH_FRAC = 0.46
-const FLOWER_TIGHT_MAX_HEIGHT_FRAC = 0.38
+const FLOWER_TIGHT_MAX_WIDTH_FRAC = 0.6
+const FLOWER_TIGHT_MAX_HEIGHT_FRAC = 0.48
 /** Applied to uniform viewBox scale `k` (1 = fill caps). Use 1/5 to undo a prior 5× size boost. */
 const FLOWER_POLYGON_SCREEN_SCALE = 2
 /** Keep body text this many px away from the polygon silhouette (not 0-tight). */
-const FLOWER_SHAPE_TEXT_MARGIN_PX = 5
+const FLOWER_SHAPE_TEXT_MARGIN_PX = 2
 /** Extra inset for glyph ink past advances (Pretext widths are still advance-based). */
-const FLOWER_GLYPH_INK_PAD_PX = 5
+const FLOWER_GLYPH_INK_PAD_PX = 2
 /**
  * Only extend the split band *below* the polygon bbox by a few px so an occasional line
  * is not left full-width under the slot. Do not use the full slot height — that splits
@@ -266,12 +266,15 @@ function mergedPolygonSpanForLine(polyPts, bbox, boxTop, boxHeight, lineTop, lin
 function computeTightFlowerBox(deckW, totalH, bbox) {
   const rX = Math.max(0.001, (bbox.maxX - bbox.minX) / 100)
   const rY = Math.max(0.001, (bbox.maxY - bbox.minY) / 100)
-  const maxW = deckW * FLOWER_TIGHT_MAX_WIDTH_FRAC
-  const maxH = Math.max(72, totalH * FLOWER_TIGHT_MAX_HEIGHT_FRAC)
   const { width: vbW, height: vbH } = FLOWER_POLYGON_VIEWBOX
-  const bboxW = rX * vbW
-  const bboxH = rY * vbH
-  const k = Math.min(maxW / bboxW, maxH / bboxH) * FLOWER_POLYGON_SCREEN_SCALE
+
+  // Cap the *slot* size (not the polygon bbox). If we cap by bbox size, the slot can
+  // become wider than the deck when rX is small, which pushes it off-screen on mobile.
+  const mobile = deckW <= 520
+  const maxSlotW = deckW * (mobile ? 0.62 : FLOWER_TIGHT_MAX_WIDTH_FRAC)
+  const maxSlotH = Math.max(96, totalH * (mobile ? 0.42 : FLOWER_TIGHT_MAX_HEIGHT_FRAC))
+  const mobileBoost = mobile ? 1.25 : 1
+  const k = Math.min(maxSlotW / vbW, maxSlotH / vbH) * FLOWER_POLYGON_SCREEN_SCALE * mobileBoost
   const boxW = vbW * k
   const boxH = vbH * k
   const cx = deckW / 2

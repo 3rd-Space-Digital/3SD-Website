@@ -298,6 +298,14 @@ body:has(.article6),
   font: inherit;
   line-height: 1.2;
   text-align: center;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.article6-flower-slot:focus {
+  outline: none;
 }
 
 .article6-flower-slot--hole {
@@ -313,8 +321,7 @@ body:has(.article6),
 }
 
 .article6-flower-slot:focus-visible {
-  outline: 2px solid #000;
-  outline-offset: 3px;
+  outline: none;
 }
 
 .article6-flower-slot-visual {
@@ -453,8 +460,9 @@ body:has(.article6),
 
 @media (max-width: 768px) {
   .article6 {
-    padding: 100px 30px 100px;
-    --article6-gutter: 30px;
+    /* Give the fixed side rails breathing room (avoid overlapping text). */
+    padding: 100px 44px 100px;
+    --article6-gutter: 44px;
   }
 
   .article6-flower-rail--left {
@@ -537,8 +545,9 @@ body:has(.article6),
 
 @media (max-width: 480px) {
   .article6 {
-    padding: 80px 20px 80px;
-    --article6-gutter: 20px;
+    /* Still leave space for the rails on very small screens. */
+    padding: 80px 34px 80px;
+    --article6-gutter: 34px;
   }
 
   .article6-flower-rail {
