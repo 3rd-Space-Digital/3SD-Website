@@ -749,6 +749,19 @@ function Article6() {
                 <span className="article6-credit-value">{article.author}</span>
               </div>
             )}
+            <div className="article6-credit-item">
+              <span className="article6-credit-label">Interactive Web Design:</span>
+              <span className="article6-credit-value">
+                <a
+                  href="https://www.instagram.com/not.__ethan/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="article6-credit-link"
+                >
+                  Ethan Scherwitz
+                </a>
+              </span>
+            </div>
           </div>
         </div>
       </div>
