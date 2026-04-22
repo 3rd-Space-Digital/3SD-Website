@@ -293,20 +293,14 @@ body:has(.article6),
   margin: 0;
   border: 0;
   padding: 0;
-  cursor: pointer;
   background: transparent;
   color: #000;
   font: inherit;
   line-height: 1.2;
   text-align: center;
   outline: none;
-  -webkit-appearance: none;
-  appearance: none;
   -webkit-tap-highlight-color: transparent;
-}
-
-.article6-flower-slot:focus {
-  outline: none;
+  pointer-events: none;
 }
 
 .article6-flower-slot--hole {
@@ -321,22 +315,51 @@ body:has(.article6),
   margin: 20px auto 24px;
 }
 
-.article6-flower-slot:focus-visible {
-  outline: none;
+.article6-flower-slot-hit {
+  position: absolute;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.article6-flower-slot-hit:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.35);
+  outline-offset: 2px;
 }
 
 .article6-flower-slot-visual {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 45%, #f6f6f6 0%, #eaeaea 55%, #e0e0e0 100%);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+  background: transparent;
   pointer-events: none;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transform: translateZ(0);
-  will-change: clip-path, -webkit-clip-path, background-image, transform, opacity;
+  will-change: clip-path, -webkit-clip-path, transform, opacity;
+}
+
+.article6-flower-kf {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform: translateZ(0);
+  will-change: opacity;
+}
+
+.article6-flower-kf--active {
+  opacity: 1;
 }
 
 .article6-loading,
