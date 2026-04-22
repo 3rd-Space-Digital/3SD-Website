@@ -49,6 +49,27 @@ const FLOWER_KF_IMAGES = {
   12: kf12Image
 }
 
+function preloadImages(urls) {
+  if (typeof window === 'undefined') return () => {}
+  const unique = Array.from(new Set(urls.filter(Boolean)))
+  const imgs = []
+  let cancelled = false
+
+  for (const url of unique) {
+    const img = new Image()
+    img.decoding = 'async'
+    img.src = url
+    imgs.push(img)
+  }
+
+  return () => {
+    cancelled = true
+    if (!cancelled) return
+    // Keep references from leaking; browser cache retains the decoded bytes as needed.
+    imgs.length = 0
+  }
+}
+
 /**
  * KF 1..12 from `scripts/KF-polygons-50-points.txt` (50 samples each, viewBox 960×600).
  * Index 0 unused so FLOWER_POLYGONS[1] === KF 1.
@@ -640,6 +661,13 @@ function Article6() {
   const [article, setArticle] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+
+  useEffect(() => {
+    const kfUrls = Object.values(FLOWER_KF_IMAGES)
+    const railUrls = FLOWER_IMAGES
+    const cleanup = preloadImages([...railUrls, ...kfUrls])
+    return cleanup
+  }, [])
 
   useEffect(() => {
     const load = async () => {
