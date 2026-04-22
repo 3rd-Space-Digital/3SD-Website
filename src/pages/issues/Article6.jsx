@@ -348,6 +348,10 @@ function Article6FlowerParagraph({ text }) {
   const [activeKf, setActiveKf] = useState(1)
   const [layout, setLayout] = useState(null)
   const [fontRev, setFontRev] = useState(0)
+  const [kfReady, setKfReady] = useState(() => {
+    const first = FLOWER_KF_IMAGES[FLOWER_POLYGON_PLAY_FORWARD[0]]
+    return Boolean(first && LOADED_IMAGE_URLS.has(first))
+  })
   const prepared = useMemo(() => {
     try {
       return prepareWithSegments(text, ARTICLE6_PRETEXT_FONT)
@@ -374,6 +378,8 @@ function Article6FlowerParagraph({ text }) {
   const startRef = useRef(0)
   const animatingRef = useRef(false)
   const lastKfRef = useRef(1)
+  const lastLayoutModeRef = useRef('hole')
+  const pendingStartRef = useRef(false)
 
   const cancelAnim = useCallback(() => {
     if (rafRef.current != null) {
@@ -429,17 +435,45 @@ function Article6FlowerParagraph({ text }) {
   )
 
   const startAnim = useCallback(() => {
+    if (!kfReady) {
+      pendingStartRef.current = true
+      return
+    }
     cancelAnim()
     animatingRef.current = true
     startRef.current = performance.now()
     const first = FLOWER_POLYGON_PLAY_FORWARD[0]
     lastKfRef.current = first
-    // Ensure first frame is warmed so we don't flash immediately on slower networks.
-    warmImage(FLOWER_KF_IMAGES[first])
     setActivePolygon(FLOWER_POLYGONS[first])
     setActiveKf(first)
     rafRef.current = requestAnimationFrame(tick)
-  }, [cancelAnim, tick])
+  }, [cancelAnim, kfReady, tick])
+
+  useEffect(() => {
+    // Ensure KF images are warmed/decoded before first play to avoid a blank frame flash.
+    const kfUrls = Object.values(FLOWER_KF_IMAGES)
+    for (const url of kfUrls) warmImage(url)
+
+    if (kfReady) return
+
+    let raf = 0
+    const check = () => {
+      const first = FLOWER_KF_IMAGES[FLOWER_POLYGON_PLAY_FORWARD[0]]
+      if (first && LOADED_IMAGE_URLS.has(first)) {
+        setKfReady(true)
+        return
+      }
+      raf = requestAnimationFrame(check)
+    }
+    raf = requestAnimationFrame(check)
+    return () => cancelAnimationFrame(raf)
+  }, [kfReady])
+
+  useEffect(() => {
+    if (!kfReady || !pendingStartRef.current) return
+    pendingStartRef.current = false
+    startAnim()
+  }, [kfReady, startAnim])
 
   useEffect(() => () => cancelAnim(), [cancelAnim])
 
@@ -472,8 +506,21 @@ function Article6FlowerParagraph({ text }) {
     const minSide = deckW / 2
     const leftMaxIfSymmetric = minSide - maxGapPx / 2
 
-    if (leftMaxIfSymmetric < 56) {
+    // Prevent rapid mode-flipping (looks like flashing) near the cutoff on some devices.
+    // Add hysteresis so "hole" and "stack" don't toggle back and forth as the polygon animates.
+    // On mobile we prefer keeping the "hole" layout (wrap-around) unless it's truly too narrow.
+    const mobile = deckW <= 520
+    const STACK_ENTER_PX = mobile ? 34 : 52
+    const STACK_EXIT_PX = mobile ? 44 : 68
+
+    const preferStack =
+      lastLayoutModeRef.current === 'stack'
+        ? leftMaxIfSymmetric < STACK_EXIT_PX
+        : leftMaxIfSymmetric < STACK_ENTER_PX
+
+    if (preferStack) {
       const splitAt = findStackSplitIndex(text)
+      lastLayoutModeRef.current = 'stack'
       setLayout({
         mode: 'stack',
         before: text.slice(0, splitAt).trimStart(),
@@ -483,6 +530,8 @@ function Article6FlowerParagraph({ text }) {
       })
       return
     }
+
+    lastLayoutModeRef.current = 'hole'
 
     const polyTopDoc = (polyPts ? boxTop + (bbox.minY / 100) * boxH : boxTop) - m
     const polyBottomDoc = (polyPts ? boxTop + (bbox.maxY / 100) * boxH : boxBottom) + m
@@ -602,43 +651,68 @@ function Article6FlowerParagraph({ text }) {
   const deckClass =
     layout != null ? 'article6-flower-deck article6-flower-deck--ready' : 'article6-flower-deck'
 
-  const activeImage = FLOWER_KF_IMAGES[activeKf]
-  const flowerButton = layout && (
-    <button
-      ref={slotRef}
-      type="button"
-      className={`article6-flower-slot article6-flower-slot--${layout.mode}`}
-      style={
-        layout.mode === 'hole'
-          ? {
-              width: layout.boxW,
-              height: layout.boxH,
-              top: layout.cy
-            }
-          : {
-              width: layout.boxW,
-              height: layout.boxH
-            }
-      }
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      aria-label="Play opening animation"
-    >
-      <span
-        className="article6-flower-slot-visual"
+  const flowerButton = layout && (() => {
+    const b = FLOWER_POLYGON_UNION_BBOX
+    // Shrink hit area further than the bbox so text selection isn't blocked.
+    const HIT_INSET_FRAC = 0.3
+    const bw = b.maxX - b.minX
+    const bh = b.maxY - b.minY
+    const hitLeft = (layout.boxW * (b.minX + bw * HIT_INSET_FRAC)) / 100
+    const hitTop = (layout.boxH * (b.minY + bh * HIT_INSET_FRAC)) / 100
+    const hitW = (layout.boxW * bw * (1 - HIT_INSET_FRAC * 2)) / 100
+    const hitH = (layout.boxH * bh * (1 - HIT_INSET_FRAC * 2)) / 100
+
+    return (
+      <div
+        className={`article6-flower-slot article6-flower-slot--${layout.mode}`}
         style={
-          activeImage
+          layout.mode === 'hole'
             ? {
-                clipPath: activePolygon,
-                WebkitClipPath: activePolygon,
-                backgroundImage: `url(${activeImage})`
+                width: layout.boxW,
+                height: layout.boxH,
+                top: layout.cy
               }
-            : { clipPath: activePolygon, WebkitClipPath: activePolygon }
+            : {
+                width: layout.boxW,
+                height: layout.boxH
+              }
         }
-        aria-hidden="true"
-      />
-    </button>
-  )
+      >
+        <span
+          className="article6-flower-slot-visual"
+          style={{ clipPath: activePolygon, WebkitClipPath: activePolygon }}
+          aria-hidden="true"
+        >
+          {Object.entries(FLOWER_KF_IMAGES).map(([kf, src]) => {
+            const kfNum = Number(kf)
+            const active = kfNum === activeKf
+            return (
+              <img
+                key={`kf-${kf}`}
+                className={active ? 'article6-flower-kf article6-flower-kf--active' : 'article6-flower-kf'}
+                src={src}
+                alt=""
+                aria-hidden="true"
+                decoding="async"
+                loading="eager"
+                draggable="false"
+              />
+            )
+          })}
+        </span>
+
+        <button
+          ref={slotRef}
+          type="button"
+          className="article6-flower-slot-hit"
+          style={{ left: hitLeft, top: hitTop, width: hitW, height: hitH }}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+          aria-label="Play opening animation"
+        />
+      </div>
+    )
+  })()
 
   return (
     <div ref={deckRef} className={deckClass}>
