@@ -76,12 +76,12 @@ const FLOWER_POLYGON_PLAY_FORWARD = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 const FLOWER_POLYGON_PLAY_REVERSE = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 
 const ARTICLE_BODY_SINGLE_PARAGRAPH = [
-  `Ask the question, “Would you from one year ago like who you are now?” `,
-  `How about two years? Then go back as far as five years ago and ask the same question. A few would say yes, some would say no, and a lot would say maybe and talk about tiny comparisons, old expectations, or about their younger selves’s dreams and goals. `,
-  `Now ask the question, “Do you like the you now more than the you from a year ago?” `,
-  `How about two years? Five years ago? A lot would say yes, some would say no, and a few would point out the nuances about how life was back then, how simple it was, the people they were surrounded by, going on tangent about the things that happened in high school, hinting at the fact they peaked. But the question was about yourself, not anything or anyone else. `,
-  `Despite these different answers, you look back on the past and reflect and wonder “when did it all change?”. Then you start replaying all your phases, past relationships, crazy and not so crazy exes, stupid decisions and then great ones, goals and career expectations, so on and so forth. It's a lot. A lot of change stacked on top of itself. `,
-  `But despite all of it, some people still feel stuck. `,
+  `Ask the question, “Would you from one year ago like who you are now?”`,
+  `How about two years? Then go back as far as five years ago and ask the same question. A few would say yes, some would say no, and a lot would say maybe and talk about tiny comparisons, old expectations, or about their younger selves’s dreams and goals.`,
+  `Now ask the question, “Do you like the you now more than the you from a year ago?”`,
+  `How about two years? Five years ago? A lot would say yes, some would say no, and a few would point out the nuances about how life was back then, how simple it was, the people they were surrounded by, going on tangent about the things that happened in high school, hinting at the fact they peaked. But the question was about yourself, not anything or anyone else.`,
+  `Despite these different answers, you look back on the past and reflect and wonder “when did it all change?”. Then you start replaying all your phases, past relationships, crazy and not so crazy exes, stupid decisions and then great ones, goals and career expectations, so on and so forth. It's a lot. A lot of change stacked on top of itself.`,
+  `But despite all of it, some people still feel stuck.`,
   `And that's the confusing part. On paper, everything changed. You changed environments, people, habits, maybe even your goals you were dead set on. You can clearly spot differences between who you were and who you are now. But internally, there's this quiet feeling that nothing has really moved. Like you're carrying the same weight, maybe even more, but just in a different setting. `,
   `That's where growing pains live. We know growth isn't always loud or obvious. It's not always about leveling up or becoming this completely new person overnight. Sometimes it looks like sitting with things you used to avoid. Sometimes it's realizing patterns in yourself that you can't unsee anymore. Sometimes it's understanding why you are the way you are and not being able to blame it on ignorance, life situation, or your parents or anyone for that matter. `,
   `And that's the part that hurts more than the obvious and life changing events that've already happened in life. Because maturing isn't just adding these new objects, friends, hobbies, lifestyles, these things, these layers. It's also peeling them back. `,
@@ -97,7 +97,7 @@ const ARTICLE_BODY_SINGLE_PARAGRAPH = [
   `You’re still you. `,
   `Not the exact same, but not completely different either. `,
   `More aware. More layered. More real.`
-].join('')
+].join('\n\n')
 
 const FlowerRail = ({ side }) => {
   const columns = Array.from({ length: FLOWER_COLUMNS_PER_SIDE }, (_, columnIndex) => {
