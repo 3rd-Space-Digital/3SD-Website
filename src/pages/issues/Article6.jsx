@@ -187,6 +187,12 @@ const FLOWER_SLOT_TOTAL_MS = FLOWER_SLOT_FORWARD_MS + FLOWER_SLOT_REVERSE_MS
 const ARTICLE6_PRETEXT_FONT = '500 18px Inter, sans-serif'
 const ARTICLE6_PRETEXT_LINE_HEIGHT = 18 * 1.6
 
+function parsePx(value) {
+  if (typeof value !== 'string') return null
+  const m = value.trim().match(/^([\d.]+)px$/i)
+  return m ? parseFloat(m[1]) : null
+}
+
 /** clip-path %: x vs element width, y vs element height — tight box around polygon bbox. */
 const FLOWER_TIGHT_MAX_WIDTH_FRAC = 0.6
 const FLOWER_TIGHT_MAX_HEIGHT_FRAC = 0.48
@@ -349,6 +355,7 @@ function findStackSplitIndex(input) {
 function Article6FlowerParagraph({ text }) {
   const deckRef = useRef(null)
   const slotRef = useRef(null)
+  const measureRef = useRef(null)
   const [activePolygon, setActivePolygon] = useState(() => FLOWER_POLYGONS[1])
   const [activeKf, setActiveKf] = useState(1)
   const [layout, setLayout] = useState(null)
@@ -357,13 +364,17 @@ function Article6FlowerParagraph({ text }) {
     const first = FLOWER_KF_IMAGES[FLOWER_POLYGON_PLAY_FORWARD[0]]
     return Boolean(first && LOADED_IMAGE_URLS.has(first))
   })
+  const [typography, setTypography] = useState(() => ({
+    font: ARTICLE6_PRETEXT_FONT,
+    lineHeightPx: ARTICLE6_PRETEXT_LINE_HEIGHT
+  }))
   const prepared = useMemo(() => {
     try {
-      return prepareWithSegments(text, ARTICLE6_PRETEXT_FONT)
+      return prepareWithSegments(text, typography.font)
     } catch {
       return null
     }
-  }, [text, fontRev])
+  }, [text, fontRev, typography.font])
 
   useEffect(() => {
     if (typeof document === 'undefined' || !document.fonts?.ready) {
@@ -378,6 +389,25 @@ function Article6FlowerParagraph({ text }) {
       cancelled = true
     }
   }, [text])
+
+  useLayoutEffect(() => {
+    const el = measureRef.current
+    if (!el || typeof window === 'undefined') return
+
+    const cs = window.getComputedStyle(el)
+    const fontWeight = cs.fontWeight || '500'
+    const fontSize = cs.fontSize || '18px'
+    const fontFamily = cs.fontFamily || 'Inter, sans-serif'
+    const nextFont = `${fontWeight} ${fontSize} ${fontFamily}`
+
+    const fsPx = parsePx(fontSize) ?? 18
+    const lhPx = parsePx(cs.lineHeight) ?? fsPx * 1.6
+
+    setTypography((prev) => {
+      if (prev.font === nextFont && Math.abs(prev.lineHeightPx - lhPx) < 0.01) return prev
+      return { font: nextFont, lineHeightPx: lhPx }
+    })
+  }, [fontRev])
 
   const rafRef = useRef(null)
   const startRef = useRef(0)
@@ -492,7 +522,7 @@ function Article6FlowerParagraph({ text }) {
     const polyPts = parsePolygonPercentPoints(activePolygon)
     const bbox = polyPts ? polygonBBox(polyPts) : { minX: 0, maxX: 100, minY: 0, maxY: 100 }
 
-    const lh = ARTICLE6_PRETEXT_LINE_HEIGHT
+    const lh = typography.lineHeightPx
     const { height: totalH, lineCount } = pretextLayout(prepared, deckW, lh)
     if (lineCount <= 0 || totalH <= 0) {
       setLayout(null)
@@ -616,7 +646,7 @@ function Article6FlowerParagraph({ text }) {
       boxTop,
       cy
     })
-  }, [prepared, text, activePolygon])
+  }, [prepared, text, activePolygon, typography.lineHeightPx])
 
   useLayoutEffect(() => {
     recomputeLayout()
@@ -722,6 +752,20 @@ function Article6FlowerParagraph({ text }) {
 
   return (
     <div ref={deckRef} className={deckClass}>
+      <span
+        ref={measureRef}
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          visibility: 'hidden',
+          pointerEvents: 'none',
+          whiteSpace: 'nowrap',
+          height: 0,
+          overflow: 'hidden'
+        }}
+      >
+        M
+      </span>
       {layout?.mode === 'hole' && (
         <>
           <p className="article6-paragraph article6-paragraph--single article6-flower-body">
