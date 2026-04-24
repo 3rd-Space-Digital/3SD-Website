@@ -30,6 +30,7 @@ import kf12Image from './Article6Images/KF 12.png'
 
 const ARTICLE_ID = '6'
 const IMAGE_PATH_PREFIX = 'issue/article6'
+const ARTICLE6_DEBUG_BUILD_TAG = 'a6-align-debug-1'
 
 const FLOWER_IMAGES = [flowerRed, flowerWhite, flowerPurple, flowerYellow]
 const FLOWER_COLUMNS_PER_SIDE = 1
@@ -437,6 +438,9 @@ function Article6FlowerParagraph({ text }) {
     return () => cancelAnimationFrame(raf)
   }, [layout])
 
+  const debugEnabled =
+    typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('debug') === '1'
+
   const rafRef = useRef(null)
   const startRef = useRef(0)
   const animatingRef = useRef(false)
@@ -804,6 +808,27 @@ function Article6FlowerParagraph({ text }) {
       </span>
       {layout?.mode === 'hole' && (
         <>
+          {debugEnabled && layout && (
+            <div
+              style={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                zIndex: 9999,
+                fontFamily: 'monospace',
+                fontSize: 12,
+                background: 'rgba(255,255,255,0.9)',
+                border: '1px solid rgba(0,0,0,0.15)',
+                padding: '6px 8px',
+                borderRadius: 6
+              }}
+            >
+              <div>build: {ARTICLE6_DEBUG_BUILD_TAG}</div>
+              <div>mode: {layout.mode}</div>
+              <div>boxTop: {Math.round((layout.boxTop ?? 0) * 100) / 100}</div>
+              <div>iosYOffsetPx: {Math.round(iosYOffsetPx * 100) / 100}</div>
+            </div>
+          )}
           <p className="article6-paragraph article6-paragraph--single article6-flower-body">
             {layout.rows.map((row, i) =>
               row.kind === 'full' ? (
