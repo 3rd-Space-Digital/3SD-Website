@@ -338,10 +338,8 @@ body:has(.article6),
   inset: 0;
   background: transparent;
   pointer-events: none;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: clip-path, -webkit-clip-path, transform, opacity;
+  /* Keep this layer out of GPU compositing; iOS can rasterize it slightly offset. */
+  contain: paint;
 }
 
 .article6-flower-kf {
@@ -354,7 +352,6 @@ body:has(.article6),
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
-  transform: translateZ(0);
   will-change: opacity;
 }
 
