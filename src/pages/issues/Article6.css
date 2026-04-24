@@ -215,6 +215,62 @@ body:has(.article6),
 
 .article6-body--flower-wrap {
   position: relative;
+  margin: 42px 0;
+}
+
+.article6-body--readable {
+  margin: 42px 0;
+}
+
+.article6-readable-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto 18px;
+  max-width: 640px;
+  font-family: inherit;
+}
+
+.article6-readable-toggle__label {
+  font: inherit;
+  font-weight: 700;
+}
+
+.article6-switch {
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: #e6e6e6;
+  padding: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.article6-switch__thumb {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transform: translateX(0);
+  transition: transform 0.15s ease-out;
+}
+
+.article6-switch--on {
+  background: #111;
+  border-color: #111;
+}
+
+.article6-switch--on .article6-switch__thumb {
+  transform: translateX(20px);
+}
+
+.article6-switch:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.35);
+  outline-offset: 3px;
 }
 
 .article6-entry {

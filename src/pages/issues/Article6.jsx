@@ -122,7 +122,7 @@ const FLOWER_POLYGON_PLAY_FORWARD = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 /** Return leg: 11 → 1 (KF 12 was the last frame of forward). */
 const FLOWER_POLYGON_PLAY_REVERSE = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 
-const ARTICLE_BODY_SINGLE_PARAGRAPH = [
+const ARTICLE_BODY_PARAGRAPHS = [
   `Ask the question, “Would you from one year ago like who you are now?”`,
   `How about two years? Then go back as far as five years ago and ask the same question. A few would say yes, some would say no, and a lot would say maybe and talk about tiny comparisons, old expectations, or about their younger selves’s dreams and goals.`,
   `Now ask the question, “Do you like the you now more than the you from a year ago?”`,
@@ -144,7 +144,9 @@ const ARTICLE_BODY_SINGLE_PARAGRAPH = [
   `You’re still you. `,
   `Not the exact same, but not completely different either. `,
   `More aware. More layered. More real.`
-].join('\n\n')
+]
+
+const ARTICLE_BODY_SINGLE_PARAGRAPH = ARTICLE_BODY_PARAGRAPHS.join('\n\n')
 
 const FlowerRail = ({ side }) => {
   const columns = Array.from({ length: FLOWER_COLUMNS_PER_SIDE }, (_, columnIndex) => {
@@ -905,6 +907,7 @@ function Article6() {
   const [article, setArticle] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [readableMode, setReadableMode] = useState(false)
 
   useEffect(() => {
     const kfUrls = Object.values(FLOWER_KF_IMAGES)
@@ -942,6 +945,11 @@ function Article6() {
       document.documentElement.style.removeProperty('background-color')
     }
   }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }, [readableMode])
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
@@ -997,10 +1005,12 @@ function Article6() {
       </header>
 
       <div className="article6-main">
-        <div className="article6-flower-rails" aria-hidden="true">
-          <FlowerRail side="left" />
-          <FlowerRail side="right" />
-        </div>
+        {!readableMode && (
+          <div className="article6-flower-rails" aria-hidden="true">
+            <FlowerRail side="left" />
+            <FlowerRail side="right" />
+          </div>
+        )}
 
         <div className="article6-content">
           <figure className="article6-hero">
@@ -1013,8 +1023,31 @@ function Article6() {
             <p className="article6-subtitle">{article.description}</p>
           )}
 
-          <div className="article6-body article6-body--flower-wrap">
-            <Article6FlowerParagraph text={ARTICLE_BODY_SINGLE_PARAGRAPH} />
+          {!readableMode ? (
+            <div className="article6-body article6-body--flower-wrap">
+              <Article6FlowerParagraph text={ARTICLE_BODY_SINGLE_PARAGRAPH} />
+            </div>
+          ) : (
+            <div className="article6-body article6-body--readable">
+              {ARTICLE_BODY_PARAGRAPHS.map((p, i) => (
+                <p key={`p-${i}`} className="article6-paragraph">
+                  {p}
+                </p>
+              ))}
+            </div>
+          )}
+
+          <div className="article6-readable-toggle">
+            <span className="article6-readable-toggle__label">Readable Mode</span>
+            <button
+              type="button"
+              className={readableMode ? 'article6-switch article6-switch--on' : 'article6-switch'}
+              role="switch"
+              aria-checked={readableMode}
+              onClick={() => setReadableMode((v) => !v)}
+            >
+              <span className="article6-switch__thumb" aria-hidden="true" />
+            </button>
           </div>
 
           <div className="article6-entry">
