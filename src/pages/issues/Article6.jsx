@@ -1005,7 +1005,7 @@ function Article6() {
         <div className="article6-content">
           <figure className="article6-hero">
             <img
-              src={getImageUrl(`${IMAGE_PATH_PREFIX}/hero.webp`)}
+              src={getImageUrl(`${IMAGE_PATH_PREFIX}/thumbnail.webp`)}
               alt={displayTitle || 'Issue hero'}
             />
           </figure>

@@ -4,7 +4,7 @@ import { getAllArticles } from '../../utils/issuesUtils'
 import LoadingScreen from '../../components/LoadingScreen'
 import './IssuesPage.css'
 
-const LATEST_ISSUE_COUNT = 5
+const LATEST_ISSUE_COUNT = 6
 
 function getDisplayTitle(title) {
   if (typeof title !== 'string') return title
@@ -102,11 +102,17 @@ function IssuesPage() {
     </Link>
   )
   
-    const latest = [...filteredWithoutTemplate]
-      .sort((a, b) => new Date(b.article_date) - new Date(a.article_date))
-      .slice(0, LATEST_ISSUE_COUNT)
-    const latestIds = new Set(latest.map(article => article.id))
-    const archive = filteredWithoutTemplate.filter(article => !latestIds.has(article.id))
+  const latest = [...filteredWithoutTemplate]
+    .sort((a, b) => new Date(b.article_date) - new Date(a.article_date))
+    .slice(0, LATEST_ISSUE_COUNT)
+  const latestIds = new Set(latest.map((article) => article.id))
+  const archive = filteredWithoutTemplate.filter((article) => !latestIds.has(article.id))
+
+  const article6 = latest.find((a) => a.id === 6)
+  const article3 = latest.find((a) => a.id === 3)
+  const middleFour =
+    article6 && article3 ? latest.filter((a) => a.id !== 6 && a.id !== 3).slice(0, 4) : []
+  const useFourColDesktop = !narrowLatestLayout && article6 && article3 && middleFour.length === 4
 
   if (loading) {
     return <LoadingScreen label="Issues" />
@@ -156,13 +162,26 @@ function IssuesPage() {
         </div>
         <div
           className={
-            latest.length === 3
-              ? 'issues-grid issues-grid-latest issues-grid-latest--featured'
-              : 'issues-grid issues-grid-latest'
+            useFourColDesktop
+              ? 'issues-grid issues-grid-latest issues-grid-latest--fourcol'
+              : latest.length === 3
+                ? 'issues-grid issues-grid-latest issues-grid-latest--featured'
+                : 'issues-grid issues-grid-latest'
           }
         >
           {latest.length > 0 ? (
-            latest.length === 3 ? (
+            useFourColDesktop ? (
+              <>
+                <div className="issues-grid-latest-feature">{renderIssueCard(article6)}</div>
+                <div className="issues-grid-latest-mid issues-grid-latest-mid--left">
+                  {middleFour.slice(0, 2).map(renderIssueCard)}
+                </div>
+                <div className="issues-grid-latest-mid issues-grid-latest-mid--right">
+                  {middleFour.slice(2, 4).map(renderIssueCard)}
+                </div>
+                <div className="issues-grid-latest-feature">{renderIssueCard(article3)}</div>
+              </>
+            ) : latest.length === 3 ? (
               <>
                 {renderIssueCard(latest[0])}
                 <div className="issues-grid-latest-stack">

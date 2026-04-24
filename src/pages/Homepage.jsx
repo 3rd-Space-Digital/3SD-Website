@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import logoIcon from '../assets/svgs/3SD.svg'
 import { useHomepageReveal } from '../context/HomepageRevealContext'
+import { Link } from 'react-router-dom'
+import { getImageUrl } from '../utils/supabaseImageRetrieval'
 import './Homepage.css'
 
 const PHRASE = 'Third Space Digital'
@@ -26,6 +28,25 @@ const FONT_SIZE_SCALE = 0.025
 const LETTER_SPACING_MULTIPLIER = -0.1
 const FONT_COLOR = '#000'
 const FONT_HEIGHT_SCALE = 0.78
+
+const HOMEPAGE_FEATURED = {
+  left: {
+    id: 6,
+    title: 'Spring Therapy',
+    imagePath: 'issue/article6/thumbnail.webp'
+  },
+  right: {
+    id: 3,
+    title: 'Issue 3',
+    imagePath: 'issue/article3/thumbnail.webp'
+  },
+  middle: [
+    { id: 5, title: 'Issue 5', imagePath: 'issue/article5/thumbnail.webp' },
+    { id: 4, title: 'Issue 4', imagePath: 'issue/article4/thumbnail.webp' },
+    { id: 2, title: 'Issue 2', imagePath: 'issue/article2/thumbnail.webp' },
+    { id: 1, title: 'Issue 1', imagePath: 'issue/article1/thumbnail.webp' }
+  ]
+}
 
 function Homepage() {
   const canvasRef = useRef(null)
@@ -294,6 +315,64 @@ function Homepage() {
             <p className="homepage-reveal-text homepage-reveal-p4" style={{ fontStyle: 'italic', marginTop: '1.5rem' }}>
               It's time to create more than you consume.
             </p>
+
+            <div className="homepage-issues-grid" aria-label="Featured issues">
+              <div className="homepage-issues-col homepage-issues-col--left">
+                <Link to={`/issues/${HOMEPAGE_FEATURED.left.id}`} className="homepage-issue-card homepage-issue-card--featured">
+                  <img
+                    className="homepage-issue-image"
+                    src={getImageUrl(HOMEPAGE_FEATURED.left.imagePath)}
+                    alt={HOMEPAGE_FEATURED.left.title}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="homepage-issue-title">{HOMEPAGE_FEATURED.left.title}</div>
+                </Link>
+              </div>
+
+              <div className="homepage-issues-col homepage-issues-col--mid1">
+                {HOMEPAGE_FEATURED.middle.slice(0, 2).map((a) => (
+                  <Link key={a.id} to={`/issues/${a.id}`} className="homepage-issue-card">
+                    <img
+                      className="homepage-issue-image"
+                      src={getImageUrl(a.imagePath)}
+                      alt={a.title}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="homepage-issue-title">{a.title}</div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="homepage-issues-col homepage-issues-col--mid2">
+                {HOMEPAGE_FEATURED.middle.slice(2, 4).map((a) => (
+                  <Link key={a.id} to={`/issues/${a.id}`} className="homepage-issue-card">
+                    <img
+                      className="homepage-issue-image"
+                      src={getImageUrl(a.imagePath)}
+                      alt={a.title}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="homepage-issue-title">{a.title}</div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="homepage-issues-col homepage-issues-col--right">
+                <Link to={`/issues/${HOMEPAGE_FEATURED.right.id}`} className="homepage-issue-card homepage-issue-card--featured">
+                  <img
+                    className="homepage-issue-image"
+                    src={getImageUrl(HOMEPAGE_FEATURED.right.imagePath)}
+                    alt={HOMEPAGE_FEATURED.right.title}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="homepage-issue-title">{HOMEPAGE_FEATURED.right.title}</div>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
         <button

@@ -158,6 +158,29 @@
   align-items: start;
 }
 
+.issues-grid-latest--fourcol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 10px;
+}
+
+.issues-grid-latest-feature {
+  min-width: 0;
+  align-self: center;
+}
+
+.issues-grid-latest-mid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.issues-grid-latest--fourcol .issue-card {
+  margin-bottom: 0;
+}
+
 .issues-grid-latest--featured > .issue-card:first-child {
   grid-column: 1;
 }
