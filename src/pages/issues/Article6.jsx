@@ -451,7 +451,13 @@ function Article6FlowerParagraph({ text }) {
     const q = new URLSearchParams(window.location.search)
     const override = q.get('debugNudgePx')
     if (override != null && override.trim() !== '' && Number.isFinite(Number(override))) return Number(override)
-    return deckW && deckW <= 520 ? -10 : 0
+    if (!(deckW && deckW <= 520)) return 0
+
+    // Scale correction to the actual slot size so it stays consistent across iPhone sizes.
+    // Tuned to match the previously good fixed offset on typical mobile slot dimensions.
+    const h = layout?.boxH ?? 0
+    const raw = h > 0 ? -0.12 * h : -75
+    return Math.max(-140, Math.min(0, raw))
   }, [layout])
 
   const rafRef = useRef(null)
