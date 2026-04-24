@@ -356,9 +356,11 @@ function Article6FlowerParagraph({ text }) {
   const deckRef = useRef(null)
   const slotRef = useRef(null)
   const measureRef = useRef(null)
+  const slotBoxRef = useRef(null)
   const [activePolygon, setActivePolygon] = useState(() => FLOWER_POLYGONS[1])
   const [activeKf, setActiveKf] = useState(1)
   const [layout, setLayout] = useState(null)
+  const [iosYOffsetPx, setIosYOffsetPx] = useState(0)
   const [fontRev, setFontRev] = useState(0)
   const [kfReady, setKfReady] = useState(() => {
     const first = FLOWER_KF_IMAGES[FLOWER_POLYGON_PLAY_FORWARD[0]]
@@ -408,6 +410,32 @@ function Article6FlowerParagraph({ text }) {
       return { font: nextFont, lineHeightPx: lhPx }
     })
   }, [fontRev])
+
+  useLayoutEffect(() => {
+    // iOS can rasterize clipped/composited layers slightly offset. Measure and correct.
+    if (typeof window === 'undefined') return
+    const ua = navigator.userAgent || ''
+    const isIOS = /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    if (!isIOS) return
+    if (!layout || layout.mode !== 'hole') return
+
+    const deck = deckRef.current
+    const slotBox = slotBoxRef.current
+    if (!deck || !slotBox) return
+
+    let raf = requestAnimationFrame(() => {
+      const deckRect = deck.getBoundingClientRect()
+      const slotRect = slotBox.getBoundingClientRect()
+      const expectedTop = deckRect.top + (layout.boxTop ?? 0)
+      const delta = expectedTop - slotRect.top
+
+      // Clamp to something sane; we're correcting tiny compositor offsets, not layout bugs.
+      const next = Math.max(-24, Math.min(24, delta))
+      setIosYOffsetPx((prev) => (Math.abs(prev - next) < 0.25 ? prev : next))
+    })
+
+    return () => cancelAnimationFrame(raf)
+  }, [layout])
 
   const rafRef = useRef(null)
   const startRef = useRef(0)
@@ -700,13 +728,14 @@ function Article6FlowerParagraph({ text }) {
 
     return (
       <div
+        ref={slotBoxRef}
         className={`article6-flower-slot article6-flower-slot--${layout.mode}`}
         style={
           layout.mode === 'hole'
             ? {
                 width: layout.boxW,
                 height: layout.boxH,
-                top: layout.boxTop
+                top: layout.boxTop + iosYOffsetPx
               }
             : {
                 width: layout.boxW,
