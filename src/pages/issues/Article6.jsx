@@ -441,6 +441,19 @@ function Article6FlowerParagraph({ text }) {
   const debugEnabled =
     typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('debug') === '1'
 
+  const iosMobileNudgePx = useMemo(() => {
+    if (typeof window === 'undefined') return 0
+    const ua = navigator.userAgent || ''
+    const isIOS = /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    if (!isIOS) return 0
+    // This only affects small screens; adjust if needed via ?debugNudgePx=.
+    const deckW = deckRef.current?.clientWidth ?? window.innerWidth ?? 0
+    const q = new URLSearchParams(window.location.search)
+    const override = q.get('debugNudgePx')
+    if (override != null && override.trim() !== '' && Number.isFinite(Number(override))) return Number(override)
+    return deckW && deckW <= 520 ? -10 : 0
+  }, [layout])
+
   const rafRef = useRef(null)
   const startRef = useRef(0)
   const animatingRef = useRef(false)
@@ -739,7 +752,7 @@ function Article6FlowerParagraph({ text }) {
             ? {
                 width: layout.boxW,
                 height: layout.boxH,
-                top: layout.boxTop + iosYOffsetPx
+                top: layout.boxTop + iosYOffsetPx + iosMobileNudgePx
               }
             : {
                 width: layout.boxW,
@@ -827,6 +840,7 @@ function Article6FlowerParagraph({ text }) {
               <div>mode: {layout.mode}</div>
               <div>boxTop: {Math.round((layout.boxTop ?? 0) * 100) / 100}</div>
               <div>iosYOffsetPx: {Math.round(iosYOffsetPx * 100) / 100}</div>
+              <div>iosMobileNudgePx: {Math.round(iosMobileNudgePx * 100) / 100}</div>
             </div>
           )}
           <p className="article6-paragraph article6-paragraph--single article6-flower-body">
