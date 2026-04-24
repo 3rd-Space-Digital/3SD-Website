@@ -355,7 +355,7 @@ function findStackSplitIndex(input) {
   return target
 }
 
-function Article6FlowerParagraph({ text }) {
+function Article6FlowerParagraph({ text, onRegisterDemo }) {
   const deckRef = useRef(null)
   const slotRef = useRef(null)
   const measureRef = useRef(null)
@@ -531,6 +531,15 @@ function Article6FlowerParagraph({ text }) {
     setActiveKf(first)
     rafRef.current = requestAnimationFrame(tick)
   }, [cancelAnim, kfReady, tick])
+
+  useEffect(() => {
+    if (typeof onRegisterDemo !== 'function') return
+    onRegisterDemo({
+      play: () => startAnim(),
+      getSlotEl: () => slotBoxRef.current,
+      getDeckEl: () => deckRef.current
+    })
+  }, [onRegisterDemo, startAnim])
 
   useEffect(() => {
     // Ensure KF images are warmed/decoded before first play to avoid a blank frame flash.
@@ -908,6 +917,7 @@ function Article6() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [readableMode, setReadableMode] = useState(false)
+  const demoApiRef = useRef(null)
 
   useEffect(() => {
     const kfUrls = Object.values(FLOWER_KF_IMAGES)
@@ -950,6 +960,88 @@ function Article6() {
     if (typeof window === 'undefined') return
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }, [readableMode])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const q = new URLSearchParams(window.location.search)
+    const demo = q.get('demo') === '1'
+    if (!demo) return
+
+    // Auto-scroll + auto-play when passing the slot (for recording).
+    const prefersReduced =
+      typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) return
+
+    let cancelled = false
+    let raf = 0
+    let started = false
+    let timeoutId = 0
+
+    const startWhenReady = () => {
+      if (cancelled) return
+      const api = demoApiRef.current
+      const slot = api?.getSlotEl?.()
+      if (!slot) {
+        raf = requestAnimationFrame(startWhenReady)
+        return
+      }
+
+      const maxScrollY = Math.max(
+        0,
+        (document.documentElement?.scrollHeight ?? document.body.scrollHeight ?? 0) - window.innerHeight
+      )
+      const centerTargetY = Math.max(
+        0,
+        slot.getBoundingClientRect().top +
+          window.scrollY +
+          slot.getBoundingClientRect().height / 2 -
+          window.innerHeight / 2
+      )
+
+      const scroll = ({ fromY, toY, durationMs, onTick, onDone }) => {
+        if (cancelled) return
+        const t0 = performance.now()
+        const step = (now) => {
+          if (cancelled) return
+          const t = Math.min(1, durationMs > 0 ? (now - t0) / durationMs : 1)
+          const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2
+          const y = fromY + (toY - fromY) * eased
+          window.scrollTo(0, y)
+          onTick?.()
+          if (t < 1) raf = requestAnimationFrame(step)
+          else onDone?.()
+        }
+        raf = requestAnimationFrame(step)
+      }
+
+      // Phase 1: scroll until flower is centered, then stop.
+      const startY = window.scrollY
+      scroll({
+        fromY: startY,
+        toY: Math.min(maxScrollY, centerTargetY),
+        durationMs: 1800,
+        onDone: () => {
+          if (cancelled || started) return
+          started = true
+          api?.play?.()
+
+          // Phase 2: after animation, continue scrolling to bottom.
+          timeoutId = window.setTimeout(() => {
+            if (cancelled) return
+            const from = window.scrollY
+            scroll({ fromY: from, toY: maxScrollY, durationMs: 2900 })
+          }, FLOWER_SLOT_TOTAL_MS + 250)
+        }
+      })
+    }
+
+    raf = requestAnimationFrame(startWhenReady)
+    return () => {
+      cancelled = true
+      cancelAnimationFrame(raf)
+      if (timeoutId) window.clearTimeout(timeoutId)
+    }
+  }, [])
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
@@ -1023,33 +1115,6 @@ function Article6() {
             <p className="article6-subtitle">{article.description}</p>
           )}
 
-          {!readableMode ? (
-            <div className="article6-body article6-body--flower-wrap">
-              <Article6FlowerParagraph text={ARTICLE_BODY_SINGLE_PARAGRAPH} />
-            </div>
-          ) : (
-            <div className="article6-body article6-body--readable">
-              {ARTICLE_BODY_PARAGRAPHS.map((p, i) => (
-                <p key={`p-${i}`} className="article6-paragraph">
-                  {p}
-                </p>
-              ))}
-            </div>
-          )}
-
-          <div className="article6-readable-toggle">
-            <span className="article6-readable-toggle__label">Readable Mode</span>
-            <button
-              type="button"
-              className={readableMode ? 'article6-switch article6-switch--on' : 'article6-switch'}
-              role="switch"
-              aria-checked={readableMode}
-              onClick={() => setReadableMode((v) => !v)}
-            >
-              <span className="article6-switch__thumb" aria-hidden="true" />
-            </button>
-          </div>
-
           <div className="article6-entry">
             <div className="article6-entry-grid">
               <div className="article6-entry-text">
@@ -1083,6 +1148,38 @@ A bloom where I can live Anew`}
                 <img src={getImageUrl(`${IMAGE_PATH_PREFIX}/3.webp`)} alt="" loading="lazy" decoding="async" />
               </div>
             </div>
+          </div>
+
+          {!readableMode ? (
+            <div className="article6-body article6-body--flower-wrap">
+              <Article6FlowerParagraph
+                text={ARTICLE_BODY_SINGLE_PARAGRAPH}
+                onRegisterDemo={(api) => {
+                  demoApiRef.current = api
+                }}
+              />
+            </div>
+          ) : (
+            <div className="article6-body article6-body--readable">
+              {ARTICLE_BODY_PARAGRAPHS.map((p, i) => (
+                <p key={`p-${i}`} className="article6-paragraph">
+                  {p}
+                </p>
+              ))}
+            </div>
+          )}
+
+          <div className="article6-readable-toggle">
+            <span className="article6-readable-toggle__label">Readable Mode</span>
+            <button
+              type="button"
+              className={readableMode ? 'article6-switch article6-switch--on' : 'article6-switch'}
+              role="switch"
+              aria-checked={readableMode}
+              onClick={() => setReadableMode((v) => !v)}
+            >
+              <span className="article6-switch__thumb" aria-hidden="true" />
+            </button>
           </div>
         </div>
 

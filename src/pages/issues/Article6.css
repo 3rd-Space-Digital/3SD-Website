@@ -330,11 +330,11 @@ body:has(.article6),
     align-items: start;
   }
 
-  .article6-entry-images {
+  .article6-entry-text {
     order: 1;
   }
 
-  .article6-entry-text {
+  .article6-entry-images {
     order: 2;
   }
 }
