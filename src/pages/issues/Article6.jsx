@@ -716,7 +716,6 @@ function Article6FlowerParagraph({ text }) {
       >
         <span
           className="article6-flower-slot-visual"
-          style={{ clipPath: activePolygon, WebkitClipPath: activePolygon }}
           aria-hidden="true"
         >
           {Object.entries(FLOWER_KF_IMAGES).map(([kf, src]) => {
@@ -732,6 +731,14 @@ function Article6FlowerParagraph({ text }) {
                 decoding="async"
                 loading="eager"
                 draggable="false"
+                style={
+                  active
+                    ? {
+                        clipPath: activePolygon,
+                        WebkitClipPath: activePolygon
+                      }
+                    : undefined
+                }
               />
             )
           })}
