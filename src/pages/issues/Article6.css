@@ -187,6 +187,10 @@ body:has(.article6),
   padding: 0;
   background-color: white;
   display: block;
+  width: 100%;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .article6-hero img {
