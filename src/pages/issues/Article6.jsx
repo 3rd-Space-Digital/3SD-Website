@@ -1196,12 +1196,12 @@ A bloom where I can live Anew`}
               <span className="article6-credit-label">Models:</span>
               <span className="article6-credit-value">
                 <a
-                  href="https://www.instagram.com/_sofiachang/"
+                  href="https://www.instagram.com/_sophiachang/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="article6-credit-link"
                 >
-                  Sofia Chang
+                  Sophia Chang
                 </a>{' '}
                 &amp;{' '}
                 <a
