@@ -5,6 +5,7 @@ import LoadingScreen from '../../components/LoadingScreen'
 import './IssuesPage.css'
 
 const LATEST_ISSUE_COUNT = 6
+const ISSUE_PREVIEW_MAX_LENGTH = 72
 
 function getDisplayTitle(title) {
   if (typeof title !== 'string') return title
@@ -80,10 +81,26 @@ function IssuesPage() {
   // Filter out template article (id 0)
   const filteredWithoutTemplate = filtered.filter((article) => article.id !== 0)
 
-  const truncateDescription = (text, maxLength = 100) => {
+  const truncateDescription = (text, maxLength = ISSUE_PREVIEW_MAX_LENGTH) => {
     if (!text) return ''
-    if (text.length <= maxLength) return text
-    return text.substring(0, maxLength).trim() + '...'
+    const normalized = text.trim()
+    const existingEllipsisMatch = normalized.match(/(\.\.\.|…)/)
+    if (existingEllipsisMatch) {
+      const ellipsisIndex = existingEllipsisMatch.index ?? -1
+      if (ellipsisIndex >= 0) {
+        return normalized.slice(0, ellipsisIndex + existingEllipsisMatch[0].length)
+      }
+    }
+    if (normalized.length <= maxLength) return normalized
+
+    const clipped = normalized.slice(0, maxLength + 1).trim()
+    const lastSpaceIndex = clipped.lastIndexOf(' ')
+    const cleanCutoff =
+      lastSpaceIndex > Math.floor(maxLength * 0.6)
+        ? clipped.slice(0, lastSpaceIndex).trim()
+        : clipped.slice(0, maxLength).trim()
+
+    return `${cleanCutoff}...`
   }
 
   const renderIssueCard = (article) => (
