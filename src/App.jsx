@@ -20,6 +20,7 @@ import Article6 from './pages/issues/Article6'
 import MenuPage from './pages/MenuPage'
 import AppsPage from './pages/apps/AppsPage'
 import PlaylistPage from './pages/PlaylistPage'
+import ProjectsPage from './pages/projects/ProjectsPage'
 import ComingSoonPage from './pages/ComingSoonPage'
 import AboutPage from './pages/AboutPage'
 import './App.css'
@@ -78,7 +79,7 @@ function App() {
           <Route path="/archive/:folderName" element={<ArchivePage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/events/:id" element={<EventDetail />} />
-          <Route path="/issues" element={<IssuesPage />} />
+          <Route path="/issues" element={<IssuesPage contentType="article" pageTitle="Articles" />} />
           <Route path="/issues/0" element={<ArticleTemplate />} />
           <Route path="/issues/1" element={<Article1 />} />
           <Route path="/issues/2" element={<Article2 />} />
@@ -90,11 +91,11 @@ function App() {
           <Route path="/apps" element={<AppsPage />} />
           <Route path="/playlist" element={<PlaylistPage />} />
           <Route path="/account" element={<ComingSoonPage />} />
-          <Route path="/projects" element={<ComingSoonPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/artists" element={<ComingSoonPage />} />
           <Route path="/music" element={<ComingSoonPage />} />
           <Route path="/interviews" element={<ComingSoonPage />} />
-          <Route path="/read" element={<ComingSoonPage />} />
+          <Route path="/read" element={<IssuesPage contentType="all" pageTitle="All Issues" />} />
           </Routes>
         </div>
         <Analytics />

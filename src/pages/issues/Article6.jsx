@@ -1118,24 +1118,27 @@ function Article6() {
           <div className="article6-entry">
             <div className="article6-entry-grid">
               <div className="article6-entry-text">
-                <p className="article6-entry-title">Entry</p>
                 <p className="article6-entry-poem">
                   {`I wore a blindfold made of bloom
 With soft petals clouding sight
 I breathed them in, their sweet perfume
 And wandered through the night
+
 Until my chest began to twist
 A truth I could no longer hide
 I feel and choked on what Id missed
 As flowers poured deep inside
+
 They spilled at my feet
 No longer soft, no longer fair
 I lay among their fading sweet
 And drifted Sleep under heavy air
+
 I rose tired like ive slept for years
 Like I've walked farand and wide
 I do not know what was lost or appears
 But i feel different inside
+
 I woke with eyes that finally see
 With no petals to shroud my view
 I felt a bloom grow quietly

@@ -13,7 +13,7 @@ function getDisplayTitle(title) {
   return title
 }
 
-function IssuesPage() {
+function IssuesPage({ contentType = 'article', pageTitle = 'Issues' }) {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
@@ -78,8 +78,12 @@ function IssuesPage() {
     ? articles.filter((article) => getDisplayTitle(article.title).toLowerCase().includes(q))
     : articles
   
-  // Filter out template article (id 0)
-  const filteredWithoutTemplate = filtered.filter((article) => article.id !== 0)
+  const showAllContent = contentType === 'all'
+
+  // Filter out template article and apply content-type routing.
+  const filteredWithoutTemplate = filtered.filter(
+    (article) => article.id !== 0 && (showAllContent || article.contentType === contentType)
+  )
 
   const truncateDescription = (text, maxLength = ISSUE_PREVIEW_MAX_LENGTH) => {
     if (!text) return ''
@@ -130,15 +134,16 @@ function IssuesPage() {
   const middleFour =
     article6 && article3 ? latest.filter((a) => a.id !== 6 && a.id !== 3).slice(0, 4) : []
   const useFourColDesktop = !narrowLatestLayout && article6 && article3 && middleFour.length === 4
+  const loadingLabel = showAllContent ? 'All Issues' : pageTitle
 
   if (loading) {
-    return <LoadingScreen label="Issues" />
+    return <LoadingScreen label={loadingLabel} />
   }
 
   return (
     <div className="issues-page">
       <div className="issues-header">
-        <h1 className="issues-title">Issues</h1>
+        <h1 className="issues-title">{pageTitle}</h1>
         <div className="issues-search-wrapper">
           {searchOpen ? (
             <>

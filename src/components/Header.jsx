@@ -116,7 +116,7 @@ function Header({ onOpenMenu }) {
       </div>
 
       <div className="header-right">
-        <Link to="/issues" className="header-nav-icon" aria-label="Issues">
+        <Link to="/read" className="header-nav-icon" aria-label="Issues">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="header-icon-svg">
             <rect x="3.5" y="1.5" width="25" height="29" rx="1.5" stroke="currentColor" strokeWidth="3"/>
             <line x1="9" y1="12.5" x2="23" y2="12.5" stroke="currentColor" strokeWidth="3"/>

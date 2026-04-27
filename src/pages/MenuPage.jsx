@@ -86,7 +86,7 @@ function MenuPage({ onClose }) {
 
         <section className="menu-read-content">
           <div>
-            <Link to="/issues" className="menu-section-link" onClick={handleClose}>
+            <Link to="/read" className="menu-section-link" onClick={handleClose}>
               <h2 className="menu-section-title menu-read-title">Read</h2>
             </Link>
             <div className="menu-read-columns">

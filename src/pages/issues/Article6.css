@@ -1,8 +1,8 @@
 .article6 {
   background-color: white;
   min-height: 100vh;
-  padding: 120px 200px 120px;
-  --article6-gutter: 200px;
+  padding: 120px 450px 120px;
+  --article6-gutter: 450px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -286,8 +286,9 @@ body:has(.article6),
 }
 
 .article6-entry-text {
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
+  min-width: 0;
   margin: 0;
   text-align: left;
 }
@@ -307,16 +308,20 @@ body:has(.article6),
 }
 
 .article6-entry-title {
+  color: #000;
   font-weight: 900;
   font-size: clamp(22px, 2.1vw, 28px);
   margin: 0 0 12px;
 }
 
 .article6-entry-poem {
+  color: #000;
+  display: block;
+  overflow-wrap: anywhere;
   margin: 0;
   white-space: pre-line;
-  font-size: clamp(20px, 1.9vw, 26px);
-  line-height: 1.85;
+  font-size: clamp(16px, 1.52vw, 21px);
+  line-height: 1.45;
 }
 
 @media (max-width: 768px) {
@@ -431,7 +436,7 @@ body:has(.article6),
 
 .article6-flower-slot--hole {
   position: absolute;
-  left: 50%;
+  left: calc(50% + 34px);
   transform: translateX(-50%);
   z-index: 2;
 }
@@ -564,15 +569,15 @@ body:has(.article6),
 
 @media (max-width: 1600px) {
   .article6 {
-    padding: 120px 120px 120px;
-    --article6-gutter: 120px;
+    padding: 120px 180px 120px;
+    --article6-gutter: 180px;
   }
 }
 
 @media (max-width: 1200px) {
   .article6 {
-    padding: 120px 60px 120px;
-    --article6-gutter: 60px;
+    padding: 120px 90px 120px;
+    --article6-gutter: 90px;
   }
 
   .article6-flower-rail {
@@ -612,8 +617,8 @@ body:has(.article6),
 @media (max-width: 768px) {
   .article6 {
     /* Give the fixed side rails breathing room (avoid overlapping text). */
-    padding: 100px 44px 100px;
-    --article6-gutter: 44px;
+    padding: 100px 56px 100px;
+    --article6-gutter: 56px;
   }
 
   .article6-flower-rail--left {
@@ -697,8 +702,8 @@ body:has(.article6),
 @media (max-width: 480px) {
   .article6 {
     /* Still leave space for the rails on very small screens. */
-    padding: 80px 34px 80px;
-    --article6-gutter: 34px;
+    padding: 80px 42px 80px;
+    --article6-gutter: 42px;
   }
 
   .article6-flower-rail {

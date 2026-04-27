@@ -1,7 +1,7 @@
 .article1 {
   background-color: white;
   min-height: 100vh;
-  padding: 120px 200px 120px;
+  padding: 120px 450px 120px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -273,13 +273,13 @@ body:has(.article1),
 
 @media (max-width: 1600px) {
   .article1 {
-    padding: 120px 120px 120px;
+    padding: 120px 180px 120px;
   }
 }
 
 @media (max-width: 1200px) {
   .article1 {
-    padding: 120px 60px 120px;
+    padding: 120px 90px 120px;
   }
 
   .article1-header {
@@ -314,7 +314,7 @@ body:has(.article1),
 
 @media (max-width: 768px) {
   .article1 {
-    padding: 100px 30px 100px;
+    padding: 100px 45px 100px;
   }
 
   .article1-two-images-grid {
@@ -388,7 +388,7 @@ body:has(.article1),
 
 @media (max-width: 480px) {
   .article1 {
-    padding: 80px 20px 80px;
+    padding: 80px 30px 80px;
   }
 
   .article1-header {
