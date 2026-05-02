@@ -22,6 +22,7 @@ import AppsPage from './pages/apps/AppsPage'
 import PlaylistPage from './pages/PlaylistPage'
 import ComingSoonPage from './pages/ComingSoonPage'
 import AboutPage from './pages/AboutPage'
+import IspyPage from './pages/IspyPage'
 import './App.css'
 
 function App() {
@@ -95,6 +96,7 @@ function App() {
           <Route path="/music" element={<ComingSoonPage />} />
           <Route path="/interviews" element={<ComingSoonPage />} />
           <Route path="/read" element={<ComingSoonPage />} />
+          <Route path="/ispy" element={<IspyPage />} />
           </Routes>
         </div>
         <Analytics />

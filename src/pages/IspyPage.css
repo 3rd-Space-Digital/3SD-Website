@@ -1,0 +1,490 @@
+@import url('https://fonts.cdnfonts.com/css/budnull');
+
+.ispy-page {
+  box-sizing: border-box;
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 120px;
+  padding-bottom: clamp(1.5rem, 5vw, 3rem);
+  padding-left: 4%;
+  padding-right: 4%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /** Cap scene width — inner scale follows via ResizeObserver */
+  --ispy-scene-max-width: min(920px, 84vw);
+  /** 32×32 lens-centered hotspot; falls back if custom cursor unsupported */
+  --ispy-cursor-magnify: url('../assets/ispy/cursor-magnify.svg') 12 12, zoom-in;
+}
+
+@media (max-width: 768px) {
+  .ispy-page {
+    padding-top: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ispy-page {
+    padding-top: 50px;
+  }
+}
+
+.ispy-stack {
+  width: 100%;
+  max-width: var(--ispy-scene-max-width, min(920px, 84vw));
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+}
+
+/*
+ * Chamfered frame: outer clip (yellow rim) + padding + inner clip (white fill).
+ */
+.ispy-frame-outline {
+  --ispy-chamfer: clamp(18px, 3.8vw, 26px);
+  --ispy-frame-border: 8px;
+  --ispy-frame-rim: #e3c101;
+  --ispy-panel: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--ispy-frame-rim);
+  padding: var(--ispy-frame-border);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.08);
+  clip-path: polygon(
+    var(--ispy-chamfer) 0,
+    calc(100% - var(--ispy-chamfer)) 0,
+    100% var(--ispy-chamfer),
+    100% calc(100% - var(--ispy-chamfer)),
+    calc(100% - var(--ispy-chamfer)) 100%,
+    var(--ispy-chamfer) 100%,
+    0 calc(100% - var(--ispy-chamfer)),
+    0 var(--ispy-chamfer)
+  );
+}
+
+.ispy-frame-body {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: var(--ispy-panel);
+  clip-path: polygon(
+    calc(var(--ispy-chamfer) - var(--ispy-frame-border)) 0,
+    calc(100% - (var(--ispy-chamfer) - var(--ispy-frame-border))) 0,
+    100% calc(var(--ispy-chamfer) - var(--ispy-frame-border)),
+    100% calc(100% - (var(--ispy-chamfer) - var(--ispy-frame-border))),
+    calc(100% - (var(--ispy-chamfer) - var(--ispy-frame-border))) 100%,
+    calc(var(--ispy-chamfer) - var(--ispy-frame-border)) 100%,
+    0 calc(100% - (var(--ispy-chamfer) - var(--ispy-frame-border))),
+    0 calc(var(--ispy-chamfer) - var(--ispy-frame-border))
+  );
+}
+
+.ispy-game-banner {
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 16px 0.75rem 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ispy-game-banner-title {
+  margin: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.02em;
+  font-family: 'BudNull', 'Times New Roman', Times, serif;
+  font-weight: 500;
+  text-align: center;
+}
+
+.ispy-game-banner-line1 {
+  font-size: clamp(3rem, calc(15vmin + 2.5vw), 8.5rem);
+  letter-spacing: 0.06em;
+  line-height: 0.92;
+  color: #d60e45;
+}
+
+.ispy-game-banner-line2 {
+  font-size: clamp(1.05rem, 3.6vmin, 2.2rem);
+  letter-spacing: 0.07em;
+  line-height: 1.12;
+  color: #9ec9f0;
+}
+
+@media (max-width: 420px) {
+  .ispy-game-banner-line1 {
+    font-size: clamp(2.1rem, 14vw, 4.25rem);
+    letter-spacing: 0.05em;
+  }
+
+  .ispy-game-banner-line2 {
+    font-size: clamp(0.9rem, 4.5vw, 1.45rem);
+  }
+}
+
+.ispy-viewport {
+  width: 100%;
+  aspect-ratio: 1440 / 900;
+  margin: 0;
+  overflow: hidden;
+  background: #fff;
+  cursor: var(--ispy-cursor-magnify);
+}
+
+.ispy-viewport .ispy-scene-slot,
+.ispy-viewport .ispy-scene {
+  cursor: var(--ispy-cursor-magnify);
+}
+
+.ispy-scene-slot {
+  position: relative;
+  overflow: visible;
+}
+
+.ispy-scene {
+  position: relative;
+  background: #fff;
+}
+
+.ispy-cutout {
+  appearance: none;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: var(--ispy-cursor-magnify);
+  outline: none;
+  border-radius: 0;
+  transform-origin: center center;
+  transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: var(--ispy-z, 0);
+}
+
+/* Hit target only — never show stroke art */
+.ispy-cutout__hit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.ispy-cutout:hover:not(:disabled) {
+  transform: scale(1.09);
+  z-index: calc(var(--ispy-z, 0) + 100);
+}
+
+.ispy-cutout:disabled {
+  cursor: wait;
+  opacity: 0.94;
+}
+
+.ispy-cutout:disabled:hover {
+  transform: none;
+}
+
+/*
+ * Glow lives on the WebP only: drop-shadow follows alpha, not the rectangular <button>.
+ * box-shadow/filter on the button made the whole group box read as visible.
+ */
+.ispy-cutout--selected {
+  z-index: calc(var(--ispy-z, 0) + 60);
+}
+
+.ispy-cutout--selected:hover:not(:disabled) {
+  transform: scale(1.09);
+  z-index: calc(var(--ispy-z, 0) + 120);
+}
+
+.ispy-cutout:focus-visible {
+  outline: none;
+  z-index: calc(var(--ispy-z, 0) + 110);
+}
+
+.ispy-cutout:focus-visible:not(:hover):not(.ispy-cutout--selected) {
+  transform: none;
+}
+
+.ispy-cutout:focus-visible.ispy-cutout--selected:not(:hover) {
+  transform: none;
+}
+
+.ispy-cutout__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  pointer-events: none;
+  transform-origin: center center;
+  transition: filter 0.22s ease;
+}
+
+.ispy-cutout--selected .ispy-cutout__photo {
+  filter:
+    drop-shadow(0 0 12px rgb(200 215 255 / 0.95))
+    drop-shadow(0 0 28px rgb(150 175 255 / 0.75))
+    drop-shadow(0 0 52px rgb(120 155 255 / 0.5));
+}
+
+.ispy-cutout:focus-visible:not(.ispy-cutout--selected) .ispy-cutout__photo {
+  filter:
+    drop-shadow(0 0 14px rgb(195 212 255 / 0.95))
+    drop-shadow(0 0 32px rgb(150 172 255 / 0.7))
+    drop-shadow(0 0 48px rgb(130 160 255 / 0.45));
+}
+
+@keyframes ispy-cutout-photo-match-bad {
+  0%,
+  71.43% {
+    filter:
+      drop-shadow(0 0 16px rgb(230 50 75 / 0.95))
+      drop-shadow(0 0 38px rgb(214 14 69 / 0.88))
+      drop-shadow(0 0 58px rgb(190 25 55 / 0.55));
+  }
+
+  100% {
+    filter: none;
+  }
+}
+
+@keyframes ispy-cutout-photo-match-ok {
+  0%,
+  71.43% {
+    filter:
+      drop-shadow(0 0 14px rgb(70 220 130 / 0.95))
+      drop-shadow(0 0 38px rgb(34 175 85 / 0.85))
+      drop-shadow(0 0 56px rgb(25 140 70 / 0.5));
+  }
+
+  100% {
+    filter: none;
+  }
+}
+
+.ispy-cutout--match-bad,
+.ispy-cutout--match-ok {
+  z-index: calc(var(--ispy-z, 0) + 200);
+}
+
+.ispy-cutout--match-bad .ispy-cutout__photo {
+  animation: ispy-cutout-photo-match-bad 1.4s ease forwards;
+}
+
+.ispy-cutout--match-ok .ispy-cutout__photo {
+  animation: ispy-cutout-photo-match-ok 1.4s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ispy-cutout--match-bad .ispy-cutout__photo,
+  .ispy-cutout--match-ok .ispy-cutout__photo {
+    animation-duration: 0.01ms;
+  }
+}
+
+/* Full-bleed row: wider than the game column (sibling of .ispy-stack, not inside it) */
+.ispy-officers-strip {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  box-sizing: border-box;
+  padding: 1.75rem clamp(0.75rem, 3vw, 2rem) 0.25rem;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  cursor: var(--ispy-cursor-magnify);
+}
+
+/* Officer polaroids: one row, six equal slots */
+.ispy-officers {
+  cursor: var(--ispy-cursor-magnify);
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: clamp(0.4rem, 1.1vw, 0.85rem);
+  width: 100%;
+  max-width: none;
+  margin-inline: auto;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+button.ispy-polaroid {
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  text-align: center;
+  cursor: var(--ispy-cursor-magnify);
+  display: block;
+  flex: 1 1 0;
+  min-width: 0;
+  width: 0;
+}
+
+.ispy-polaroid {
+  box-sizing: border-box;
+  background: linear-gradient(165deg, #fffffe 0%, #f4f1eb 100%);
+  padding: 1.35rem 1.35rem 1.05rem;
+  border: 1px solid rgb(0 0 0 / 0.07);
+  border-radius: 4px;
+  box-shadow:
+    0 8px 26px rgb(0 0 0 / 0.12),
+    0 2px 6px rgb(0 0 0 / 0.07);
+}
+
+.ispy-polaroid:disabled {
+  cursor: wait;
+  opacity: 0.94;
+}
+
+.ispy-polaroid--picked:not(:disabled) {
+  box-shadow:
+    0 0 14px 3px rgb(158 201 240 / 0.55),
+    0 0 32px 8px rgb(158 201 240 / 0.38),
+    0 0 52px 16px rgb(158 201 240 / 0.22),
+    0 8px 26px rgb(0 0 0 / 0.12),
+    0 2px 6px rgb(0 0 0 / 0.07);
+}
+
+@keyframes ispy-polaroid-match-bad {
+  0%,
+  71.43% {
+    box-shadow:
+      0 0 18px 4px rgb(214 14 69 / 0.55),
+      0 0 40px 10px rgb(214 14 69 / 0.38),
+      0 0 64px 18px rgb(214 14 69 / 0.2),
+      0 8px 26px rgb(0 0 0 / 0.12),
+      0 2px 6px rgb(0 0 0 / 0.07);
+  }
+
+  100% {
+    box-shadow:
+      0 8px 26px rgb(0 0 0 / 0.12),
+      0 2px 6px rgb(0 0 0 / 0.07);
+  }
+}
+
+@keyframes ispy-polaroid-match-ok {
+  0%,
+  71.43% {
+    box-shadow:
+      0 0 16px 4px rgb(50 200 105 / 0.52),
+      0 0 42px 10px rgb(34 175 85 / 0.36),
+      0 0 68px 18px rgb(34 160 80 / 0.2),
+      0 8px 26px rgb(0 0 0 / 0.12),
+      0 2px 6px rgb(0 0 0 / 0.07);
+  }
+
+  100% {
+    box-shadow:
+      0 8px 26px rgb(0 0 0 / 0.12),
+      0 2px 6px rgb(0 0 0 / 0.07);
+  }
+}
+
+.ispy-polaroid--match-bad {
+  animation: ispy-polaroid-match-bad 1.4s ease forwards;
+}
+
+.ispy-polaroid--match-ok {
+  animation: ispy-polaroid-match-ok 1.4s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ispy-polaroid--match-bad,
+  .ispy-polaroid--match-ok {
+    animation-duration: 0.01ms;
+  }
+}
+
+.ispy-polaroid:focus {
+  outline: 2px solid #9ec9f0;
+  outline-offset: 3px;
+}
+
+.ispy-polaroid:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.ispy-polaroid__photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #e8e6e3;
+  overflow: hidden;
+}
+
+.ispy-polaroid__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transition: opacity 0.22s ease;
+}
+
+.ispy-polaroid__img--back {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.ispy-polaroid:hover:not(:disabled) .ispy-polaroid__img--back,
+.ispy-polaroid:focus-visible:not(:disabled) .ispy-polaroid__img--back {
+  opacity: 1;
+}
+
+.ispy-polaroid:hover:not(:disabled) .ispy-polaroid__img--front,
+.ispy-polaroid:focus-visible:not(:disabled) .ispy-polaroid__img--front {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ispy-polaroid__img {
+    transition: none;
+  }
+}
+
+.ispy-polaroid__caption {
+  display: block;
+  margin: 0.95rem 0 0;
+  padding: 0 0.1rem;
+  font-family: 'BudNull', 'Times New Roman', Times, serif;
+  font-size: clamp(0.95rem, 3.2vmin, 1.65rem);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #2a2a2a;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.ispy-footer {
+  margin-top: 1rem;
+  padding: 0 0.5rem;
+  font-size: 0.925rem;
+  color: #333;
+  text-align: center;
+  width: 100%;
+}
+
+.ispy-footer p {
+  margin: 0;
+}
