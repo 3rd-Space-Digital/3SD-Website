@@ -1,10 +1,14 @@
+import { createPortal } from 'react-dom'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { ISP_OFFICERS } from '../data/ispy/officers'
 import { ISP_ITEMS, ISP_SCENE_WIDTH, ISP_SCENE_HEIGHT } from '../data/ispy/items'
+import { getRevealByItemId } from '../data/ispy/reveals'
 import './IspyPage.css'
 
-/** ~1s solid glow, then quick fade (total animation length). */
+/** Wrong match: ~1s solid glow, then quick fade (total animation length). */
 const MATCH_PULSE_MS = 1400
+/** Correct match: open modal when green animation ends — keep in sync with `.ispy-cutout--match-ok` / polaroid CSS `1.4s` */
+const MATCH_OK_GREEN_MS = 1400
 
 function isCorrectMatch(itemId, officerId) {
   const officer = ISP_OFFICERS.find((o) => o.id === officerId)
@@ -14,10 +18,12 @@ function isCorrectMatch(itemId, officerId) {
 export default function IspyPage() {
   const viewportRef = useRef(null)
   const pulseTimerRef = useRef(null)
+  const revealCloseRef = useRef(null)
   const [scale, setScale] = useState(1)
   const [pickedItemId, setPickedItemId] = useState(null)
   const [pickedOfficerId, setPickedOfficerId] = useState(null)
   const [matchPulse, setMatchPulse] = useState(null)
+  const [revealModal, setRevealModal] = useState(null)
 
   useLayoutEffect(() => {
     const el = viewportRef.current
@@ -54,7 +60,27 @@ export default function IspyPage() {
     [],
   )
 
-  const busy = matchPulse != null
+  useEffect(() => {
+    if (!revealModal) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const t = window.setTimeout(() => revealCloseRef.current?.focus(), 0)
+    return () => {
+      window.clearTimeout(t)
+      document.body.style.overflow = prev
+    }
+  }, [revealModal])
+
+  useEffect(() => {
+    if (!revealModal) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') setRevealModal(null)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [revealModal])
+
+  const busy = matchPulse != null || revealModal != null
 
   function clearPulseLater() {
     if (pulseTimerRef.current != null) {
@@ -70,8 +96,24 @@ export default function IspyPage() {
     const ok = isCorrectMatch(itemId, officerId)
     setPickedItemId(null)
     setPickedOfficerId(null)
-    setMatchPulse({ result: ok ? 'ok' : 'bad', itemId, officerId })
+    if (ok) {
+      setMatchPulse({ result: 'ok', itemId, officerId })
+      if (pulseTimerRef.current != null) {
+        window.clearTimeout(pulseTimerRef.current)
+      }
+      pulseTimerRef.current = window.setTimeout(() => {
+        setMatchPulse(null)
+        setRevealModal({ officerId, itemId })
+        pulseTimerRef.current = null
+      }, MATCH_OK_GREEN_MS)
+      return
+    }
+    setMatchPulse({ result: 'bad', itemId, officerId })
     clearPulseLater()
+  }
+
+  function closeRevealModal() {
+    setRevealModal(null)
   }
 
   function onItemClick(id) {
@@ -109,11 +151,12 @@ export default function IspyPage() {
 
   let footerMessage =
     'Pick an object in the scene or an officer below, then pick the other to try a match.'
-  if (matchPulse) {
-    footerMessage =
-      matchPulse.result === 'ok'
-        ? 'Correct match!'
-        : 'Not a match — try again.'
+  if (revealModal) {
+    footerMessage = 'Close the story (✕ or Escape) when you’re ready to keep playing.'
+  } else if (matchPulse?.result === 'ok') {
+    footerMessage = 'Correct match! Opening their story…'
+  } else if (matchPulse) {
+    footerMessage = 'Not a match — try again.'
   } else if (pickedItem) {
     footerMessage = `Selected: ${pickedItem.label}. Now pick an officer.`
   } else if (pickedOfficer) {
@@ -270,6 +313,89 @@ export default function IspyPage() {
           <p>{footerMessage}</p>
         </footer>
       </div>
+
+      {revealModal &&
+        createPortal(
+          <RevealStoryModal
+            officerId={revealModal.officerId}
+            itemId={revealModal.itemId}
+            closeRef={revealCloseRef}
+            onClose={closeRevealModal}
+          />,
+          document.body,
+        )}
     </main>
+  )
+}
+
+function RevealStoryModal({ officerId, itemId, closeRef, onClose }) {
+  const officer = ISP_OFFICERS.find((o) => o.id === officerId)
+  const item = ISP_ITEMS.find((i) => i.id === itemId)
+  const quote =
+    getRevealByItemId(itemId) ??
+    'Thanks for finding this item — their story will go here soon.'
+
+  if (!officer) return null
+
+  const titleId = 'ispy-reveal-modal-title'
+
+  return (
+    <div
+      className="ispy-reveal-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={titleId}
+    >
+      <div className="ispy-reveal-modal__panel">
+        <button
+          ref={closeRef}
+          type="button"
+          className="ispy-reveal-modal__close"
+          aria-label="Close"
+          onClick={onClose}
+        >
+          ×
+        </button>
+        <div className="ispy-reveal-modal__layout">
+          <div className="ispy-reveal-modal__polaroid-wrap">
+            <div
+              className="ispy-reveal-polaroid"
+              tabIndex={0}
+              aria-label={`${officer.label}: hover or focus for alternate portrait`}
+            >
+              <div className="ispy-reveal-polaroid__photo">
+                <img
+                  className="ispy-reveal-polaroid__img ispy-reveal-polaroid__img--front"
+                  src={officer.img1}
+                  alt=""
+                  draggable={false}
+                />
+                <img
+                  className="ispy-reveal-polaroid__img ispy-reveal-polaroid__img--back"
+                  src={officer.img2}
+                  alt=""
+                  draggable={false}
+                />
+              </div>
+              <span className="ispy-reveal-polaroid__caption">{officer.label}</span>
+            </div>
+          </div>
+          <div className="ispy-reveal-modal__copy">
+            <h2 id={titleId} className="ispy-reveal-modal__title">
+              {officer.label}
+              {item ? (
+                <>
+                  {' '}
+                  <span className="ispy-reveal-modal__title-item">
+                    · {item.label}
+                  </span>
+                </>
+              ) : null}
+            </h2>
+            <p className="ispy-reveal-modal__quote">{quote}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

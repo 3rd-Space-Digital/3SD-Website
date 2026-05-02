@@ -15,6 +15,8 @@
   --ispy-scene-max-width: min(920px, 84vw);
   /** 32×32 lens-centered hotspot; falls back if custom cursor unsupported */
   --ispy-cursor-magnify: url('../assets/ispy/cursor-magnify.svg') 12 12, zoom-in;
+  /** Behind transparent officer cutouts on polaroids */
+  --ispy-polaroid-photo-bg: url('../assets/ispy/officer_backgrounds/tomiwa_stars.jpg');
 }
 
 @media (max-width: 768px) {
@@ -190,7 +192,7 @@
 }
 
 .ispy-cutout:disabled {
-  cursor: wait;
+  cursor: var(--ispy-cursor-magnify);
   opacity: 0.94;
 }
 
@@ -350,7 +352,7 @@ button.ispy-polaroid {
 }
 
 .ispy-polaroid:disabled {
-  cursor: wait;
+  cursor: var(--ispy-cursor-magnify);
   opacity: 0.94;
 }
 
@@ -427,7 +429,11 @@ button.ispy-polaroid {
   position: relative;
   width: 100%;
   aspect-ratio: 1;
-  background: #e8e6e3;
+  background-color: #e8e6e3;
+  background-image: var(--ispy-polaroid-photo-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   overflow: hidden;
 }
 
@@ -487,4 +493,197 @@ button.ispy-polaroid {
 
 .ispy-footer p {
   margin: 0;
+}
+
+/* Correct-match story modal (portal → body) */
+.ispy-reveal-modal {
+  --ispy-cursor-magnify: url('../assets/ispy/cursor-magnify.svg') 12 12, zoom-in;
+  --ispy-polaroid-photo-bg: url('../assets/ispy/officer_backgrounds/tomiwa_stars.jpg');
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 3vw, 1.75rem);
+  box-sizing: border-box;
+  background: rgb(0 0 0 / 0.52);
+}
+
+.ispy-reveal-modal__panel {
+  position: relative;
+  width: min(52rem, 100%);
+  max-height: min(92dvh, 880px);
+  overflow: auto;
+  box-sizing: border-box;
+  background: #fafaf9;
+  border-radius: 12px;
+  border: 1px solid rgb(0 0 0 / 0.08);
+  box-shadow:
+    0 28px 90px rgb(0 0 0 / 0.3),
+    0 10px 28px rgb(0 0 0 / 0.12);
+  padding: clamp(1.1rem, 2.8vw, 1.85rem);
+  padding-top: clamp(2.5rem, 6vw, 3rem);
+}
+
+.ispy-reveal-modal__close {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: rgb(0 0 0 / 0.07);
+  color: #1a1a1a;
+  font-size: 1.85rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ispy-reveal-modal__close:hover {
+  background: rgb(0 0 0 / 0.12);
+}
+
+.ispy-reveal-modal__close:focus-visible {
+  outline: 2px solid #9ec9f0;
+  outline-offset: 2px;
+}
+
+.ispy-reveal-modal__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
+  gap: clamp(1rem, 3vw, 2.25rem);
+  align-items: start;
+}
+
+.ispy-reveal-modal__polaroid-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.ispy-reveal-modal__copy {
+  min-width: 0;
+}
+
+.ispy-reveal-modal__title {
+  margin: 0 0 0.85rem;
+  font-family: 'BudNull', 'Times New Roman', Times, serif;
+  font-size: clamp(1.25rem, 3.2vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #111;
+  line-height: 1.2;
+}
+
+.ispy-reveal-modal__title-item {
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: #444;
+}
+
+.ispy-reveal-modal__quote {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: clamp(0.95rem, 2.1vw, 1.08rem);
+  line-height: 1.55;
+  color: #2a2a2a;
+}
+
+.ispy-reveal-modal__quote::before {
+  content: '\201C';
+}
+
+.ispy-reveal-modal__quote::after {
+  content: '\201D';
+}
+
+.ispy-reveal-polaroid {
+  width: min(17rem, 100%);
+  box-sizing: border-box;
+  background: linear-gradient(165deg, #fffffe 0%, #f4f1eb 100%);
+  padding: 0.85rem 0.85rem 0.65rem;
+  border: 1px solid rgb(0 0 0 / 0.07);
+  border-radius: 6px;
+  box-shadow:
+    0 8px 26px rgb(0 0 0 / 0.12),
+    0 2px 6px rgb(0 0 0 / 0.07);
+  outline: none;
+  cursor: var(--ispy-cursor-magnify);
+}
+
+.ispy-reveal-polaroid:focus-visible {
+  box-shadow:
+    0 0 0 3px rgb(158 201 240 / 0.55),
+    0 8px 26px rgb(0 0 0 / 0.12),
+    0 2px 6px rgb(0 0 0 / 0.07);
+}
+
+.ispy-reveal-polaroid__photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: #e8e6e3;
+  background-image: var(--ispy-polaroid-photo-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.ispy-reveal-polaroid__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transition: opacity 0.22s ease;
+}
+
+.ispy-reveal-polaroid__img--back {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.ispy-reveal-polaroid:hover .ispy-reveal-polaroid__img--back,
+.ispy-reveal-polaroid:focus-visible .ispy-reveal-polaroid__img--back {
+  opacity: 1;
+}
+
+.ispy-reveal-polaroid:hover .ispy-reveal-polaroid__img--front,
+.ispy-reveal-polaroid:focus-visible .ispy-reveal-polaroid__img--front {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ispy-reveal-polaroid__img {
+    transition: none;
+  }
+}
+
+.ispy-reveal-polaroid__caption {
+  display: block;
+  margin: 0.55rem 0 0;
+  font-family: 'BudNull', 'Times New Roman', Times, serif;
+  font-size: clamp(0.85rem, 2vw, 1.05rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: #2a2a2a;
+}
+
+@media (max-width: 720px) {
+  .ispy-reveal-modal__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ispy-reveal-modal__polaroid-wrap {
+    margin-bottom: 0.25rem;
+  }
 }
