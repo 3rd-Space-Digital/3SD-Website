@@ -222,6 +222,10 @@ body:has(.article6),
   margin: 42px 0;
 }
 
+.article6-body--readable .article6-paragraph {
+  text-indent: 2em;
+}
+
 .article6-readable-toggle {
   display: flex;
   justify-content: center;
@@ -282,7 +286,7 @@ body:has(.article6),
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 28px;
-  align-items: center;
+  align-items: stretch;
 }
 
 .article6-entry-text {
@@ -291,6 +295,10 @@ body:has(.article6),
   min-width: 0;
   margin: 0;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 0;
 }
 
 .article6-entry-images {
@@ -316,12 +324,28 @@ body:has(.article6),
 
 .article6-entry-poem {
   color: #000;
-  display: block;
-  overflow-wrap: anywhere;
+  margin: 0;
+}
+
+/* Desktop: poem column matches image stack height; stanzas span top → bottom. */
+@media (min-width: 769px) {
+  .article6-entry-poem--height-match {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-wrap: anywhere;
+  }
+}
+
+.article6-entry-poem-stanza {
+  color: #000;
   margin: 0;
   white-space: pre-line;
   font-size: clamp(16px, 1.52vw, 21px);
   line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 768px) {
@@ -337,6 +361,17 @@ body:has(.article6),
 
   .article6-entry-text {
     order: 1;
+    display: block;
+    justify-content: initial;
+  }
+
+  .article6-entry-poem--height-match {
+    display: block;
+    flex: none;
+  }
+
+  .article6-entry-poem-stanza:not(:last-child) {
+    margin-bottom: 1em;
   }
 
   .article6-entry-images {
@@ -436,7 +471,7 @@ body:has(.article6),
 
 .article6-flower-slot--hole {
   position: absolute;
-  left: calc(50% + 34px);
+  left: 50%;
   transform: translateX(-50%);
   z-index: 2;
 }

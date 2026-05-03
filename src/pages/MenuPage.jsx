@@ -86,12 +86,12 @@ function MenuPage({ onClose }) {
 
         <section className="menu-read-content">
           <div>
-            <Link to="/read" className="menu-section-link" onClick={handleClose}>
+            <Link to="/issues" className="menu-section-link" onClick={handleClose}>
               <h2 className="menu-section-title menu-read-title">Read</h2>
             </Link>
             <div className="menu-read-columns">
               <div className="menu-read-item">
-                <Link to="/issues" onClick={handleClose}>articles</Link>
+                <Link to="/articles" onClick={handleClose}>articles</Link>
               </div>
               <div className="menu-read-item">
                 <Link to="/interviews" onClick={handleClose}>interviews</Link>
@@ -106,7 +106,7 @@ function MenuPage({ onClose }) {
                 <Link to="/music" onClick={handleClose}>music</Link>
               </div>
               <div className="menu-read-item">
-                <Link to="/read" onClick={handleClose}>show all...</Link>
+                <Link to="/issues" onClick={handleClose}>show all...</Link>
               </div>
             </div>
           </div>

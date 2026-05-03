@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
 import { HomepageRevealProvider } from './context/HomepageRevealContext'
 import Header from './components/Header'
@@ -79,7 +79,8 @@ function App() {
           <Route path="/archive/:folderName" element={<ArchivePage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/events/:id" element={<EventDetail />} />
-          <Route path="/issues" element={<IssuesPage contentType="article" pageTitle="Articles" />} />
+          <Route path="/issues" element={<IssuesPage contentType="all" pageTitle="All Issues" />} />
+          <Route path="/articles" element={<IssuesPage contentType="article" pageTitle="Articles" />} />
           <Route path="/issues/0" element={<ArticleTemplate />} />
           <Route path="/issues/1" element={<Article1 />} />
           <Route path="/issues/2" element={<Article2 />} />
@@ -95,7 +96,7 @@ function App() {
           <Route path="/artists" element={<ComingSoonPage />} />
           <Route path="/music" element={<ComingSoonPage />} />
           <Route path="/interviews" element={<ComingSoonPage />} />
-          <Route path="/read" element={<IssuesPage contentType="all" pageTitle="All Issues" />} />
+          <Route path="/read" element={<Navigate to="/issues" replace />} />
           </Routes>
         </div>
         <Analytics />
