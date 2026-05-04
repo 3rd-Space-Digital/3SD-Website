@@ -40,7 +40,8 @@ body {
 .article2-paragraph,
 .article3-paragraph,
 .article4-paragraph,
-.article5-paragraph {
+.article5-paragraph,
+.article7-paragraph {
   text-indent: 2em;
 }
 
