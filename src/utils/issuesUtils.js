@@ -1,7 +1,7 @@
 import { supabase } from '../config/supabase'
 import { getImageUrl } from './supabaseImageRetrieval'
 
-const ARTICLE_IDS = new Set([1, 5, 7])
+const ARTICLE_IDS = new Set([1, 5])
 
 export const getIssueContentType = (article) => {
   const articleId = Number(article?.id)
