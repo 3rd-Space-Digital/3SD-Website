@@ -5,6 +5,7 @@ import LoadingScreen from '../../components/LoadingScreen'
 import './IssuesPage.css'
 
 const LATEST_ISSUE_COUNT = 6
+const ISSUE_PREVIEW_MAX_LENGTH = 72
 
 function getDisplayTitle(title) {
   if (typeof title !== 'string') return title
@@ -12,7 +13,7 @@ function getDisplayTitle(title) {
   return title
 }
 
-function IssuesPage() {
+function IssuesPage({ contentType = 'article', pageTitle = 'Issues' }) {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
@@ -77,13 +78,33 @@ function IssuesPage() {
     ? articles.filter((article) => getDisplayTitle(article.title).toLowerCase().includes(q))
     : articles
   
-  // Filter out template article (id 0)
-  const filteredWithoutTemplate = filtered.filter((article) => article.id !== 0)
+  const showAllContent = contentType === 'all'
 
-  const truncateDescription = (text, maxLength = 100) => {
+  // Filter out template article and apply content-type routing.
+  const filteredWithoutTemplate = filtered.filter(
+    (article) => article.id !== 0 && (showAllContent || article.contentType === contentType)
+  )
+
+  const truncateDescription = (text, maxLength = ISSUE_PREVIEW_MAX_LENGTH) => {
     if (!text) return ''
-    if (text.length <= maxLength) return text
-    return text.substring(0, maxLength).trim() + '...'
+    const normalized = text.trim()
+    const existingEllipsisMatch = normalized.match(/(\.\.\.|…)/)
+    if (existingEllipsisMatch) {
+      const ellipsisIndex = existingEllipsisMatch.index ?? -1
+      if (ellipsisIndex >= 0) {
+        return normalized.slice(0, ellipsisIndex + existingEllipsisMatch[0].length)
+      }
+    }
+    if (normalized.length <= maxLength) return normalized
+
+    const clipped = normalized.slice(0, maxLength + 1).trim()
+    const lastSpaceIndex = clipped.lastIndexOf(' ')
+    const cleanCutoff =
+      lastSpaceIndex > Math.floor(maxLength * 0.6)
+        ? clipped.slice(0, lastSpaceIndex).trim()
+        : clipped.slice(0, maxLength).trim()
+
+    return `${cleanCutoff}...`
   }
 
   const renderIssueCard = (article) => (
@@ -113,15 +134,16 @@ function IssuesPage() {
   const middleFour =
     article6 && article3 ? latest.filter((a) => a.id !== 6 && a.id !== 3).slice(0, 4) : []
   const useFourColDesktop = !narrowLatestLayout && article6 && article3 && middleFour.length === 4
+  const loadingLabel = showAllContent ? 'All Issues' : pageTitle
 
   if (loading) {
-    return <LoadingScreen label="Issues" />
+    return <LoadingScreen label={loadingLabel} />
   }
 
   return (
     <div className="issues-page">
       <div className="issues-header">
-        <h1 className="issues-title">Issues</h1>
+        <h1 className="issues-title">{pageTitle}</h1>
         <div className="issues-search-wrapper">
           {searchOpen ? (
             <>

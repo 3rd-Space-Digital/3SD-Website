@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
 import { HomepageRevealProvider } from './context/HomepageRevealContext'
 import Header from './components/Header'
@@ -17,9 +17,11 @@ import Article3 from './pages/issues/Article3'
 import Article4 from './pages/issues/Article4'
 import Article5 from './pages/issues/Article5'
 import Article6 from './pages/issues/Article6'
+import Article7 from './pages/issues/Article7'
 import MenuPage from './pages/MenuPage'
 import AppsPage from './pages/apps/AppsPage'
 import PlaylistPage from './pages/PlaylistPage'
+import ProjectsPage from './pages/projects/ProjectsPage'
 import ComingSoonPage from './pages/ComingSoonPage'
 import AboutPage from './pages/AboutPage'
 import IspyPage from './pages/IspyPage'
@@ -79,7 +81,8 @@ function App() {
           <Route path="/archive/:folderName" element={<ArchivePage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/events/:id" element={<EventDetail />} />
-          <Route path="/issues" element={<IssuesPage />} />
+          <Route path="/issues" element={<IssuesPage contentType="all" pageTitle="All Issues" />} />
+          <Route path="/articles" element={<IssuesPage contentType="article" pageTitle="Articles" />} />
           <Route path="/issues/0" element={<ArticleTemplate />} />
           <Route path="/issues/1" element={<Article1 />} />
           <Route path="/issues/2" element={<Article2 />} />
@@ -87,15 +90,16 @@ function App() {
           <Route path="/issues/4" element={<Article4 />} />
           <Route path="/issues/5" element={<Article5 />} />
           <Route path="/issues/6" element={<Article6 />} />
+          <Route path="/issues/7" element={<Article7 />} />
           {/* <Route path="/issues/:id" element={<Article />} /> */}
           <Route path="/apps" element={<AppsPage />} />
           <Route path="/playlist" element={<PlaylistPage />} />
           <Route path="/account" element={<ComingSoonPage />} />
-          <Route path="/projects" element={<ComingSoonPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/artists" element={<ComingSoonPage />} />
           <Route path="/music" element={<ComingSoonPage />} />
           <Route path="/interviews" element={<ComingSoonPage />} />
-          <Route path="/read" element={<ComingSoonPage />} />
+          <Route path="/read" element={<Navigate to="/issues" replace />} />
           <Route path="/ispy" element={<IspyPage />} />
           </Routes>
         </div>

@@ -1,7 +1,7 @@
 .article4 {
   background-color: white;
   min-height: 100vh;
-  padding: 120px 200px 120px;
+  padding: 120px 450px 120px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -410,13 +410,13 @@ body:has(.article4),
 
 @media (max-width: 1600px) {
   .article4 {
-    padding: 120px 120px 120px;
+    padding: 120px 180px 120px;
   }
 }
 
 @media (max-width: 1200px) {
   .article4 {
-    padding: 120px 60px 120px;
+    padding: 120px 90px 120px;
   }
 
   .article4-header {
@@ -451,7 +451,7 @@ body:has(.article4),
 
 @media (max-width: 768px) {
   .article4 {
-    padding: 100px 30px 100px;
+    padding: 100px 45px 100px;
   }
 
   .article4-carousel {
@@ -552,7 +552,7 @@ body:has(.article4),
 
 @media (max-width: 480px) {
   .article4 {
-    padding: 80px 20px 80px;
+    padding: 80px 30px 80px;
   }
 
   .article4-header {

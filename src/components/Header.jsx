@@ -6,6 +6,8 @@ import logoIcon from '../assets/svgs/3SD.svg'
 import './Header.css'
 
 const TOP_THRESHOLD = 24
+const MOBILE_TABLET_MAX_WIDTH = 970
+const SCROLL_DELTA_THRESHOLD = 4
 
 function Header({ onOpenMenu }) {
   const location = useLocation()
@@ -39,10 +41,22 @@ function Header({ onOpenMenu }) {
 
     const handleScroll = () => {
       const y = getScrollY()
-      const scrollingUp = y < lastScrollY.current
+      const previousY = lastScrollY.current
+      const delta = y - previousY
+      const scrollingUp = delta < 0
+      const isMobileOrTablet = window.matchMedia(`(max-width: ${MOBILE_TABLET_MAX_WIDTH}px)`).matches
+      const useMobileHomepageBehavior = isHomepage && homepageRevealed && isMobileOrTablet
+
       if (y <= TOP_THRESHOLD) {
         setAtTop(true)
         setHeaderVisible(true)
+      } else if (useMobileHomepageBehavior) {
+        setAtTop(false)
+        if (delta > SCROLL_DELTA_THRESHOLD) {
+          setHeaderVisible(false)
+        } else if (delta < -SCROLL_DELTA_THRESHOLD || scrollingUp) {
+          setHeaderVisible(true)
+        }
       } else {
         setAtTop(false)
         setHeaderVisible(scrollingUp)

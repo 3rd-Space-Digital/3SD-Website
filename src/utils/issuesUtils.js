@@ -1,6 +1,13 @@
 import { supabase } from '../config/supabase'
 import { getImageUrl } from './supabaseImageRetrieval'
 
+const ARTICLE_IDS = new Set([1, 5])
+
+export const getIssueContentType = (article) => {
+  const articleId = Number(article?.id)
+  return ARTICLE_IDS.has(articleId) ? 'article' : 'project'
+}
+
 export const getArticleThumbnailUrl = async (articleId) => {
   try {
     const { data: files, error } = await supabase.storage
@@ -72,7 +79,8 @@ export const getAllArticles = async () => {
     const withThumbs = await Promise.all(
       (data || []).map(async (article) => ({
         ...article,
-        thumbnailUrl: await getArticleThumbnailUrl(article.id)
+        thumbnailUrl: await getArticleThumbnailUrl(article.id),
+        contentType: getIssueContentType(article)
       }))
     )
     return withThumbs
@@ -96,7 +104,7 @@ export const getArticleById = async (id) => {
     if (error || !data) return null
 
     const thumbnailUrl = await getArticleThumbnailUrl(data.id)
-    return { ...data, thumbnailUrl }
+    return { ...data, thumbnailUrl, contentType: getIssueContentType(data) }
   } catch (e) {
     console.error('Error fetching article by id:', e)
     return null

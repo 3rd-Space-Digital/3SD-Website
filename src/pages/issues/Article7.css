@@ -1,4 +1,4 @@
-.article5 {
+.article7 {
   background-color: white;
   min-height: 100vh;
   padding: 120px 450px 120px;
@@ -10,17 +10,17 @@
   overflow-x: hidden;
 }
 
-html:has(.article5),
-body:has(.article5),
-#root:has(.article5) {
+html:has(.article7),
+body:has(.article7),
+#root:has(.article7) {
   background-color: white;
 }
 
-.article5-nav {
+.article7-nav {
   margin-bottom: 32px;
 }
 
-.article5-back {
+.article7-back {
   background: none;
   border: none;
   color: black;
@@ -35,18 +35,18 @@ body:has(.article5),
   transition: opacity 0.2s;
 }
 
-.article5-back:hover {
+.article7-back:hover {
   opacity: 0.7;
 }
 
-.article5-header {
+.article7-header {
   margin-bottom: 40px;
   margin-left: -160px;
   margin-right: -160px;
   text-align: center;
 }
 
-.article5-title {
+.article7-title {
   color: #000;
   text-align: center;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -58,7 +58,7 @@ body:has(.article5),
   margin: 0 0 35px;
 }
 
-.article5-meta {
+.article7-meta {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 24px;
   font-style: normal;
@@ -73,30 +73,30 @@ body:has(.article5),
   position: relative;
 }
 
-.article5-date,
-.article5-author {
+.article7-date,
+.article7-author {
   color: #000;
 }
 
-.article5-date {
+.article7-date {
   position: absolute;
   right: 50%;
   margin-right: 8px;
 }
 
-.article5-sep {
+.article7-sep {
   margin: 0 4px;
   position: relative;
   z-index: 1;
 }
 
-.article5-author {
+.article7-author {
   position: absolute;
   left: 50%;
   margin-left: 8px;
 }
 
-.article5-subtitle {
+.article7-subtitle {
   color: #000;
   text-align: left;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -108,18 +108,18 @@ body:has(.article5),
   margin: 12px 0 35px;
 }
 
-.article5-content {
+.article7-content {
   margin-bottom: 60px;
 }
 
-.article5-hero {
+.article7-hero {
   margin: 0;
   padding: 0;
   background-color: white;
   display: block;
 }
 
-.article5-hero img {
+.article7-hero img {
   width: 100%;
   height: auto;
   display: block;
@@ -128,19 +128,7 @@ body:has(.article5),
   padding: 0;
 }
 
-.article5-caption {
-  color: #000;
-  text-align: center;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 24px;
-  font-style: italic;
-  font-weight: 500;
-  line-height: 1.6;
-  letter-spacing: 0;
-  margin: 12px 0 0;
-}
-
-.article5-body {
+.article7-body {
   color: #000;
   text-align: left;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -151,139 +139,86 @@ body:has(.article5),
   letter-spacing: 0;
 }
 
-.article5-paragraph {
-  margin: 0 0 24px;
+.article7-paragraph {
+  margin: 0 0 18px;
 }
 
-.article5-paragraph:last-child {
+.article7-paragraph:last-child {
   margin-bottom: 0;
 }
 
-.article5-section-heading {
-  color: #000;
-  text-align: left;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.64px;
-  margin: 48px 0 16px;
+.article7-video-embed {
+  margin: 24px auto 24px;
+  width: 100%;
+  max-width: 960px;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #0a0a0a;
 }
 
-.article5-section-heading:first-of-type {
-  margin-top: 40px;
-}
-
-.article5-three-images {
-  margin: 48px 0;
+.article7-video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
   display: block;
 }
 
-/* Tight centered row: fixed block width, 10px between images, not stretched to article width */
-.article5-three-images-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  align-items: stretch;
-  height: 400px;
-  width: min(100%, 720px);
-  margin-left: auto;
-  margin-right: auto;
+.article7-two-images {
+  margin: 24px 0;
+  display: block;
+}
+
+.article7-three-images {
+  margin: 24px 0;
+  display: block;
+}
+
+/*
+ * Row height for images is set by JS (--article7-row-img-h) so all photos share one pixel height
+ * and shrink to fit the container (no horizontal scroll). Fallback before measure/load.
+ */
+.article7-images-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.article7-images-row .article7-image-wrap {
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  min-width: 0;
   box-sizing: border-box;
 }
 
-.article5-three-images .article5-image-wrap {
-  min-height: 0;
-  height: 100%;
-  overflow: hidden;
-}
-
-.article5-three-images .article5-image-wrap img {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  object-fit: cover;
-  object-position: center;
+.article7-images-row .article7-image-wrap img {
+  box-sizing: border-box;
+  height: var(--article7-row-img-h, min(30vw, 280px));
+  width: auto;
   display: block;
   background-color: white;
 }
 
-/* Third image: pan visible crop 30px to the right (desktop only; reset on mobile) */
-.article5-three-images .article5-image-wrap--obj-nudge-x img {
-  object-position: calc(50% + 30px) center;
-}
-
-.article5-three-images .article5-caption {
-  margin-top: 16px;
-  display: block;
-  position: relative;
-  max-width: min(100%, 720px);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.article5-single-image {
-  margin: 48px auto;
-  max-width: 1200px;
-  display: block;
-  height: 400px;
-  overflow: hidden;
-}
-
-.article5-single-image img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: contain;
-  background-color: white;
-}
-
-.article5-two-images {
-  margin: 48px 0;
-  display: block;
-}
-
-.article5-two-images-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  align-items: stretch;
-  height: 400px;
-  overflow: hidden;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.article5-image-wrap {
-  min-height: 0;
-  overflow: hidden;
-}
-
-.article5-image-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-  background-color: white;
-}
-
-.article5-two-images .article5-caption {
-  margin-top: 16px;
-  display: block;
-  position: relative;
-}
-
-.article5-loading,
-.article5-error {
+.article7-loading,
+.article7-error {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 60vh;
 }
 
-.article5-loading-text,
-.article5-error-text {
+.article7-loading-text,
+.article7-error-text {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 24px;
   font-weight: 500;
@@ -291,28 +226,28 @@ body:has(.article5),
   text-align: center;
 }
 
-.article5-error-text h2 {
+.article7-error-text h2 {
   color: #d32f2f;
   margin-bottom: 20px;
 }
 
-.article5-back-link {
+.article7-back-link {
   color: black;
   font-weight: 600;
   text-decoration: none;
 }
 
-.article5-back-link:hover {
+.article7-back-link:hover {
   text-decoration: underline;
 }
 
-.article5-credits {
+.article7-credits {
   margin-top: 48px;
   padding-top: 24px;
   border-top: 1px solid #ccc;
 }
 
-.article5-credits-title {
+.article7-credits-title {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 24px;
   font-weight: 600;
@@ -320,72 +255,78 @@ body:has(.article5),
   margin: 0 0 16px;
 }
 
-.article5-credits-grid {
+.article7-credits-grid {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.article5-credit-item {
+.article7-credit-item {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 20px;
   font-weight: 500;
   color: #333;
 }
 
-.article5-credit-label {
+.article7-credit-label {
   margin-right: 6px;
 }
 
-.article5-credit-value {
+.article7-credit-value {
   text-decoration: underline;
 }
 
-.article5-credit-link {
-  color: inherit;
+.article7-credit-sep {
+  color: #333;
+}
+
+.article7-credit-link {
+  color: #333;
   text-decoration: underline;
+  font-weight: 500;
   transition: opacity 0.2s;
 }
 
-.article5-credit-link:hover {
-  opacity: 0.7;
+.article7-credit-link:visited {
+  color: #333;
+}
+
+.article7-credit-link:hover,
+.article7-credit-link:focus-visible {
+  color: #333;
+  opacity: 0.75;
+  text-decoration: underline;
 }
 
 @media (max-width: 1600px) {
-  .article5 {
+  .article7 {
     padding: 120px 180px 120px;
   }
 }
 
 @media (max-width: 1200px) {
-  .article5 {
+  .article7 {
     padding: 120px 90px 120px;
   }
 
-  .article5-header {
+  .article7-header {
     margin-left: 0;
     margin-right: 0;
   }
 
-  .article5-title {
+  .article7-title {
     font-size: 80px;
     letter-spacing: -2.4px;
   }
 
-  .article5-subtitle {
+  .article7-subtitle {
     font-size: 40px;
     letter-spacing: -1.2px;
     margin-left: 0;
     margin-right: 0;
   }
 
-  .article5-caption {
-    font-size: 24px;
-    font-weight: 500;
-    letter-spacing: 0;
-  }
-
-  .article5-body {
+  .article7-body {
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 0;
@@ -393,75 +334,29 @@ body:has(.article5),
 }
 
 @media (max-width: 768px) {
-  .article5 {
+  .article7 {
     padding: 100px 45px 100px;
   }
 
-  .article5-two-images-grid {
-    grid-template-columns: 1fr;
+  .article7-images-row {
     gap: 16px;
-    height: auto;
   }
 
-  .article5-three-images-grid {
-    grid-template-columns: 1fr;
-    height: auto;
-    gap: 10px;
-    width: 100%;
-    max-width: 100%;
+  .article7-images-row .article7-image-wrap img {
+    height: var(--article7-row-img-h, min(48vw, 240px));
   }
 
-  .article5-three-images .article5-image-wrap {
-    height: auto;
-    max-height: none;
-    overflow: visible;
-  }
-
-  .article5-three-images .article5-image-wrap img {
-    width: 100%;
-    height: auto;
-    min-height: 0;
-    object-fit: contain;
-  }
-
-  .article5-three-images .article5-image-wrap--obj-nudge-x img {
-    object-position: center;
-  }
-
-  .article5-single-image {
-    margin: 40px 0;
-    max-width: 100%;
-    height: auto;
-    overflow: visible;
-  }
-
-  .article5-single-image img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-
-  .article5-section-heading {
-    font-size: 26px;
-    margin: 40px 0 12px;
-  }
-
-  .article5-image-wrap {
-    height: auto;
-    min-height: 280px;
-  }
-
-  .article5-header {
+  .article7-header {
     margin-left: 0;
     margin-right: 0;
   }
 
-  .article5-title {
+  .article7-title {
     font-size: 48px;
     letter-spacing: -1.44px;
   }
 
-  .article5-subtitle {
+  .article7-subtitle {
     font-size: 36px;
     letter-spacing: -1.08px;
     margin-left: 0;
@@ -469,7 +364,7 @@ body:has(.article5),
     margin-top: 12px;
   }
 
-  .article5-meta {
+  .article7-meta {
     font-size: clamp(13px, 3.8vw, 18px);
     letter-spacing: -0.54px;
     white-space: nowrap;
@@ -481,50 +376,44 @@ body:has(.article5),
     gap: 0;
   }
 
-  .article5-date,
-  .article5-author {
+  .article7-date,
+  .article7-author {
     position: static;
     margin: 0;
   }
 
-  .article5-sep {
+  .article7-sep {
     position: static;
     margin: 0 6px;
   }
 
-  .article5-hero {
+  .article7-hero {
     margin-bottom: 0;
   }
 
-  .article5-body {
+  .article7-body {
     font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 0;
-  }
-
-  .article5-caption {
-    font-size: 24px;
     font-weight: 500;
     letter-spacing: 0;
   }
 }
 
 @media (max-width: 480px) {
-  .article5 {
+  .article7 {
     padding: 80px 30px 80px;
   }
 
-  .article5-header {
+  .article7-header {
     margin-left: 0;
     margin-right: 0;
   }
 
-  .article5-title {
+  .article7-title {
     font-size: 36px;
     letter-spacing: -1.08px;
   }
 
-  .article5-subtitle {
+  .article7-subtitle {
     font-size: 28px;
     letter-spacing: -0.84px;
     margin-left: 0;
@@ -532,27 +421,20 @@ body:has(.article5),
     margin-top: 12px;
   }
 
-  .article5-meta {
+  .article7-meta {
     white-space: nowrap;
     font-size: clamp(12px, 4.2vw, 16px);
     line-height: 1.3;
     padding: 0 6px;
   }
 
-  .article5-hero {
+  .article7-hero {
     margin-bottom: 0;
   }
 
-  .article5-body {
+  .article7-body {
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 0;
   }
-
-  .article5-caption {
-    font-size: 24px;
-    font-weight: 500;
-    letter-spacing: 0;
-  }
 }
-

@@ -2,7 +2,7 @@
   --article3-content-width: 640px;
   background-color: #000;
   min-height: 100vh;
-  padding: 120px 200px 120px;
+  padding: 120px 450px 120px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -222,13 +222,13 @@ body:has(.article3),
 
 @media (max-width: 1600px) {
   .article3 {
-    padding: 120px 120px 120px;
+    padding: 120px 180px 120px;
   }
 }
 
 @media (max-width: 1200px) {
   .article3 {
-    padding: 120px 60px 120px;
+    padding: 120px 90px 120px;
     --article3-content-width: 620px;
   }
 
@@ -246,7 +246,7 @@ body:has(.article3),
 @media (max-width: 768px) {
   .article3 {
     --article3-content-width: 100%;
-    padding: 100px 30px 100px;
+    padding: 100px 45px 100px;
   }
 
   .article3-header {
@@ -286,7 +286,7 @@ body:has(.article3),
 
 @media (max-width: 480px) {
   .article3 {
-    padding: 80px 20px 80px;
+    padding: 80px 30px 80px;
   }
 
   .article3-header {

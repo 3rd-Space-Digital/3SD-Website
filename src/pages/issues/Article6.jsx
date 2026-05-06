@@ -148,6 +148,35 @@ const ARTICLE_BODY_PARAGRAPHS = [
 
 const ARTICLE_BODY_SINGLE_PARAGRAPH = ARTICLE_BODY_PARAGRAPHS.join('\n\n')
 
+const ARTICLE6_ENTRY_POEM_TEXT = `I wore a blindfold made of bloom
+With soft petals clouding sight
+I breathed them in, their sweet perfume
+And wandered through the night
+
+Until my chest began to twist
+A truth I could no longer hide
+I feel and choked on what Id missed
+As flowers poured deep inside
+
+They spilled at my feet
+No longer soft, no longer fair
+I lay among their fading sweet
+And drifted Sleep under heavy air
+
+I rose tired like ive slept for years
+Like I've walked farand and wide
+I do not know what was lost or appears
+But i feel different inside
+
+I woke with eyes that finally see
+With no petals to shroud my view
+I felt a bloom grow quietly
+A bloom where I can live Anew`
+
+const ARTICLE6_ENTRY_POEM_STANZAS = ARTICLE6_ENTRY_POEM_TEXT.trim()
+  .split(/\n\n+/)
+  .map((s) => s.trim())
+
 const FlowerRail = ({ side }) => {
   const columns = Array.from({ length: FLOWER_COLUMNS_PER_SIDE }, (_, columnIndex) => {
     const items = Array.from({ length: FLOWER_ITEMS_PER_COLUMN }, (_, i) => {
@@ -1118,29 +1147,13 @@ function Article6() {
           <div className="article6-entry">
             <div className="article6-entry-grid">
               <div className="article6-entry-text">
-                <p className="article6-entry-title">Entry</p>
-                <p className="article6-entry-poem">
-                  {`I wore a blindfold made of bloom
-With soft petals clouding sight
-I breathed them in, their sweet perfume
-And wandered through the night
-Until my chest began to twist
-A truth I could no longer hide
-I feel and choked on what Id missed
-As flowers poured deep inside
-They spilled at my feet
-No longer soft, no longer fair
-I lay among their fading sweet
-And drifted Sleep under heavy air
-I rose tired like ive slept for years
-Like I've walked farand and wide
-I do not know what was lost or appears
-But i feel different inside
-I woke with eyes that finally see
-With no petals to shroud my view
-I felt a bloom grow quietly
-A bloom where I can live Anew`}
-                </p>
+                <div className="article6-entry-poem article6-entry-poem--height-match">
+                  {ARTICLE6_ENTRY_POEM_STANZAS.map((stanza, i) => (
+                    <p key={`stanza-${i}`} className="article6-entry-poem-stanza">
+                      {stanza}
+                    </p>
+                  ))}
+                </div>
               </div>
               <div className="article6-entry-images">
                 <img src={getImageUrl(`${IMAGE_PATH_PREFIX}/1.webp`)} alt="" loading="lazy" decoding="async" />
