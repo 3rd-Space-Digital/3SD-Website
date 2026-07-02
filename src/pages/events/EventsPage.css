@@ -113,20 +113,20 @@
 .event-card {
   display: flex;
   flex-direction: column;
-  background-color: #f5f5f5;
+  background-color: #fff;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
   text-decoration: none;
   color: inherit;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
-  border: 1px solid #eee;
+  border: 1px solid #000;
   height: 100%;
 }
 
 .event-card-content {
   flex: 0 0 auto;
-  height: 120px;
+  min-height: 120px;
   display: flex;
   flex-direction: column;
 }
@@ -141,10 +141,10 @@
   flex: 0 0 auto;
   overflow: hidden;
   display: block;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-radius: 0;
+  border-bottom: 1px solid #000;
   aspect-ratio: 4 / 5;
-  background-color: #f5f5f5;
+  background-color: #fff;
 }
 
 .event-image img {
@@ -161,7 +161,7 @@
   font-weight: 900;
   line-height: 1.2;
   margin: 0;
-  padding: 16px 20px 4px 20px;
+  padding: 16px 20px 8px 20px;
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -266,7 +266,7 @@
   }
 
   .event-card-content {
-    height: 110px;
+    min-height: 110px;
   }
 
   .event-image {
@@ -320,7 +320,7 @@
   }
 
   .event-card-content {
-    height: 100px;
+    min-height: 100px;
   }
 
   .event-image {

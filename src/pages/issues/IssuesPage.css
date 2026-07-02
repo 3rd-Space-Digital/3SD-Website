@@ -135,9 +135,18 @@
   width: 100%;
 }
 
-.issues-grid-latest-split--3 .issues-grid-latest-col {
+.issues-grid-latest-split--3 .issues-grid-latest-col,
+.issues-grid-latest-split--2 .issues-grid-latest-col,
+.issues-grid-latest-split--1 .issues-grid-latest-col {
   flex: 1;
   min-width: 0;
+}
+
+/* Archive masonry: round-robin flex columns so the top row is always full */
+.issues-archive-masonry {
+  padding: 0 4%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 .issues-grid-latest-col {
@@ -161,13 +170,13 @@
 .issues-grid-latest--fourcol {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  align-items: stretch;
+  align-items: start;
   gap: 10px;
 }
 
 .issues-grid-latest-feature {
   min-width: 0;
-  align-self: center;
+  align-self: start;
 }
 
 .issues-grid-latest-mid {
@@ -210,14 +219,14 @@
 .issue-card {
   display: flex;
   flex-direction: column;
-  background-color: #f5f5f5;
+  background-color: #fff;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
   text-decoration: none;
   color: inherit;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
-  border: 1px solid #eee;
+  border: 1px solid #000;
   height: auto;
   width: 100%;
   margin-bottom: 10px;
@@ -229,7 +238,7 @@
 
 .issue-card-content {
   flex: 0 0 auto;
-  height: 120px;
+  min-height: 120px;
   display: flex;
   flex-direction: column;
 }
@@ -244,8 +253,8 @@
   flex: 0 0 auto;
   overflow: hidden;
   display: block;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-radius: 0;
+  border-bottom: 1px solid #000;
 }
 
 .issue-image img {
@@ -261,8 +270,8 @@
   font-weight: 900;
   line-height: 1.2;
   margin: 0;
-  padding: 16px 20px 4px 20px;
-  text-align: center;
+  padding: 16px 20px 8px 20px;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -361,6 +370,10 @@
     padding: 20px 4%;
   }
 
+  .issues-archive-masonry {
+    padding: 20px 4%;
+  }
+
   .issues-grid-latest {
     display: flex;
     flex-direction: column;
@@ -400,7 +413,7 @@
   }
 
   .issue-card-content {
-    height: 110px;
+    min-height: 110px;
   }
 
   .issue-image {
@@ -455,7 +468,7 @@
   }
 
   .issue-card-content {
-    height: 100px;
+    min-height: 100px;
   }
 
   .issue-image {

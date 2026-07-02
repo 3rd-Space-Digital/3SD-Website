@@ -21,6 +21,12 @@ function IssuesPage({ contentType = 'article', pageTitle = 'Issues' }) {
   const [narrowLatestLayout, setNarrowLatestLayout] = useState(() =>
     typeof window !== 'undefined' ? window.matchMedia('(max-width: 768px)').matches : false
   )
+  const [archiveColumnCount, setArchiveColumnCount] = useState(() => {
+    if (typeof window === 'undefined') return 3
+    if (window.matchMedia('(max-width: 768px)').matches) return 1
+    if (window.matchMedia('(max-width: 1200px)').matches) return 2
+    return 3
+  })
   const searchInputRef = useRef(null)
 
   useEffect(() => {
@@ -71,6 +77,23 @@ function IssuesPage({ contentType = 'article', pageTitle = 'Issues' }) {
     sync()
     mq.addEventListener('change', sync)
     return () => mq.removeEventListener('change', sync)
+  }, [])
+
+  useEffect(() => {
+    const mqTablet = window.matchMedia('(max-width: 768px)')
+    const mqSmall = window.matchMedia('(max-width: 1200px)')
+    const sync = () => {
+      if (mqTablet.matches) setArchiveColumnCount(1)
+      else if (mqSmall.matches) setArchiveColumnCount(2)
+      else setArchiveColumnCount(3)
+    }
+    sync()
+    mqTablet.addEventListener('change', sync)
+    mqSmall.addEventListener('change', sync)
+    return () => {
+      mqTablet.removeEventListener('change', sync)
+      mqSmall.removeEventListener('change', sync)
+    }
   }, [])
 
   const q = searchQuery.trim().toLowerCase()
@@ -236,13 +259,27 @@ function IssuesPage({ contentType = 'article', pageTitle = 'Issues' }) {
         <div className="issues-section-divider">
           <span className="issues-section-title">Archive</span>
         </div>
-        <div className="issues-grid issues-grid-archive">
-          {archive.length > 0 ? (
-            archive.map(renderIssueCard)
-          ) : (
+        {archive.length === 0 ? (
+          <div className="issues-grid issues-grid-archive">
             <p className="issues-empty">No archived issues</p>
-          )}
-        </div>
+          </div>
+        ) : archive.length <= 2 ? (
+          <div className="issues-grid issues-grid-archive">
+            {archive.map(renderIssueCard)}
+          </div>
+        ) : (
+          <div className="issues-archive-masonry">
+            <div className={`issues-grid-latest-split issues-grid-latest-split--${archiveColumnCount}`}>
+              {Array.from({ length: archiveColumnCount }).map((_, colIndex) => (
+                <div className="issues-grid-latest-col" key={colIndex}>
+                  {archive
+                    .filter((_, i) => i % archiveColumnCount === colIndex)
+                    .map(renderIssueCard)}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

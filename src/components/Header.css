@@ -17,7 +17,7 @@
   width: 100%;
   box-sizing: border-box;
   overflow: visible;
-  transition: transform 0.3s ease-out, background-color 0.35s ease-out, backdrop-filter 0.35s ease-out;
+  transition: transform 0.3s ease-out, background-color 0.35s ease-out, backdrop-filter 0.35s ease-out, box-shadow 0.35s ease-out;
   padding: 0 31px;
 }
 
@@ -35,6 +35,19 @@
   background-color: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 0 #000;
+}
+
+/* Glass state: black text/icons on white frosted glass */
+.header--glass .brand-name,
+.header--glass .header-nav-icon,
+.header--glass .header-menu-button,
+.header--glass .user-button {
+  color: #000;
+}
+
+.header--glass .header-logo {
+  filter: brightness(0);
 }
 
 /* Light text on dark (homepage at top): when header is transparent over dark hero */
@@ -506,19 +519,21 @@
 /* Dark Mode Styles */
 @media (prefers-color-scheme: dark) {
     .header--glass {
-      background-color: rgba(0, 0, 0, 0.65);
+      background-color: rgba(255, 255, 255, 0.65);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 0 #000;
     }
 
-    /* Glass state: light text on dark glass */
+    /* Glass state: black text on white frosted glass (matches light mode) */
     .header--glass .brand-name,
     .header--glass .header-nav-icon,
-    .header--glass .header-menu-button {
-      color: #fff;
+    .header--glass .header-menu-button,
+    .header--glass .user-button {
+      color: #000;
     }
     .header--glass .header-logo {
-      filter: brightness(0) invert(1);
+      filter: brightness(0);
     }
 
     /* Transparent over white pages: use dark text so visible */
