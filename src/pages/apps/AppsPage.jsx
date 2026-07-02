@@ -91,7 +91,7 @@ function AppsPage() {
             className={`apps-tab ${activeForm === 'club' ? 'active' : ''}`}
             onClick={() => setActiveForm('club')}
           >
-            Club Collaboration
+            Org Collaboration Application
           </button>
         </div>
       </div>
