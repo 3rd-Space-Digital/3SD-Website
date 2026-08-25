@@ -134,6 +134,7 @@ body:has(.article3),
 
 .article3-paragraph {
   margin: 0 0 24px;
+  text-indent: 2em;
 }
 
 .article3-paragraph:last-child {

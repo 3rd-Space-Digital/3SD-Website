@@ -168,14 +168,16 @@ body:has(.article6),
 
 .article6-subtitle {
   color: #000;
-  text-align: center;
+  text-align: left;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 40px;
   font-style: normal;
   font-weight: 700;
   line-height: 110%;
   letter-spacing: -1.2px;
-  margin: 12px 0 35px;
+  margin: 12px auto 35px;
+  max-width: 640px;
+  width: 100%;
 }
 
 .article6-content {
@@ -219,7 +221,9 @@ body:has(.article6),
 }
 
 .article6-body--readable {
-  margin: 42px 0;
+  margin: 42px auto;
+  max-width: 640px;
+  width: 100%;
 }
 
 .article6-body--readable .article6-paragraph {
@@ -638,8 +642,8 @@ body:has(.article6),
   .article6-subtitle {
     font-size: 40px;
     letter-spacing: -1.2px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .article6-body {
@@ -689,8 +693,8 @@ body:has(.article6),
   .article6-subtitle {
     font-size: 36px;
     letter-spacing: -1.08px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 12px;
   }
 
@@ -762,8 +766,8 @@ body:has(.article6),
   .article6-subtitle {
     font-size: 28px;
     letter-spacing: -0.84px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 12px;
   }
 

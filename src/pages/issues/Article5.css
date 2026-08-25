@@ -105,7 +105,9 @@ body:has(.article5),
   font-weight: 700;
   line-height: 110%;
   letter-spacing: -1.2px;
-  margin: 12px 0 35px;
+  margin: 12px auto 35px;
+  max-width: 640px;
+  width: 100%;
 }
 
 .article5-content {
@@ -149,10 +151,15 @@ body:has(.article5),
   font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0;
+  max-width: 640px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .article5-paragraph {
   margin: 0 0 24px;
+  text-indent: 2em;
 }
 
 .article5-paragraph:last-child {
@@ -161,14 +168,16 @@ body:has(.article5),
 
 .article5-section-heading {
   color: #000;
-  text-align: left;
+  text-align: center;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 32px;
   font-style: normal;
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.64px;
-  margin: 48px 0 16px;
+  margin: 48px auto 16px;
+  max-width: 640px;
+  width: 100%;
 }
 
 .article5-section-heading:first-of-type {
@@ -375,8 +384,8 @@ body:has(.article5),
   .article5-subtitle {
     font-size: 40px;
     letter-spacing: -1.2px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .article5-caption {
@@ -443,7 +452,7 @@ body:has(.article5),
 
   .article5-section-heading {
     font-size: 26px;
-    margin: 40px 0 12px;
+    margin: 40px auto 12px;
   }
 
   .article5-image-wrap {
@@ -464,8 +473,8 @@ body:has(.article5),
   .article5-subtitle {
     font-size: 36px;
     letter-spacing: -1.08px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 12px;
   }
 
@@ -527,8 +536,8 @@ body:has(.article5),
   .article5-subtitle {
     font-size: 28px;
     letter-spacing: -0.84px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 12px;
   }
 

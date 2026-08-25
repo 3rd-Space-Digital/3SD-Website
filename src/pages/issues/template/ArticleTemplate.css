@@ -129,7 +129,9 @@ body:has(.article-template),
   font-weight: 700;
   line-height: 110%;
   letter-spacing: -1.2px;
-  margin: 0 0 35px;
+  margin: 0 auto 35px;
+  max-width: 640px;
+  width: 100%;
 }
 
 .article-template-content {
@@ -173,10 +175,15 @@ body:has(.article-template),
   font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0;
+  max-width: 640px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .article-template-paragraph {
   margin: 0 0 24px;
+  text-indent: 2em;
 }
 
 .article-template-paragraph:last-child {
@@ -307,8 +314,8 @@ body:has(.article-template),
   .article-template-subtitle {
     font-size: 40px;
     letter-spacing: -1.2px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .article-template-caption {
@@ -373,8 +380,8 @@ body:has(.article-template),
   .article-template-subtitle {
     font-size: 36px;
     letter-spacing: -1.08px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .article-template-body {
@@ -408,8 +415,8 @@ body:has(.article-template),
   .article-template-subtitle {
     font-size: 28px;
     letter-spacing: -0.84px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .article-template-body {

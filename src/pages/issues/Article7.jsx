@@ -67,7 +67,7 @@ function Article7ImageRow({ srcs }) {
     const sumWh = dims.reduce((acc, d) => acc + d.w / d.h, 0)
     const gapsTotal = Math.max(0, dims.length - 1) * gapPx
     const hFit = (cw - gapsTotal) / sumWh
-    const hCap = Math.min(window.innerWidth * 0.3, 280)
+    const hCap = Math.min(window.innerWidth * 0.48, 440)
     const h = Math.max(10, Math.min(hCap, hFit))
     el.style.setProperty('--article7-row-img-h', `${h}px`)
   }, [srcs])

@@ -114,7 +114,7 @@ function ClubCollabForm({ onSubmitStatus }) {
     <div className="clubcollab-form-container">
       <div className="clubcollab-section">
         <div className="clubcollab-section-divider">
-          <span className="clubcollab-section-title">Club Collaboration Application</span>
+          <span className="clubcollab-section-title">Org Collaboration Application</span>
         </div>
         <p className="clubcollab-description">
           Interested in collaborating with 3SD? Fill out this form and we'll reach out to discuss 
