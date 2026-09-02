@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { HomepageRevealProvider } from './contexts/HomepageRevealContext'
 import Header from './components/Header'
 import AuthCallback from './pages/AuthCallback'
@@ -102,6 +103,7 @@ function App() {
           </Routes>
         </div>
         <Analytics />
+        <SpeedInsights />
       </div>
     </HomepageRevealProvider>
   )
