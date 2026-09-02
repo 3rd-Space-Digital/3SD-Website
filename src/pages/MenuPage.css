@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  z-index: 200;
+  z-index: 199;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   box-sizing: border-box;
 }
