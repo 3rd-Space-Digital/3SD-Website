@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
-import { HomepageRevealProvider } from './context/HomepageRevealContext'
+import { HomepageRevealProvider } from './contexts/HomepageRevealContext'
 import Header from './components/Header'
 import AuthCallback from './pages/AuthCallback'
 import Homepage from './pages/Homepage'

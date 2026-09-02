@@ -45,12 +45,31 @@ For the app (and Google sign-in) to work, create a `.env.local` in the project r
 
 ```
 3SD-Website/
+├── public/               # Static assets served as-is (favicon, preview image)
+├── scripts/              # Standalone dev scripts (e.g. svg-to-polygon generator)
 ├── src/
-│   ├── App.jsx       # Main App component
-│   ├── App.css       # App styles
-│   ├── main.jsx      # Application entry point
-│   └── index.css     # Global styles
-├── index.html        # HTML template
-├── vite.config.js    # Vite configuration
-└── package.json      # Project dependencies
+│   ├── main.jsx          # Application entry point
+│   ├── App.jsx           # Root component & route definitions
+│   ├── App.css           # App-level styles
+│   ├── index.css         # Global styles
+│   ├── assets/           # Images, SVGs, and other imported media
+│   │   ├── ispy/         # I-Spy game art (items, officers, backgrounds)
+│   │   └── svgs/         # Shared icon SVGs
+│   ├── components/       # Reusable UI components (Header, UserMenu, etc.)
+│   │   └── issues/       # Components specific to the Issues section
+│   ├── config/           # Third-party client setup (supabase.js)
+│   ├── contexts/         # React context providers (AuthContext, HomepageRevealContext)
+│   ├── data/             # Static data modules
+│   │   └── ispy/         # I-Spy items, officers, and reveal data
+│   ├── pages/            # Route-level page components
+│   │   ├── apps/         # Application/collab form pages
+│   │   ├── events/       # Events listing & detail pages
+│   │   ├── issues/       # Issues landing, articles, and article template
+│   │   └── projects/     # Projects page
+│   └── utils/            # Helper utilities (events, issues, supabase, archive)
+├── index.html            # HTML template
+├── vite.config.js        # Vite configuration
+├── vercel.json           # Vercel deployment/routing config
+├── .eslintrc.cjs         # ESLint configuration
+└── package.json          # Project dependencies & scripts
 ```

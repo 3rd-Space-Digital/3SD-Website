@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useHomepageReveal } from '../context/HomepageRevealContext'
+import { useHomepageReveal } from '../contexts/HomepageRevealContext'
 import UserMenu from './UserMenu'
 import logoIcon from '../assets/svgs/3SD.svg'
 import './Header.css'
