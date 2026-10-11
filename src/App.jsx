@@ -24,6 +24,7 @@ import PlaylistPage from './pages/PlaylistPage'
 import ProjectsPage from './pages/projects/ProjectsPage'
 import ComingSoonPage from './pages/ComingSoonPage'
 import AboutPage from './pages/AboutPage'
+import IspyPage from './pages/IspyPage'
 import './App.css'
 
 function App() {
@@ -99,6 +100,7 @@ function App() {
           <Route path="/music" element={<ComingSoonPage />} />
           <Route path="/interviews" element={<ComingSoonPage />} />
           <Route path="/read" element={<Navigate to="/issues" replace />} />
+          <Route path="/ispy" element={<IspyPage />} />
           </Routes>
         </div>
         <Analytics />

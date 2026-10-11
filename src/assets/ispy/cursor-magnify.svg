@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+  <defs>
+    <linearGradient id="m-rim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f2f4f8"/>
+      <stop offset="40%" stop-color="#a8b0bd"/>
+      <stop offset="100%" stop-color="#5a6270"/>
+    </linearGradient>
+    <radialGradient id="m-glass" cx="38%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#eef8ff" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#9ec9f0" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#6a9ec4" stop-opacity="0.25"/>
+    </radialGradient>
+    <linearGradient id="m-handle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6b5344"/>
+      <stop offset="100%" stop-color="#3d2e24"/>
+    </linearGradient>
+  </defs>
+  <!-- soft ground shadow -->
+  <ellipse cx="14" cy="15" rx="11" ry="12" fill="#000" opacity="0.12"/>
+  <!-- handle (wood) -->
+  <path d="M19.5 19.5 L30 30" stroke="url(#m-handle)" stroke-width="5" stroke-linecap="round"/>
+  <path d="M20 20 L29.5 29.5" stroke="#8a6e52" stroke-width="2" stroke-linecap="round" opacity="0.9"/>
+  <!-- metal rim -->
+  <circle cx="12.5" cy="12.5" r="10.25" fill="none" stroke="url(#m-rim)" stroke-width="3.25"/>
+  <circle cx="12.5" cy="12.5" r="8.75" fill="none" stroke="#3a4150" stroke-width="1"/>
+  <!-- lens -->
+  <circle cx="12.5" cy="12.5" r="7.5" fill="url(#m-glass)"/>
+  <!-- specular highlight -->
+  <ellipse cx="9.5" cy="9" rx="3.2" ry="2.2" fill="#fff" opacity="0.55" transform="rotate(-28 9.5 9)"/>
+  <path d="M7.5 8.5 Q9.5 6.5 12 7.8" fill="none" stroke="#fff" stroke-width="1.1" stroke-linecap="round" opacity="0.75"/>
+</svg>
