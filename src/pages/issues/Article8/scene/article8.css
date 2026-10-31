@@ -1,0 +1,16 @@
+/* `lvh` keeps the canvas size fixed while mobile browser toolbars show and hide. */
+.article8-scroll {
+  position: relative;
+  width: 100%;
+  height: calc(var(--article8-pages) * 100vh);
+  height: calc(var(--article8-pages) * 100lvh);
+  background: #000;
+}
+
+.article8-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
+}

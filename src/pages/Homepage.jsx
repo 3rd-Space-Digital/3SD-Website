@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import logoIcon from '../assets/svgs/3SD.svg'
-import { useHomepageReveal } from '../context/HomepageRevealContext'
+import { useHomepageReveal } from '../contexts/HomepageRevealContext'
 import './Homepage.css'
 
 const PHRASE = 'Third Space Digital'
