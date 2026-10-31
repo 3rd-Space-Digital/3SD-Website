@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
@@ -25,7 +25,10 @@ import PlaylistPage from './pages/PlaylistPage'
 import ProjectsPage from './pages/projects/ProjectsPage'
 import ComingSoonPage from './pages/ComingSoonPage'
 import AboutPage from './pages/AboutPage'
+import LoadingScreen from './components/LoadingScreen'
 import './App.css'
+
+const Article8 = lazy(() => import('./pages/issues/Article8/Article8'))
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -68,7 +71,7 @@ function App() {
   return (
     <HomepageRevealProvider>
       <div className="App">
-        <Header onOpenMenu={() => setMenuOpen(true)} />
+        {location.pathname !== '/issues/8' && <Header onOpenMenu={() => setMenuOpen(true)} />}
         {menuOpen && (
           <MenuPage onClose={() => setMenuOpen(false)} />
         )}
@@ -91,6 +94,7 @@ function App() {
           <Route path="/issues/5" element={<Article5 />} />
           <Route path="/issues/6" element={<Article6 />} />
           <Route path="/issues/7" element={<Article7 />} />
+          <Route path="/issues/8" element={<Suspense fallback={<LoadingScreen text="Loading Issue" />}><Article8 /></Suspense>} />
           {/* <Route path="/issues/:id" element={<Article />} /> */}
           <Route path="/apps" element={<AppsPage />} />
           <Route path="/playlist" element={<PlaylistPage />} />
