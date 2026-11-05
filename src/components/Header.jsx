@@ -116,6 +116,15 @@ function Header({ onOpenMenu }) {
       </div>
 
       <div className="header-right">
+        <Link to="/game" className="header-nav-icon" aria-label="3SD Go!">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="header-icon-svg">
+            <rect x="2" y="9" width="28" height="16" rx="6" stroke="currentColor" strokeWidth="3"/>
+            <path d="M9 14v6M6 17h6" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+            <circle cx="21" cy="15" r="1.4" fill="currentColor"/>
+            <circle cx="24.5" cy="18.5" r="1.4" fill="currentColor"/>
+          </svg>
+          <span className="tooltip">3SD Go!</span>
+        </Link>
         <Link to="/issues" className="header-nav-icon" aria-label="Issues">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="header-icon-svg">
             <rect x="3.5" y="1.5" width="25" height="29" rx="1.5" stroke="currentColor" strokeWidth="3"/>
