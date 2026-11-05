@@ -25,7 +25,3 @@ dist-ssr
 
 .env
 .env.local
-
-# Local agent guidelines
-AGENTS.md
-agents.md

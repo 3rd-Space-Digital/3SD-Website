@@ -125,8 +125,8 @@ function MenuPage({ onClose }) {
         </section>
 
         <section className="menu-section">
-          <Link to="/game" className="menu-section-link" onClick={handleClose}>
-            <h2 className="menu-section-title">3SD Go!</h2>
+          <Link to="/playlist" className="menu-section-link" onClick={handleClose}>
+            <h2 className="menu-section-title menu-section-title-italic">The Playlist</h2>
           </Link>
         </section>
 

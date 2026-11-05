@@ -29,7 +29,6 @@ import LoadingScreen from './components/LoadingScreen'
 import './App.css'
 
 const Article8 = lazy(() => import('./pages/issues/Article8/Article8'))
-const GamePage = lazy(() => import('./pages/GamePage'))
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -48,16 +47,10 @@ function App() {
 
   useEffect(() => {
     const isHomepage = location.pathname === '/'
-    const isGame = location.pathname === '/game'
     
     if (isHomepage) {
       document.documentElement.style.removeProperty('background-color')
       document.body.style.removeProperty('background-color')
-      document.documentElement.style.overflow = 'hidden'
-      document.body.style.overflow = 'hidden'
-    } else if (isGame) {
-      document.documentElement.style.backgroundColor = '#c4894c'
-      document.body.style.backgroundColor = '#c4894c'
       document.documentElement.style.overflow = 'hidden'
       document.body.style.overflow = 'hidden'
     } else {
@@ -78,7 +71,7 @@ function App() {
   return (
     <HomepageRevealProvider>
       <div className="App">
-        {location.pathname !== '/issues/8' && location.pathname !== '/game' && <Header onOpenMenu={() => setMenuOpen(true)} />}
+        {location.pathname !== '/issues/8' && <Header onOpenMenu={() => setMenuOpen(true)} />}
         {menuOpen && (
           <MenuPage onClose={() => setMenuOpen(false)} />
         )}
@@ -111,7 +104,6 @@ function App() {
           <Route path="/music" element={<ComingSoonPage />} />
           <Route path="/interviews" element={<ComingSoonPage />} />
           <Route path="/read" element={<Navigate to="/issues" replace />} />
-          <Route path="/game" element={<Suspense fallback={<LoadingScreen text="Loading Game" />}><GamePage /></Suspense>} />
           </Routes>
         </div>
         <Analytics />
